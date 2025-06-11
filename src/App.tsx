@@ -1,7 +1,8 @@
 import { Routes, Route } from 'react-router-dom';
 import { useEffect } from 'react';
 import Layout from './components/layout/Layout';
-import HomePage from './components/home/Hero';
+import HomePage from './pages/Homepage';
+
 
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<HomePage />} />
+       
         
       </Route>
     </Routes>
