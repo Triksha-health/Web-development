@@ -1,8 +1,9 @@
 import { Routes, Route } from 'react-router-dom';
 import { useEffect } from 'react';
 import Layout from './components/layout/Layout';
-import HomePage from './pages/Homepage';
+
 import SignInPage from './pages/SignInPage';
+import HomePage from './pages/HomePage';
 
 
 
@@ -14,7 +15,7 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
-        <Route index element={<HomePage />} />
+        <Route index element={<HomePage/>} />
         <Route path="signin" element={<SignInPage />} />
        
         
