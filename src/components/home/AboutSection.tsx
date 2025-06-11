@@ -1,31 +1,35 @@
-
-import React from 'react';
-import { BarChart3, Brain, Smartphone, Zap } from 'lucide-react';
-import Container from '../ui/Container';
-import SectionHeading from '../ui/SectionHeading';
-import Card from '../ui/Card';
+import React from "react";
+import { BarChart3, Brain, Smartphone, Zap, LineChart } from "lucide-react";
+import Container from "../ui/Container";
+import SectionHeading from "../ui/SectionHeading";
+import Card from "../ui/Card";
 
 const AboutSection: React.FC = () => {
   const steps = [
     {
       icon: <Smartphone className="h-8 w-8 text-teal-600" />,
-      title: 'Wear Device',
-      description: 'Comfortable, 24/7 wearable with medical-grade sensors tracks vital health metrics.',
+      title: "Wear Device",
+      description: "Comfortable, 24/7 wearable with medical-grade sensors tracks vital health metrics.",
     },
     {
       icon: <BarChart3 className="h-8 w-8 text-blue-600" />,
-      title: 'Stream Data',
-      description: 'Seamlessly transmits real-time health data to our secure cloud platform.',
+      title: "Stream Data",
+      description: "Seamlessly transmits real-time health data to our secure cloud platform.",
     },
     {
       icon: <Brain className="h-8 w-8 text-purple-600" />,
-      title: 'AI Analysis',
-      description: 'Our proprietary AI analyzes patterns and detects anomalies before symptoms appear.',
+      title: "AI Analysis",
+      description: "Our proprietary AI analyzes patterns and detects anomalies before symptoms appear.",
+    },
+    {
+      icon: <LineChart className="h-8 w-8 text-red-600" />,
+      title: "Real-Time Dashboard",
+      description: " Monitor live health metrics and trends through an intuitive interface with personalized insights.",
     },
     {
       icon: <Zap className="h-8 w-8 text-amber-600" />,
-      title: 'Get Alerts',
-      description: 'Receive timely notifications about potential health issues and preventive recommendations.',
+      title: "Get Alerts",
+      description: "Receive timely notifications about potential health issues and preventive recommendations.",
     },
   ];
 
@@ -36,7 +40,7 @@ const AboutSection: React.FC = () => {
       <div className="absolute -top-40 -right-40 w-80 h-80 bg-teal-100 rounded-full opacity-30 blur-3xl"></div>
 
       <Container className="relative z-10">
-        <SectionHeading 
+        <SectionHeading
           title="What is Triksha?"
           subtitle="Triksha is an AI-powered predictive health system for early detection of chronic diseases like diabetes, heart issues, and respiratory problems."
         />
@@ -44,7 +48,7 @@ const AboutSection: React.FC = () => {
         <div className="relative mt-16">
           <div className="absolute hidden md:block top-24 left-0 right-0 h-1 bg-gradient-to-r from-teal-500 via-blue-500 to-purple-500 z-0"></div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
             {steps.map((step, index) => (
               <div key={index} className="relative">
                 <Card hoverable className="h-full p-6 flex flex-col items-center text-center">
@@ -72,18 +76,20 @@ const AboutSection: React.FC = () => {
               <div className="md:w-1/2">
                 <h3 className="text-2xl md:text-3xl font-bold mb-4">Pioneering Preventive Healthcare</h3>
                 <p className="text-slate-600 mb-6">
-                  Traditional healthcare is reactive—it treats problems after they arise. Triksha revolutionizes this approach by predicting potential health issues days, weeks, or even months before symptoms appear.
+                  Traditional healthcare is reactive—it treats problems after they arise. Triksha revolutionizes this
+                  approach by predicting potential health issues days, weeks, or even months before symptoms appear.
                 </p>
                 <p className="text-slate-600">
-                  By combining cutting-edge wearable technology with our proprietary AI algorithms, we enable you to take preventive action early, potentially avoiding serious health complications altogether.
+                  By combining cutting-edge wearable technology with our proprietary AI algorithms, we enable you to
+                  take preventive action early, potentially avoiding serious health complications altogether.
                 </p>
               </div>
 
               <div className="md:w-1/2">
                 <div className="relative rounded-xl overflow-hidden">
-                  <img 
-                    src="https://images.pexels.com/photos/7089401/pexels-photo-7089401.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" 
-                    alt="Doctor analyzing health data" 
+                  <img
+                    src="https://images.pexels.com/photos/7089401/pexels-photo-7089401.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+                    alt="Doctor analyzing health data"
                     className="w-full h-auto rounded-xl"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
