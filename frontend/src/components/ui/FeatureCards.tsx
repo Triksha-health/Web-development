@@ -15,52 +15,26 @@ interface FeatureCardsProps {
   onLearnMore?: (cardId: string) => void;
 }
 
-const defaultCards: FeatureCard[] = [
-  {
-    id: "cardiac",
-    icon: <Heart className="w-6 h-6 text-blue-500" />,
-    title: "Cardiac Issue Detection",
-    description: "Early identification of irregular heartbeats and potential cardiovascular concerns.",
-    image: "/api/placeholder/300/200",
-  },
-  {
-    id: "emergency",
-    icon: <AlertTriangle className="w-6 h-6 text-blue-500" />,
-    title: "Emergency Alerts to Family",
-    description: "Automatic notifications to loved ones during critical health events.",
-    image: "/api/placeholder/300/200",
-  },
-  {
-    id: "insights",
-    icon: <Shield className="w-6 h-6 text-blue-500" />,
-    title: "Long-term Health Insights",
-    description: "Preventive analysis to detect patterns indicating potential chronic disease risk.",
-    image: "/api/placeholder/300/200",
-  },
-];
+const defaultCards: FeatureCard[] = [];
 
 const FeatureCard: React.FC<{ card: FeatureCard; onLearnMore?: (cardId: string) => void }> = ({
   card,
   onLearnMore,
 }) => {
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-all duration-300 hover:-translate-y-1 ">
+    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-all duration-300 hover:-translate-y-1 group">
       {/* Image */}
       <div className="relative h-48 bg-gray-100 overflow-hidden">
         <img
           src={card.image}
           alt={card.title}
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover scale-105 transition-transform duration-1000 ease-out group-hover:scale-100"
           onError={(e) => {
             // Fallback gradient background if image fails to load
             e.currentTarget.style.display = "none";
             e.currentTarget.parentElement!.style.background = "linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%)";
           }}
         />
-        {/* Fallback content for demo */}
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center">
-          <div className="text-blue-300 opacity-50">{card.icon}</div>
-        </div>
       </div>
 
       {/* Content */}
