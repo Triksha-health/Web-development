@@ -1,10 +1,6 @@
-import { Link } from "react-router-dom";
-import { Mail, Phone } from "lucide-react";
-import { FiFacebook } from "react-icons/fi";
-import { FiTwitter } from "react-icons/fi";
-import { FiInstagram } from "react-icons/fi";
-import { FiLinkedin } from "react-icons/fi";
-import logo from "../../public/logo (3).png";
+import { Link } from 'react-router-dom';
+import {  Facebook, Twitter, Instagram, Linkedin, Mail, Phone } from 'lucide-react';
+import logo from "../../public/logo (3).png"
 
 function Footer() {
   const currentYear = new Date().getFullYear();
@@ -15,28 +11,29 @@ function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand */}
           <div>
-            <Link to="/" className="flex items-center color-white w-20 h-10">
-              <img src={logo} alt="" className="dark:brightness-0 dark:invert" />
-            </Link>
+              <Link to="/" className="flex items-center color-white w-20 h-10">
+           <img src={logo} alt="" />
+           
+          </Link>
             <p className="mt-4 text-gray-400">
-              wearable that predicts and prevents chronic health risks before they become serious.
+               wearable that predicts and prevents chronic health risks before they become serious.
             </p>
             <div className="flex space-x-4 mt-6">
               <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                <FiFacebook size={20} />
+                <Facebook size={20} />
               </a>
               <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                <FiTwitter size={20} />
+                <Twitter size={20} />
               </a>
               <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                <FiInstagram size={20} />
+                <Instagram size={20} />
               </a>
               <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                <FiLinkedin size={20} />
+                <Linkedin size={20} />
               </a>
             </div>
           </div>
-
+          
           {/* Quick Links */}
           <div>
             <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
@@ -68,7 +65,7 @@ function Footer() {
               </li>
             </ul>
           </div>
-
+          
           {/* Legal */}
           <div>
             <h3 className="text-lg font-semibold mb-4">Legal</h3>
@@ -95,7 +92,7 @@ function Footer() {
               </li>
             </ul>
           </div>
-
+          
           {/* Contact */}
           <div>
             <h3 className="text-lg font-semibold mb-4">Contact Us</h3>
@@ -111,9 +108,11 @@ function Footer() {
             </ul>
           </div>
         </div>
-
+        
         <div className="border-t border-gray-800 mt-12 pt-8">
-          <p className="text-gray-400 text-center">&copy; {currentYear} Triksha Health Tech. All rights reserved.</p>
+          <p className="text-gray-400 text-center">
+            &copy; {currentYear} Triksha Health Tech. All rights reserved.
+          </p>
         </div>
       </div>
     </footer>
