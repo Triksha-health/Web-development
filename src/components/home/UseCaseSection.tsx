@@ -1,4 +1,3 @@
-import React from "react";
 import { useState } from "react";
 import Container from "../ui/Container";
 import SectionHeading from "../ui/SectionHeading";
