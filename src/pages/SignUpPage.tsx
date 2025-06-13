@@ -45,7 +45,7 @@ function SignUpPage() {
       </div>
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+        <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10 w-[500px] -ml-[26px]">
           {error && (
             <div className="mb-4 bg-red-50 text-red-500 p-3 rounded-md text-sm">
               {error}
