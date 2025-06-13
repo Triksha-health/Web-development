@@ -4,6 +4,7 @@ import Layout from './components/layout/Layout';
 
 import SignInPage from './pages/SignInPage';
 import HomePage from './pages/HomePage';
+import SignUpPage from './pages/SignUpPage';
 
 
 
@@ -17,6 +18,7 @@ function App() {
       <Route path="/" element={<Layout />}>
         <Route index element={<HomePage/>} />
         <Route path="signin" element={<SignInPage />} />
+        <Route path="signup" element={<SignUpPage />} />
        
         
       </Route>
