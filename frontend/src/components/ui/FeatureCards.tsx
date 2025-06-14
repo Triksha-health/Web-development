@@ -1,5 +1,4 @@
 import React from "react";
-import { Heart, AlertTriangle, Shield } from "lucide-react";
 
 interface FeatureCard {
   id: string;
@@ -22,7 +21,7 @@ const FeatureCard: React.FC<{ card: FeatureCard; onLearnMore?: (cardId: string) 
   onLearnMore,
 }) => {
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-all duration-300 hover:-translate-y-1 group">
+    <div className="bg-white rounded-2xl shadow-md border border-gray-100 overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1 group">
       {/* Image */}
       <div className="relative h-48 bg-gray-100 overflow-hidden">
         <img
