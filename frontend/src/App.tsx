@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import Layout from "./components/layout/Layout";
 import HomePage from "./pages/HomePage";
 import SignInPage from "./pages/SignInPage";
+import PreOrderPage from "./pages/PreOrderPage";
 
 function App() {
   useEffect(() => {
@@ -14,6 +15,7 @@ function App() {
       <Route path="/" element={<Layout />}>
         <Route index element={<HomePage />} />
         <Route path="signin" element={<SignInPage />} />
+        <Route path="pre-order" element={<PreOrderPage />} />
       </Route>
     </Routes>
   );
