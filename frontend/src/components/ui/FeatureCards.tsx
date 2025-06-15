@@ -1,5 +1,5 @@
 import React from "react";
-import { Heart, AlertTriangle, Shield } from "lucide-react";
+// import { Heart, AlertTriangle, Shield } from "lucide-react";
 
 interface FeatureCard {
   id: string;
@@ -48,7 +48,7 @@ const FeatureCard: React.FC<{ card: FeatureCard; onLearnMore?: (cardId: string) 
 
         <button
           onClick={() => onLearnMore?.(card.id)}
-          className="text-teal-500 hover:text-teal-600 font-medium text-sm transition-colors duration-200"
+          className="text-[#3691ff] hover:text-[#3690ff] font-medium text-sm transition-colors duration-200"
         >
           Learn more
         </button>
