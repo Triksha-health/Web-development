@@ -15,7 +15,6 @@ function App() {
       <Route path="/" element={<Layout />}>
         <Route index element={<HomePage />} />
         <Route path="signin" element={<SignInPage />} />
-        <Route path="pre-order" element={<PreOrderPage />} />
       </Route>
     </Routes>
   );
