@@ -9,7 +9,7 @@ interface PreOrderConfirmationProps {
 const PreOrderConfirmation: React.FC<PreOrderConfirmationProps> = ({ triksha }) => {
   const shippingdays = triksha === "early" ? 30 : 45;
   const isEarlyBird = triksha === "early";
-  const price = isEarlyBird ? "₹14,999" : "₹19,999";
+  const price = isEarlyBird ? "₹14,999" : "₹17,999";
   const productName = isEarlyBird ? "Triksha - Early Bird" : "Triksha - Standard";
 
   return (
