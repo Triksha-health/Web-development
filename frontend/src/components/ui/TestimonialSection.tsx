@@ -55,9 +55,9 @@ const TestimonialSection: React.FC<TestimonialSectionProps> = ({
     setCurrentTestimonial((prev) => (prev + 1) % testimonials.length);
   };
 
-  const prevTestimonial = () => {
-    setCurrentTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length);
-  };
+  // const prevTestimonial = () => {
+  //   setCurrentTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+  // };
 
   React.useEffect(() => {
     const interval = setInterval(nextTestimonial, 5000); // Auto-rotate every 5 seconds
