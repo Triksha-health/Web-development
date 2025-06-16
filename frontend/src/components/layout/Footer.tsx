@@ -5,6 +5,8 @@ import { FiTwitter } from "react-icons/fi";
 import { FiInstagram } from "react-icons/fi";
 import { FiLinkedin } from "react-icons/fi";
 import logo from "../../public/logo (3).png";
+import trikshawordlogo from "../../public/Trikshawordlogo.png";
+import trikshaeyelogo from "../../public/trikshaeyelogo(2).png";
 
 function Footer() {
   const currentYear = new Date().getFullYear();
@@ -15,8 +17,9 @@ function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand */}
           <div>
-            <Link to="/" className="flex items-center color-white w-20 h-10">
-              <img src={logo} alt="" className="dark:brightness-0 dark:invert" />
+            <Link to="/" className="flex items-center color-white w-[90px] h-10 relative">
+              <img src={trikshawordlogo} alt="" className="w-[65px] h-auto brightness-[120%]" />
+              <img src={trikshaeyelogo} alt="" className="invert w-[28px] h-[90%] absolute top-[0px] right-[0px]" />
             </Link>
             <p className="mt-4 text-gray-400">
               wearable that predicts and prevents chronic health risks before they become serious.
