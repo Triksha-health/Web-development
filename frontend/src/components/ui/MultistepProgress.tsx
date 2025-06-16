@@ -53,7 +53,7 @@ const MultiStepProgress: React.FC<MultiStepProgressProps> = ({
             {index < steps.length - 1 && (
               <div
                 className={`
-                  flex-1 h-1 mx-4 transition-colors duration-200
+                  flex-1 h-1 mx-4 transition-colors duration-200 translate-y-[-12px]
                   ${step.id < currentStep ? "bg-[#3690fe]" : "bg-gray-200"}
                 `}
               />

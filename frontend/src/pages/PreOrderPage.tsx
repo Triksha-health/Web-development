@@ -54,14 +54,10 @@ const PreOrderPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen py-12 sm:px-6 lg:px-8 mt-10 bg-[#f9fafc]">
+    <div className="min-h-screen py-12 sm:px-6 lg:px-8 bg-[#f9fafc]">
       {!ordercomplete && (
         <>
-          <div className="sm:mx-auto sm:w-full sm:max-w-md ">
-            <div className="flex justify-center">
-              <img src={logo} alt="logo" className="w-20 h-10" />
-            </div>
-          </div>
+          <div className="sm:mx-auto sm:w-full sm:max-w-md mt-4 "></div>
           <MultiStepProgress currentStep={currentStep} />
           <Container className="relative z-10">
             <div className="flex max-w-7xl lg:flex-row shadow-lg rounded-lg">

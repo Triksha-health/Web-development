@@ -13,7 +13,7 @@ const PreOrderConfirmation: React.FC<PreOrderConfirmationProps> = ({ triksha }) 
   const productName = isEarlyBird ? "Triksha - Early Bird" : "Triksha - Standard";
 
   return (
-    <div className="lg:w-1/2 mx-auto bg-white rounded-lg shadow-lg p-10">
+    <div className="lg:w-1/2 mx-auto bg-white rounded-lg shadow-lg p-10 mt-10">
       {/* Success Icon */}
       <div className="flex justify-center mb-6">
         <div className="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center">
