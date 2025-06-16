@@ -47,7 +47,7 @@ const Comparison: React.FC = () => {
                 <div></div>
                 {brands.map((brand, idx) => (
                   <div key={idx} className="flex flex-col items-center">
-                    <div className="w-16 h-16 rounded-full bg-blue-400 flex items-center justify-center mb-3 border border-gray-300">
+                    <div className="w-16 h-16 rounded-full  bg-slate-100 flex items-center justify-center mb-3 border border-gray-300">
                       <img
                         src={brand.logo}
                         alt={brand.name}
