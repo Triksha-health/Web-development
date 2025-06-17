@@ -3,6 +3,7 @@ import AboutSection from "../components/home/AboutSection";
 import UseCaseSection from "../components/home/UseCaseSection";
 import Comparison from "../components/home/Comparison";
 import LaunchSection from "../components/home/LaunchSection";
+import FAQSection from "../components/home/FAQSection";
 
 function HomePage() {
   return (
@@ -12,6 +13,7 @@ function HomePage() {
       <UseCaseSection />
       <Comparison/>
       <LaunchSection/>
+      <FAQSection/>
     </div>
   );
 }
