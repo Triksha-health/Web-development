@@ -14,8 +14,10 @@ function HomePage() {
       <AboutSection />
       <UseCaseSection />
       <Comparison/>
+      <CoFoundersSection/>
       <LaunchSection/>
       <FAQSection/>
+      <StayUpdated/>
     </div>
   );
 }
