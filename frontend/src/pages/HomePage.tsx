@@ -6,6 +6,7 @@ import LaunchSection from "../components/home/LaunchSection";
 import FAQSection from "../components/home/FAQSection";
 import StayUpdated from "../components/home/StayUpdated";
 import CoFoundersSection from "../components/home/CoFounderSection";
+import TrustSection from "../components/home/TrustSection";
 
 function HomePage() {
   return (
@@ -16,6 +17,7 @@ function HomePage() {
       <Comparison/>
       <CoFoundersSection/>
       <LaunchSection/>
+      <TrustSection/>
       <FAQSection/>
       <StayUpdated/>
     </div>
