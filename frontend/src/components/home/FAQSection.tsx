@@ -167,7 +167,7 @@ const FAQ: React.FC = () => {
   ];
 
   return (
-    <section id="faq" className="bg-white py-24 relative overflow-hidden w-full">
+    <section id="faq" className="bg-gray-50 py-24 relative overflow-hidden w-full">
       {/* Decorative blob */}
       <div className="absolute -top-20 -right-20 w-72 h-72 bg-gradient-to-br from-purple-300 via-indigo-200 to-transparent rounded-full opacity-50 blur-3xl"></div>
 
