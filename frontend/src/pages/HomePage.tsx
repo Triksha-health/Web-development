@@ -4,6 +4,7 @@ import UseCaseSection from "../components/home/UseCaseSection";
 import Comparison from "../components/home/Comparison";
 import LaunchSection from "../components/home/LaunchSection";
 import FAQSection from "../components/home/FAQSection";
+import StayUpdated from "../components/home/StayUpdated";
 import CoFoundersSection from "../components/home/CoFounderSection";
 
 function HomePage() {
@@ -13,7 +14,6 @@ function HomePage() {
       <AboutSection />
       <UseCaseSection />
       <Comparison/>
-      <CoFoundersSection/>
       <LaunchSection/>
       <FAQSection/>
     </div>
