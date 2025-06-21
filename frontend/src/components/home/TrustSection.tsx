@@ -71,7 +71,7 @@ function TrustSection() {
 
           <div className="grid md:grid-cols-3 gap-8">
             {testimonials.map((testimonial, index) => (
-              <div key={index} className="bg-gray-50 p-6 rounded-xl">
+              <div key={index} className="bg-white p-6 rounded-xl">
                 <div className="mb-4">
                   {[...Array(5)].map((_, i) => (
                     <svg
