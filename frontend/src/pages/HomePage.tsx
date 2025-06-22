@@ -14,12 +14,12 @@ function HomePage() {
       <Hero />
       <AboutSection />
       <UseCaseSection />
-      <Comparison/>
-      <CoFoundersSection/>
-      <LaunchSection/>
-      <TrustSection/>
-      <FAQSection/>
-      <StayUpdated/>
+      <Comparison />
+      <CoFoundersSection />
+      <LaunchSection />
+      <TrustSection />
+      <FAQSection />
+      <StayUpdated />
     </div>
   );
 }
