@@ -31,7 +31,10 @@ interface PaymentFormData {
 const PreOrderPage: React.FC = () => {
   const [ordercomplete, setordercomplete] = useState<Boolean>(false);
   const [currentStep, setCurrentStep] = useState(1);
-  const [triksha, settriksha] = useState<"early" | "standard">("early");
+  //set traiksha to early or standard based on query in url
+  const urlParams = new URLSearchParams(window.location.search);
+  const initialTriksha = urlParams.get("triksha") === "standard" ? "standard" : "early";
+  const [triksha, settriksha] = useState<"early" | "standard">(initialTriksha as "early" | "standard");
   const [shippingFormData, setShippingFormData] = useState<ShippingFormData>({
     fullName: "",
     email: "",

@@ -50,9 +50,9 @@ function Navbar({ scrolled }: NavbarProps) {
             <a href="/#whytriksha" className="text-gray-700 hover:text-primary-500 font-medium">
               Why Triksha
             </a>
-            <a href="/#team" className="text-gray-700 hover:text-primary-500 font-medium">
+            <Link to="/teams" className="text-gray-700 hover:text-primary-500 font-medium">
               Team
-            </a>
+            </Link>
             <a href="/#faq" className="text-gray-700 hover:text-primary-500 font-medium">
               FAQ
             </a>
@@ -111,9 +111,9 @@ function Navbar({ scrolled }: NavbarProps) {
               <a href="/#features" className="text-gray-700 hover:text-primary-500 font-medium">
                 Features
               </a>
-              <a href="/#team" className="text-gray-700 hover:text-primary-500 font-medium">
+              <Link to="/teams" className="text-gray-700 hover:text-primary-500 font-medium">
                 Team
-              </a>
+              </Link>
               <a href="/#faq" className="text-gray-700 hover:text-primary-500 font-medium">
                 FAQ
               </a>

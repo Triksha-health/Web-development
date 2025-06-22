@@ -5,6 +5,8 @@ import HomePage from "./pages/HomePage";
 import SignInPage from "./pages/SignInPage";
 import SignUpPage from "./pages/SignUpPage";
 import PreOrderPage from "./pages/PreOrderPage";
+import TeamsPage from "./pages/TeamsPage";
+import TeamSection from "./components/ui/TeamSection";
 
 function App() {
   useEffect(() => {
@@ -18,6 +20,7 @@ function App() {
         <Route path="signin" element={<SignInPage />} />
         <Route path="signup" element={<SignUpPage />} />
         <Route path="pre-order" element={<PreOrderPage />} />
+        <Route path="teams" element={<TeamsPage />} />
       </Route>
     </Routes>
   );
