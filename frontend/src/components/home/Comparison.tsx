@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Check, X } from 'lucide-react';
 import Container from '../ui/Container';
@@ -47,7 +48,13 @@ const Comparison: React.FC = () => {
                 <div></div>
                 {brands.map((brand, idx) => (
                   <div key={idx} className="flex flex-col items-center">
-                    <div className="w-16 h-16 rounded-full  bg-slate-100 flex items-center justify-center mb-3 border border-gray-300">
+                    <div
+                      className={`w-16 h-16 rounded-full flex items-center justify-center mb-3 border ${
+                        brand.name === 'Triksha'
+                          ? 'bg-[#4aa2f4]'
+                          : 'bg-slate-100 border-gray-300'
+                      }`}
+                    >
                       <img
                         src={brand.logo}
                         alt={brand.name}
@@ -59,14 +66,13 @@ const Comparison: React.FC = () => {
                 ))}
               </div>
 
-
-
               <div className="space-y-4">
                 {features.map((feature, index) => (
                   <div
                     key={index}
-                    className={`grid grid-cols-5 gap-4 p-4 rounded-lg ${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'
-                      }`}
+                    className={`grid grid-cols-5 gap-4 p-4 rounded-lg ${
+                      index % 2 === 0 ? 'bg-gray-50' : 'bg-white'
+                    }`}
                   >
                     <div className="col-span-1 font-medium flex items-center">
                       {feature.name}
@@ -91,7 +97,6 @@ const Comparison: React.FC = () => {
               </div>
             </div>
           </div>
-
 
           <div className="mt-16 bg-gradient-to-r from-teal-500 to-blue-600 rounded-2xl shadow-lg text-white">
             <div className="p-8 md:p-12">

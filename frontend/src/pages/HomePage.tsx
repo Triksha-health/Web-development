@@ -5,7 +5,8 @@ import Comparison from "../components/home/Comparison";
 import LaunchSection from "../components/home/LaunchSection";
 import FAQSection from "../components/home/FAQSection";
 import StayUpdated from "../components/home/StayUpdated";
-import FounderPage from "../components/home/FounderPage";
+import CoFoundersSection from "../components/home/CoFounderSection";
+import TrustSection from "../components/home/TrustSection";
 
 function HomePage() {
   return (
@@ -14,9 +15,10 @@ function HomePage() {
       <AboutSection />
       <UseCaseSection />
       <Comparison />
+      <CoFoundersSection />
       <LaunchSection />
+      <TrustSection />
       <FAQSection />
-      <FounderPage />
       <StayUpdated />
     </div>
   );

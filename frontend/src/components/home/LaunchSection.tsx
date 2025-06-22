@@ -63,7 +63,7 @@ function LaunchSection() {
   });
 
   return (
-    <section className="section bg-gray-50">
+    <section className="section bg-white">
       <div className="container">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="section-title text-[#3691ff]">Launch Timeline</h2>
