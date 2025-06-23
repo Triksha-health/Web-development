@@ -16,7 +16,7 @@ function SignInPage() {
 
     try {
       await login(email, password);
-      navigate("/dashboard");
+      navigate("/userdashboard");
     } catch (err) {
       setError("Invalid email or password");
     }

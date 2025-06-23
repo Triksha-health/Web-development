@@ -1,7 +1,7 @@
 // PreOrderPage.tsx
 import React from "react";
 import { useState } from "react";
-import logo from "../public/logo (3).png";
+
 import Container from "../components/ui/Container";
 import OrderSummary from "../components/ui/OrderSummary";
 import TrikshaForm from "../components/ui/TrikshaForm";
