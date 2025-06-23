@@ -8,6 +8,7 @@ import PreOrderPage from "./pages/PreOrderPage";
 import TeamsPage from "./pages/TeamsPage";
 import UserDashBored from "./pages/UserDashBored";
 
+import AdminDashboard from "./dashboard/admindashboard/AdminDashboard";
 
 function App() {
   useEffect(() => {
@@ -30,6 +31,7 @@ function App() {
             
           } 
         />
+        <Route path="/admindashboard" element={<AdminDashboard />} />
       </Route>
     </Routes>
   );
