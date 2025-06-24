@@ -1,8 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
+import adminDataReducer from "./slices/adminDataSlice";
 // ...
 
 export const store = configureStore({
-  reducer: {},
+  reducer: {
+    adminData: adminDataReducer,
+  },
 });
 
 // Infer the `RootState`,  `AppDispatch`, and `AppStore` types from the store itself

@@ -1,7 +1,9 @@
 import React from "react";
+import { useAppSelector } from "../../../store/hooks";
 import { User, Calendar, Shield, Mail, Phone, MapPin, CheckCircle } from "lucide-react";
 
 const ProfileContent: React.FC = () => {
+  const userProfile = useAppSelector((state) => state.adminData.userProfile);
   return (
     <div className="space-y-6">
       {/* Profile Header */}
@@ -17,21 +19,25 @@ const ProfileContent: React.FC = () => {
             </div>
           </div>
           <div className="flex-1">
-            <h2 className="text-2xl font-bold mb-1">sanjeev</h2>
-            <p className="text-white/80 mb-4">Triksha Admin User</p>
+            <h2 className="text-2xl font-bold mb-1">{userProfile.name}</h2>
+            <p className="text-white/80 mb-4">{userProfile.role}</p>
             <div className="flex flex-wrap gap-4 text-sm">
               <div className="flex items-center space-x-2">
                 <Calendar className="w-4 h-4" />
-                <span>Member since June 2025</span>
+                <span>{userProfile.memberSince}</span>
               </div>
-              <div className="flex items-center space-x-2">
-                <Shield className="w-4 h-4" />
-                <span>Super Admin</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <CheckCircle className="w-4 h-4" />
-                <span>Verified Account</span>
-              </div>
+              {userProfile.isSuperAdmin && (
+                <div className="flex items-center space-x-2">
+                  <Shield className="w-4 h-4" />
+                  <span>Super Admin</span>
+                </div>
+              )}
+              {userProfile.isVerified && (
+                <div className="flex items-center space-x-2">
+                  <CheckCircle className="w-4 h-4" />
+                  <span>Verified Account</span>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -49,7 +55,7 @@ const ProfileContent: React.FC = () => {
               </div>
               <div>
                 <p className="text-sm text-gray-500">Email Address</p>
-                <p className="font-medium text-gray-900">sanjeev@gmail.com</p>
+                <p className="font-medium text-gray-900">{userProfile.contactInformation.email}</p>
               </div>
             </div>
             <div className="flex items-center space-x-4">
@@ -58,7 +64,7 @@ const ProfileContent: React.FC = () => {
               </div>
               <div>
                 <p className="text-sm text-gray-500">Phone Number</p>
-                <p className="font-medium text-gray-900">+91 98765 43210</p>
+                <p className="font-medium text-gray-900">{userProfile.contactInformation.phoneNumber}</p>
               </div>
             </div>
             <div className="flex items-center space-x-4">
@@ -67,7 +73,7 @@ const ProfileContent: React.FC = () => {
               </div>
               <div>
                 <p className="text-sm text-gray-500">Date of Birth</p>
-                <p className="font-medium text-gray-900">May 15, 1990</p>
+                <p className="font-medium text-gray-900">{userProfile.contactInformation.dateOfBirth}</p>
               </div>
             </div>
           </div>
@@ -83,7 +89,7 @@ const ProfileContent: React.FC = () => {
               </div>
               <div>
                 <p className="text-sm text-gray-500">Address</p>
-                <p className="font-medium text-gray-900">123 Main St, Bangalore, Karnataka, India</p>
+                <p className="font-medium text-gray-900">{userProfile.additionalDetails.address}</p>
               </div>
             </div>
             <div className="flex items-center space-x-4">
@@ -92,7 +98,7 @@ const ProfileContent: React.FC = () => {
               </div>
               <div>
                 <p className="text-sm text-gray-500">Emergency Contact</p>
-                <p className="font-medium text-gray-900">+91 98765 43211</p>
+                <p className="font-medium text-gray-900">{userProfile.additionalDetails.emergencyContact}</p>
               </div>
             </div>
             <div className="flex items-center space-x-4">
@@ -101,7 +107,7 @@ const ProfileContent: React.FC = () => {
               </div>
               <div>
                 <p className="text-sm text-gray-500">Account Status</p>
-                <p className="font-medium text-green-600">Verified & Active</p>
+                <p className="font-medium text-green-600">{userProfile.additionalDetails.accountStatus}</p>
               </div>
             </div>
           </div>
