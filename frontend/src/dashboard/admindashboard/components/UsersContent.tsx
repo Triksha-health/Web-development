@@ -1,10 +1,31 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { Search, Filter, Download, Eye, Edit, CheckCircle, XCircle } from "lucide-react";
 import { getDashboardData } from "./data";
+import { useAppSelector } from "../../../store/hooks";
+import Fuse from "fuse.js";
+
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  registrationDate: string;
+  preOrderStatus: string;
+  orderId: string;
+}
 
 const UsersContent: React.FC = () => {
-  const { users } = getDashboardData();
+  //const { users } = getDashboardData();
+  const users = useAppSelector((state) => state.adminData.users);
   const [searchTerm, setSearchTerm] = useState<string>("");
+
+  const fuse = useMemo(() => {
+    return new Fuse(users, {
+      keys: ["name", "email"],
+      threshold: 0.3,
+    });
+  }, [users]);
+
+  const filteredUsers = searchTerm ? fuse.search(searchTerm).map((res) => res.item) : users;
 
   return (
     <div className="space-y-6">
@@ -67,7 +88,7 @@ const UsersContent: React.FC = () => {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {users.map((user) => (
+              {(searchTerm.length === 0 ? users : filteredUsers).map((user) => (
                 <tr key={user.id} className="hover:bg-gray-50">
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{user.id}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{user.name}</td>

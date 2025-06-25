@@ -1,4 +1,12 @@
-import { CheckCircle, XCircle, Clock, Truck, AlertCircle, LucideIcon } from "lucide-react";
+import { CheckCircle, XCircle, Clock, Truck, AlertCircle, Package, PackageCheck } from "lucide-react";
+
+export interface PaymentTransaction {
+  id: string;
+  method: string;
+  status: string;
+  date: string;
+  amount: string;
+}
 
 export interface DashboardData {
   dashboardStats: {
@@ -10,16 +18,6 @@ export interface DashboardData {
     confirmedOrders: number;
     totalRevenue: number;
   };
-  recentPreOrders: Array<{
-    id: string;
-    customer: string;
-    email: string;
-    product: string;
-    date: string;
-    amount: string;
-    status: string;
-    payment: string;
-  }>;
   allPreOrders: Array<{
     id: string;
     customer: string;
@@ -27,8 +25,10 @@ export interface DashboardData {
     product: string;
     date: string;
     amount: string;
-    status: string;
-    payment: string;
+    paymentStatus: string;
+    shippingStatus: string;
+    shippingAddress: string;
+    paymentTransaction: PaymentTransaction;
   }>;
   users: Array<{
     id: string;
@@ -50,48 +50,7 @@ export const getDashboardData = (): DashboardData => ({
     confirmedOrders: 1158,
     totalRevenue: 2450000,
   },
-  recentPreOrders: [
-    {
-      id: "PO-001",
-      customer: "John Doe",
-      email: "john@example.com",
-      product: "Premium Tier",
-      date: "2025-06-22",
-      amount: "₹2,499",
-      status: "Confirmed",
-      payment: "Paid",
-    },
-    {
-      id: "PO-002",
-      customer: "Jane Smith",
-      email: "jane@example.com",
-      product: "Standard Tier",
-      date: "2025-06-22",
-      amount: "₹1,499",
-      status: "Pending",
-      payment: "Pending",
-    },
-    {
-      id: "PO-003",
-      customer: "Mike Johnson",
-      email: "mike@example.com",
-      product: "Basic Tier",
-      date: "2025-06-21",
-      amount: "₹999",
-      status: "Confirmed",
-      payment: "Paid",
-    },
-    {
-      id: "PO-004",
-      customer: "Sarah Wilson",
-      email: "sarah@example.com",
-      product: "Premium Tier",
-      date: "2025-06-21",
-      amount: "₹2,499",
-      status: "Shipped",
-      payment: "Paid",
-    },
-  ],
+
   allPreOrders: [
     {
       id: "PO-001",
@@ -100,8 +59,16 @@ export const getDashboardData = (): DashboardData => ({
       product: "Premium Tier",
       date: "2025-06-22",
       amount: "₹2,499",
-      status: "Confirmed",
-      payment: "Paid",
+      paymentStatus: "Confirmed",
+      shippingStatus: "Not Shipped",
+      shippingAddress: "123 Main St, Mumbai, MH, 400001",
+      paymentTransaction: {
+        id: "TXN-1001",
+        method: "UPI",
+        status: "Success",
+        date: "2025-06-22",
+        amount: "₹2,499",
+      },
     },
     {
       id: "PO-002",
@@ -110,8 +77,16 @@ export const getDashboardData = (): DashboardData => ({
       product: "Standard Tier",
       date: "2025-06-22",
       amount: "₹1,499",
-      status: "Pending",
-      payment: "Pending",
+      paymentStatus: "Pending",
+      shippingStatus: "Not Shipped",
+      shippingAddress: "456 Park Ave, Delhi, DL, 110001",
+      paymentTransaction: {
+        id: "TXN-1002",
+        method: "Credit Card",
+        status: "Pending",
+        date: "2025-06-22",
+        amount: "₹1,499",
+      },
     },
     {
       id: "PO-003",
@@ -120,8 +95,16 @@ export const getDashboardData = (): DashboardData => ({
       product: "Basic Tier",
       date: "2025-06-21",
       amount: "₹999",
-      status: "Confirmed",
-      payment: "Paid",
+      paymentStatus: "Confirmed",
+      shippingStatus: "Shipped",
+      shippingAddress: "789 Lake Rd, Bengaluru, KA, 560001",
+      paymentTransaction: {
+        id: "TXN-1003",
+        method: "Net Banking",
+        status: "Success",
+        date: "2025-06-21",
+        amount: "₹999",
+      },
     },
     {
       id: "PO-004",
@@ -130,8 +113,16 @@ export const getDashboardData = (): DashboardData => ({
       product: "Premium Tier",
       date: "2025-06-21",
       amount: "₹2,499",
-      status: "Shipped",
-      payment: "Paid",
+      paymentStatus: "Confirmed",
+      shippingStatus: "Shipped",
+      shippingAddress: "321 Hill St, Pune, MH, 411001",
+      paymentTransaction: {
+        id: "TXN-1004",
+        method: "UPI",
+        status: "Success",
+        date: "2025-06-21",
+        amount: "₹2,499",
+      },
     },
     {
       id: "PO-005",
@@ -140,8 +131,16 @@ export const getDashboardData = (): DashboardData => ({
       product: "Standard Tier",
       date: "2025-06-20",
       amount: "₹1,499",
-      status: "Delivered",
-      payment: "Paid",
+      paymentStatus: "Confirmed",
+      shippingStatus: "Delivered",
+      shippingAddress: "654 River Rd, Chennai, TN, 600001",
+      paymentTransaction: {
+        id: "TXN-1005",
+        method: "Debit Card",
+        status: "Success",
+        date: "2025-06-20",
+        amount: "₹1,499",
+      },
     },
     {
       id: "PO-006",
@@ -150,8 +149,16 @@ export const getDashboardData = (): DashboardData => ({
       product: "Basic Tier",
       date: "2025-06-20",
       amount: "₹999",
-      status: "Confirmed",
-      payment: "Paid",
+      paymentStatus: "Confirmed",
+      shippingStatus: "Not Shipped",
+      shippingAddress: "987 Ocean Dr, Hyderabad, TS, 500001",
+      paymentTransaction: {
+        id: "TXN-1006",
+        method: "UPI",
+        status: "Success",
+        date: "2025-06-20",
+        amount: "₹999",
+      },
     },
     {
       id: "PO-007",
@@ -160,8 +167,16 @@ export const getDashboardData = (): DashboardData => ({
       product: "Premium Tier",
       date: "2025-06-19",
       amount: "₹2,499",
-      status: "Refunded",
-      payment: "Refunded",
+      paymentStatus: "Refunded",
+      shippingStatus: "Not Shipped",
+      shippingAddress: "246 Forest Ln, Kolkata, WB, 700001",
+      paymentTransaction: {
+        id: "TXN-1007",
+        method: "Credit Card",
+        status: "Refunded",
+        date: "2025-06-19",
+        amount: "₹2,499",
+      },
     },
     {
       id: "PO-008",
@@ -170,8 +185,16 @@ export const getDashboardData = (): DashboardData => ({
       product: "Standard Tier",
       date: "2025-06-19",
       amount: "₹1,499",
-      status: "Pending",
-      payment: "Pending",
+      paymentStatus: "Pending",
+      shippingStatus: "Not Shipped",
+      shippingAddress: "135 Valley Rd, Ahmedabad, GJ, 380001",
+      paymentTransaction: {
+        id: "TXN-1008",
+        method: "Net Banking",
+        status: "Pending",
+        date: "2025-06-19",
+        amount: "₹1,499",
+      },
     },
   ],
   users: [
@@ -210,16 +233,12 @@ export const getDashboardData = (): DashboardData => ({
   ],
 });
 
-export const getStatusColor = (status: string): string => {
+export const getPaymentStatusColor = (status: string): string => {
   switch (status.toLowerCase()) {
     case "confirmed":
-    case "paid":
-    case "delivered":
       return "text-green-600 bg-green-50";
     case "pending":
       return "text-yellow-600 bg-yellow-50";
-    case "shipped":
-      return "text-blue-600 bg-blue-50";
     case "refunded":
       return "text-red-600 bg-red-50";
     default:
@@ -227,18 +246,40 @@ export const getStatusColor = (status: string): string => {
   }
 };
 
-export const getStatusIcon = (status: string): JSX.Element => {
+export const getShippingStatusColor = (status: string): string => {
+  switch (status.toLowerCase()) {
+    case "delivered":
+      return "text-green-600 bg-green-50";
+    case "shipped":
+      return "text-blue-600 bg-blue-50";
+    case "not shipped":
+      return "text-orange-600 bg-orange-50";
+    default:
+      return "text-gray-600 bg-gray-50";
+  }
+};
+
+export const getPaymentStatusIcon = (status: string): JSX.Element => {
   switch (status.toLowerCase()) {
     case "confirmed":
-    case "paid":
-    case "delivered":
       return <CheckCircle className="w-4 h-4" />;
     case "pending":
       return <Clock className="w-4 h-4" />;
-    case "shipped":
-      return <Truck className="w-4 h-4" />;
     case "refunded":
       return <XCircle className="w-4 h-4" />;
+    default:
+      return <AlertCircle className="w-4 h-4" />;
+  }
+};
+
+export const getShippingStatusIcon = (status: string): JSX.Element => {
+  switch (status.toLowerCase()) {
+    case "delivered":
+      return <PackageCheck className="w-4 h-4" />;
+    case "shipped":
+      return <Truck className="w-4 h-4" />;
+    case "not shipped":
+      return <Package className="w-4 h-4" />;
     default:
       return <AlertCircle className="w-4 h-4" />;
   }

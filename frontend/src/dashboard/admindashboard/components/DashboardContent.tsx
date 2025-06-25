@@ -1,13 +1,16 @@
 import React from "react";
 import { ShoppingBag, Users, Globe, CreditCard } from "lucide-react";
-import { getDashboardData, getStatusColor, getStatusIcon } from "./data";
+import { getPaymentStatusColor, getPaymentStatusIcon, getShippingStatusColor, getShippingStatusIcon } from "./data";
+import { useAppSelector } from "../../../store/hooks";
 
 interface DashboardContentProps {
   setActiveSection: (section: string) => void;
 }
 
 const DashboardContent: React.FC<DashboardContentProps> = ({ setActiveSection }) => {
-  const { dashboardStats, recentPreOrders } = getDashboardData();
+  //const { dashboardStats, recentPreOrders } = getDashboardData();
+  const dashboardStats = useAppSelector((state) => state.adminData.dashboardStats);
+  const allPreOrders = useAppSelector((state) => state.adminData.allPreOrders);
 
   return (
     <div className="space-y-6">
@@ -65,26 +68,29 @@ const DashboardContent: React.FC<DashboardContentProps> = ({ setActiveSection })
             </button>
           </div>
           <div className="space-y-4">
-            {recentPreOrders.slice(0, 4).map((order) => (
-              <div key={order.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                <div className="flex-1">
-                  <p className="font-medium text-gray-900">{order.customer}</p>
-                  <p className="text-sm text-gray-500">
-                    {order.product} • {order.amount}
-                  </p>
+            {[...allPreOrders]
+              .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+              .slice(0, 4)
+              .map((order) => (
+                <div key={order.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                  <div className="flex-1">
+                    <p className="font-medium text-gray-900">{order.customer}</p>
+                    <p className="text-sm text-gray-500">
+                      {order.product} • {order.amount}
+                    </p>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <span
+                      className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${getShippingStatusColor(
+                        order.shippingStatus
+                      )}`}
+                    >
+                      {getShippingStatusIcon(order.shippingStatus)}
+                      <span className="ml-1">{order.shippingStatus}</span>
+                    </span>
+                  </div>
                 </div>
-                <div className="flex items-center space-x-2">
-                  <span
-                    className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(
-                      order.status
-                    )}`}
-                  >
-                    {getStatusIcon(order.status)}
-                    <span className="ml-1">{order.status}</span>
-                  </span>
-                </div>
-              </div>
-            ))}
+              ))}
           </div>
         </div>
         <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
