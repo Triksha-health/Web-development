@@ -1,6 +1,12 @@
-import { Link } from 'react-router-dom';
-import {  Facebook, Twitter, Instagram, Linkedin, Mail, Phone } from 'lucide-react';
-import logo from "../../public/logo (3).png"
+import { Link } from "react-router-dom";
+import { Mail, Phone } from "lucide-react";
+import { FiFacebook } from "react-icons/fi";
+import { FiTwitter } from "react-icons/fi";
+import { FiInstagram } from "react-icons/fi";
+import { FiLinkedin } from "react-icons/fi";
+import logo from "../../public/logo (3).png";
+import trikshawordlogo from "../../public/Trikshawordlogo.png";
+import trikshaeyelogo from "../../public/trikshaeyelogo(2).png";
 
 function Footer() {
   const currentYear = new Date().getFullYear();
@@ -11,29 +17,29 @@ function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand */}
           <div>
-              <Link to="/" className="flex items-center color-white w-20 h-10">
-           <img src={logo} alt="" />
-           
-          </Link>
+            <Link to="/" className="flex items-center color-white w-[90px] h-10 relative">
+              <img src={trikshawordlogo} alt="" className="w-[65px] h-auto brightness-[120%]" />
+              <img src={trikshaeyelogo} alt="" className="invert w-[28px] h-[90%] absolute top-[0px] right-[0px]" />
+            </Link>
             <p className="mt-4 text-gray-400">
-               wearable that predicts and prevents chronic health risks before they become serious.
+              wearable that predicts and prevents chronic health risks before they become serious.
             </p>
             <div className="flex space-x-4 mt-6">
               <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                <Facebook size={20} />
+                <FiFacebook size={20} />
               </a>
               <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                <Twitter size={20} />
+                <FiTwitter size={20} />
               </a>
               <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                <Instagram size={20} />
+                <FiInstagram size={20} />
               </a>
               <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                <Linkedin size={20} />
+                <FiLinkedin size={20} />
               </a>
             </div>
           </div>
-          
+
           {/* Quick Links */}
           <div>
             <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
@@ -65,7 +71,7 @@ function Footer() {
               </li>
             </ul>
           </div>
-          
+
           {/* Legal */}
           <div>
             <h3 className="text-lg font-semibold mb-4">Legal</h3>
@@ -92,7 +98,7 @@ function Footer() {
               </li>
             </ul>
           </div>
-          
+
           {/* Contact */}
           <div>
             <h3 className="text-lg font-semibold mb-4">Contact Us</h3>
@@ -108,11 +114,9 @@ function Footer() {
             </ul>
           </div>
         </div>
-        
+
         <div className="border-t border-gray-800 mt-12 pt-8">
-          <p className="text-gray-400 text-center">
-            &copy; {currentYear} Triksha Health Tech. All rights reserved.
-          </p>
+          <p className="text-gray-400 text-center">&copy; {currentYear} Triksha Health Tech. All rights reserved.</p>
         </div>
       </div>
     </footer>
