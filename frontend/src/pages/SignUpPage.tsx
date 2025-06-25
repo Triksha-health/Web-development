@@ -23,7 +23,7 @@ function SignUpPage() {
     
     try {
       await signup(name, email, password);
-      navigate('/dashboard');
+      navigate('/userdashboard');
     } catch (err) {
       setError('Failed to create an account');
     }
