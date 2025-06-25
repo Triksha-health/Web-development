@@ -110,7 +110,7 @@ const TeamsPage = () => {
       twitter: "",
     },
     {
-      name: "Sudhamayye",
+      name: "Sudhamayee",
       role: "Fullstack Developer",
       bio: "Crafting seamless digital experiences—CBIT’s full stack & backend developer building robust, scalable solutions from front to core.",
       image: sudhamayye,
