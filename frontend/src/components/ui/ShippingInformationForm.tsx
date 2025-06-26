@@ -40,7 +40,7 @@ const ShippingInformationForm: React.FC<shippingprops> = ({ onbtnclick, formData
   };
 
   return (
-    <div className="lg:w-3/5 mx-auto p-6 bg-white">
+    <div className="w-full mx-auto p-6 bg-white">
       <h1 className="text-xl font-semibold text-gray-900 mb-8">Shipping Information</h1>
       <form onSubmit={handleContinueToPayment}>
         <div className="space-y-6">

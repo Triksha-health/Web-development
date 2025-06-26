@@ -1,4 +1,5 @@
 import Container from "../components/ui/Container";
+import { useEffect } from "react";
 import SectionHeading from "../components/ui/SectionHeading";
 import { Check } from "lucide-react";
 import familylaptop from "../public/familylaptop.jpg";
@@ -18,6 +19,9 @@ import yash from "../public/yash.jpg";
 import ujjwal from "../public/ujjwal.jpg";
 
 const TeamsPage = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const team = [
     {
       name: "Vemuri Toshan Yashwanth",
@@ -102,8 +106,8 @@ const TeamsPage = () => {
     },
     {
       name: "Ankur Gupta",
-      role: "Fullstack Developer",
-      bio: "Architecting seamless systems—Backend enthusiast from IIIT Guwahati powering performance behind the scenes with precision.",
+      role: "Fullstack Developer | Cloud Engineer",
+      bio: "Architecting seamless systems—Backend Node.js & Express.js developer and Cloud Engineer from IIIT Guwahati, scaling services on AWS and Azure with precision.",
       image: ankur,
       github: "https://github.com/7007259Ankur",
       linkedin: "https://www.linkedin.com/in/ankur-gupta-15221a24b",
