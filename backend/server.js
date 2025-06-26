@@ -10,6 +10,7 @@ const blogRoutes = require('./routes/blogRoutes');
 const newsletterRoutes = require('./routes/newsletterRoutes');
 const systemRoutes = require("./routes/systemRoutes");
 const paymentRoutes = require("./routes/paymentRoutes");
+const preorderRoutes = require('./routes/preorderRoutes');
 
 dotenv.config();
 console.log("MONGO_URL from .env is:", process.env.MONGO_URL); // 🔍 Add this line
@@ -27,6 +28,8 @@ app.use('/api', faqRoutes);
 app.use('/api/blogs', blogRoutes);
 app.use('/api/newsletter', newsletterRoutes);
 app.use("/api/system", systemRoutes);
+app.use('/api/preorder', preorderRoutes);
+
 
 
 const PORT = process.env.PORT || 5000;
