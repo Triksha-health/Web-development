@@ -10,7 +10,7 @@ function Hero() {
   }, []);
 
   return (
-    <section className="relative pt-20 lg:pt-24 overflow-hidden">
+    <section className="relative pt-28 sm:pt-28 lg:pt-24 overflow-hidden min-h-screen flex items-center">
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-green-50 z-0"></div>
       
