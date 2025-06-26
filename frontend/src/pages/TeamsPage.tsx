@@ -107,7 +107,7 @@ const TeamsPage = () => {
     {
       name: "Ankur Gupta",
       role: "Fullstack Developer | Cloud Engineer",
-      bio: "Architecting seamless systems—Backend Node.js & Express.js developer and Cloud Engineer from IIIT Guwahati, scaling services on AWS and Azure with precision.",
+      bio: "Architecting seamless systems—Backend Node.js & Express.js developer and Cloud Engineer from IIIT Guwahati, scaling apps with AWS and Azure.",
       image: ankur,
       github: "https://github.com/7007259Ankur",
       linkedin: "https://www.linkedin.com/in/ankur-gupta-15221a24b",
