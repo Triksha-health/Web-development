@@ -102,12 +102,13 @@ const TeamsPage = () => {
     },
     {
       name: "Ankur Gupta",
-      role: "Fullstack Developer",
-      bio: "Architecting seamless systems—Backend enthusiast from IIIT Guwahati powering performance behind the scenes with precision.",
+      role: "Fullstack Developer | Cloud Engineer",
+      bio: "Architecting seamless systems—Backend Node.js & Express.js developer and Cloud Engineer from IIIT Guwahati, scaling apps with AWS and Azure.",
       image: ankur,
       github: "https://github.com/7007259Ankur",
       linkedin: "https://www.linkedin.com/in/ankur-gupta-15221a24b",
       twitter: "",
+
     },
     {
       name: "Sudhamayee",
