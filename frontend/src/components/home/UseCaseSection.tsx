@@ -69,7 +69,7 @@ const UseCaseSection = () => {
     // Handle navigation or modal opening
   };
   return (
-    <section id="section" className="py-24 relative overflow-hidden bg-white text-black">
+    <section id="usecases" className="py-24 relative overflow-hidden bg-white text-black">
       <div className="absolute top-0 inset-x-0 h-40 bg-gradient-to-b from-slate-50 to-transparent"></div>
       <div className="absolute -top-40 -right-40 w-80 h-80 bg-teal-100 rounded-full opacity-30 blur-3xl"></div>
       <Container className="relative z-10">

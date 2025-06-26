@@ -4,9 +4,10 @@ import { FiFacebook } from "react-icons/fi";
 import { FiTwitter } from "react-icons/fi";
 import { FiInstagram } from "react-icons/fi";
 import { FiLinkedin } from "react-icons/fi";
-import logo from "../../public/logo (3).png";
+// import logo from "../../public/logo (3).png";
 import trikshawordlogo from "../../public/Trikshawordlogo.png";
 import trikshaeyelogo from "../../public/trikshaeyelogo(2).png";
+import { HashLink } from 'react-router-hash-link';
 
 function Footer() {
   const currentYear = new Date().getFullYear();
@@ -45,29 +46,29 @@ function Footer() {
             <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
             <ul className="space-y-2">
               <li>
-                <Link to="/" className="text-gray-400 hover:text-white transition-colors">
-                  Home
-                </Link>
-              </li>
-              <li>
-                <a href="/#about" className="text-gray-400 hover:text-white transition-colors">
+                <HashLink smooth to="/#about" className="text-gray-400 hover:text-white transition-colors">
                   About
-                </a>
+                </HashLink>
               </li>
               <li>
-                <a href="/#features" className="text-gray-400 hover:text-white transition-colors">
-                  Features
-                </a>
+                <HashLink smooth to="/#usecases" className="text-gray-400 hover:text-white transition-colors">
+                  Use Cases
+                </HashLink>
               </li>
               <li>
-                <a href="/#team" className="text-gray-400 hover:text-white transition-colors">
-                  Team
-                </a>
+                <HashLink smooth to="/#whytriksha" className="text-gray-400 hover:text-white transition-colors">
+                  Why Triksha
+                </HashLink>
               </li>
               <li>
-                <a href="/#faq" className="text-gray-400 hover:text-white transition-colors">
+                 <HashLink smooth to="/#cofounder" className="text-gray-400 hover:text-white transition-colors">
+                  Meet Our Founder
+                </HashLink>
+              </li>
+              <li>
+                <HashLink smooth to="/#faq" className="text-gray-400 hover:text-white transition-colors">
                   FAQ
-                </a>
+                </HashLink>
               </li>
             </ul>
           </div>
