@@ -23,3 +23,7 @@ dist-ssr
 *.sln
 *.sw?
 .env
+/frontend/.env
+/frontend/.env.*
+/backend/.env
+/backend/.env.*
