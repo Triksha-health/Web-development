@@ -15,7 +15,7 @@ const TrikshaForm: React.FC<trikshaformprops> = ({ currenttriksha, setselectedtr
   };
 
   return (
-    <div className="bg-white rounded-lg p-6 w-full lg:w-3/5">
+    <div className="bg-white rounded-lg p-6 w-full">
       <h2 className="text-xl font-semibold text-gray-900 mb-8">Select Your Triksha</h2>
 
       <div

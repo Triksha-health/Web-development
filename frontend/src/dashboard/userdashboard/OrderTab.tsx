@@ -1,13 +1,8 @@
-import React from 'react';
-import {
-  Package,
-  Truck,
-  CheckCircle,
-  Info,
-  Calendar,
-  MapPin,
-  CreditCard
-} from 'lucide-react';
+import React from "react";
+import { Package, Truck, CheckCircle, Info, Calendar, MapPin, CreditCard } from "lucide-react";
+import { useSelector, useDispatch } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { setOrder } from "../../store/slices/userDataSlice";
 
 interface ShippingAddress {
   name: string;
@@ -17,6 +12,14 @@ interface ShippingAddress {
   state: string;
   postalCode: string;
   country: string;
+}
+
+interface OrderProgress {
+  title: string;
+  date: string;
+  description: string;
+  active: boolean;
+  pulse?: boolean;
 }
 
 interface Order {
@@ -31,30 +34,81 @@ interface Order {
   deliveryDate: string;
   paymentMethod: string;
   shippingAddress: ShippingAddress;
+  progress: OrderProgress[];
 }
 
 const OrdersTab: React.FC = () => {
-  const order: Order = {
-    orderId: 'TRK-2025-001234',
-    date: 'July 1, 2025',
-    status: 'Processing',
-    product: 'Triksha - Early Bird',
-    price: '₹14,999',
-    originalPrice: '₹17,999',
-    savings: '₹3,000',
-    shipDate: 'Expected to ship on August 1, 2025',
-    deliveryDate: 'Expected delivery: August 5-7, 2025',
-    paymentMethod: 'Visa ending in 4242',
-    shippingAddress: {
-      name: 'John Doe',
-      line1: '123 Main Street',
-      line2: 'Apartment 4B',
-      city: 'Bangalore',
-      state: 'Karnataka',
-      postalCode: '560001',
-      country: 'India'
-    }
-  };
+  const dispatch = useAppDispatch();
+  const order = useAppSelector((state) => state.userData.value as Order);
+
+  React.useEffect(() => {
+    const initialOrder: Order = {
+      orderId: "TRK-2025-001234",
+      date: "July 1, 2025",
+      status: "Processing",
+      product: "Triksha - Early Bird",
+      price: "₹14,999",
+      originalPrice: "₹17,999",
+      savings: "₹3,000",
+      shipDate: "Expected to ship on August 1, 2025",
+      deliveryDate: "Expected delivery: August 5-7, 2025",
+      paymentMethod: "Visa ending in 4242",
+      shippingAddress: {
+        name: "John Doe",
+        line1: "123 Main Street",
+        line2: "Apartment 4B",
+        city: "Bangalore",
+        state: "Karnataka",
+        postalCode: "560001",
+        country: "India",
+      },
+      progress: [
+        {
+          title: "Order Placed",
+          date: "July 1, 2025",
+          description: "Your pre-order has been confirmed and payment processed successfully.",
+          active: true,
+        },
+        {
+          title: "Payment Confirmed",
+          date: "July 1, 2025",
+          description: `Payment of ${order?.price || "₹14,999"} has been successfully processed.`,
+          active: true,
+        },
+        {
+          title: "In Production",
+          date: "Current Status",
+          description: "Your Triksha device is being manufactured and tested by our quality team.",
+          active: true,
+          pulse: true,
+        },
+        {
+          title: "Ready to Ship",
+          date: "August 1, 2025",
+          description: "Device will be packaged and ready for shipment.",
+          active: true,
+          pulse: true,
+        },
+        {
+          title: "Shipped",
+          date: "August 1, 2025",
+          description: "Your order is on its way to you.",
+          active: false,
+        },
+        {
+          title: "Delivered",
+          date: "August 5-7, 2025",
+          description: "Your Triksha device has been delivered.",
+          active: false,
+        },
+      ],
+    };
+    dispatch(setOrder(initialOrder));
+  }, [dispatch]);
+
+  if (!order) {
+    return <div>Loading order...</div>;
+  }
 
   return (
     <div className="space-y-6">
@@ -93,87 +147,35 @@ const OrdersTab: React.FC = () => {
           <div className="relative">
             <div className="absolute top-5 left-5 bottom-5 w-0.5 bg-gray-200"></div>
             <div className="space-y-8">
-
-              {/* Steps */}
-              {[
-                {
-                  icon: <CheckCircle className="w-5 h-5 text-white" />,
-                  title: 'Order Placed',
-                  date: 'July 1, 2025',
-                  description: 'Your pre-order has been confirmed and payment processed successfully.',
-                  active: true
-                },
-                {
-                  icon: <CreditCard className="w-5 h-5 text-white" />,
-                  title: 'Payment Confirmed',
-                  date: 'July 1, 2025',
-                  description: `Payment of ${order.price} has been successfully processed.`,
-                  active: true
-                },
-                {
-                  icon: <Package className="w-5 h-5 text-white" />,
-                  title: 'In Production',
-                  date: 'Current Status',
-                  description: 'Your Triksha device is being manufactured and tested by our quality team.',
-                  active: true,
-                  pulse: true
-                },
-                {
-                  icon: <Package className="w-5 h-5 text-white" />,
-                  title: 'Ready to Ship',
-                  date: 'August 1, 2025',
-                  description: 'Device will be packaged and ready for shipment.',
-                  active: false
-                },
-                {
-                  icon: <Truck className="w-5 h-5 text-white" />,
-                  title: 'Shipped',
-                  date: 'August 1, 2025',
-                  description: 'Your order is on its way to you.',
-                  active: false
-                },
-                {
-                  icon: <CheckCircle className="w-5 h-5 text-white" />,
-                  title: 'Delivered',
-                  date: 'August 5-7, 2025',
-                  description: 'Your Triksha device has been delivered.',
-                  active: false
-                }
-              ].map((step, index) => (
+              {order.progress.map((step, index) => (
                 <div key={index} className="relative flex items-start">
                   <div
                     className={`h-10 w-10 rounded-full flex items-center justify-center z-10 shadow-md ${
-                      step.active
-                        ? step.pulse
-                          ? 'bg-blue-500 animate-pulse'
-                          : 'bg-primary-500'
-                        : 'bg-gray-300'
+                      step.active ? (step.pulse ? "bg-blue-500 animate-pulse" : "bg-primary-500") : "bg-gray-300"
                     }`}
                   >
-                    {step.icon}
+                    {step.title === "Order Placed" || step.title === "Delivered" ? (
+                      <CheckCircle className="w-5 h-5 text-white" />
+                    ) : step.title === "Payment Confirmed" ? (
+                      <CreditCard className="w-5 h-5 text-white" />
+                    ) : step.title === "Shipped" ? (
+                      <Truck className="w-5 h-5 text-white" />
+                    ) : (
+                      <Package className="w-5 h-5 text-white" />
+                    )}
                   </div>
                   <div className="ml-6 flex-1">
                     <div className="flex items-center justify-between">
-                      <h4
-                        className={`font-medium ${
-                          step.active ? 'text-gray-900' : 'text-gray-500'
-                        }`}
-                      >
-                        {step.title}
-                      </h4>
+                      <h4 className={`font-medium ${step.active ? "text-gray-900" : "text-gray-500"}`}>{step.title}</h4>
                       <span
                         className={`text-sm ${
-                          step.date === 'Current Status' ? 'text-blue-600 font-medium' : 'text-gray-500'
+                          step.date === "Current Status" ? "text-blue-600 font-medium" : "text-gray-500"
                         }`}
                       >
                         {step.date}
                       </span>
                     </div>
-                    <p
-                      className={`text-sm mt-1 ${
-                        step.active ? 'text-gray-600' : 'text-gray-500'
-                      }`}
-                    >
+                    <p className={`text-sm mt-1 ${step.active ? "text-gray-600" : "text-gray-500"}`}>
                       {step.description}
                     </p>
                   </div>
@@ -187,7 +189,6 @@ const OrdersTab: React.FC = () => {
         <div className="p-6">
           <h3 className="font-semibold text-gray-900 mb-6">Order Details</h3>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {/* Product Info */}
             <div>
               <h4 className="font-medium text-gray-900 mb-4">Product Information</h4>
               <div className="flex items-start space-x-4 mb-6">
@@ -212,14 +213,14 @@ const OrdersTab: React.FC = () => {
                 <h5 className="font-medium text-gray-900 mb-3">What's Included</h5>
                 <ul className="text-sm text-gray-600 space-y-2">
                   {[
-                    'Triksha health wearable device',
-                    'Wireless charging dock',
-                    'Quick start guide & user manual',
-                    '12 months premium subscription',
-                    'Premium health coaching session',
-                    'Lifetime priority support'
+                    "Triksha health wearable device",
+                    "Wireless charging dock",
+                    "Quick start guide & user manual",
+                    "12 months premium subscription",
+                    "Premium health coaching session",
+                    "Lifetime priority support",
                   ].map((item, idx) => (
-                    <li key={idx} className="flex items-center">
+                    <li key={idx} className=" satisfaire li flex items-center">
                       <CheckCircle className="w-4 h-4 text-[#3691ff] mr-2" />
                       {item}
                     </li>
@@ -228,7 +229,6 @@ const OrdersTab: React.FC = () => {
               </div>
             </div>
 
-            {/* Shipping & Payment */}
             <div>
               <h4 className="font-medium text-gray-900 mb-4">Shipping & Payment</h4>
               <div className="space-y-6">
@@ -242,8 +242,7 @@ const OrdersTab: React.FC = () => {
                     <div>{order.shippingAddress.line1}</div>
                     {order.shippingAddress.line2 && <div>{order.shippingAddress.line2}</div>}
                     <div>
-                      {order.shippingAddress.city}, {order.shippingAddress.state}{' '}
-                      {order.shippingAddress.postalCode}
+                      {order.shippingAddress.city}, {order.shippingAddress.state} {order.shippingAddress.postalCode}
                     </div>
                     <div>{order.shippingAddress.country}</div>
                   </div>
@@ -272,7 +271,6 @@ const OrdersTab: React.FC = () => {
           </div>
         </div>
 
-        {/* Support Section */}
         <div className="bg-blue-50 p-6">
           <div className="flex items-start">
             <Info className="w-5 h-5 text-blue-500 mr-3 flex-shrink-0 mt-0.5" />

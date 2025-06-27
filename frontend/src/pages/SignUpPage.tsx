@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import {  User, Mail, Lock } from 'lucide-react';
+import { User, Mail, Lock } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 function SignUpPage() {
@@ -15,12 +15,12 @@ function SignUpPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-    
+
     if (password !== confirmPassword) {
       setError('Passwords do not match');
       return;
     }
-    
+
     try {
       await signup(name, email, password);
       navigate('/userdashboard');
@@ -30,9 +30,8 @@ function SignUpPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        
         <h2 className="mt-6 text-center text-3xl font-bold text-gray-900">
           Create a new account
         </h2>
@@ -44,15 +43,16 @@ function SignUpPage() {
         </p>
       </div>
 
-      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md ">
-        <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10 w-[500px] -ml-6">
+      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+        <div className="bg-white py-8 px-6 shadow sm:rounded-lg sm:px-10">
           {error && (
             <div className="mb-4 bg-red-50 text-red-500 p-3 rounded-md text-sm">
               {error}
             </div>
           )}
-          
+
           <form className="space-y-6" onSubmit={handleSubmit}>
+            {/* Name Field */}
             <div>
               <label htmlFor="name" className="block text-sm font-medium text-gray-700">
                 Full name
@@ -74,7 +74,8 @@ function SignUpPage() {
                 />
               </div>
             </div>
-            
+
+            {/* Email Field */}
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700">
                 Email address
@@ -97,6 +98,7 @@ function SignUpPage() {
               </div>
             </div>
 
+            {/* Password Field */}
             <div>
               <label htmlFor="password" className="block text-sm font-medium text-gray-700">
                 Password
@@ -118,7 +120,8 @@ function SignUpPage() {
                 />
               </div>
             </div>
-            
+
+            {/* Confirm Password Field */}
             <div>
               <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
                 Confirm password
@@ -141,6 +144,7 @@ function SignUpPage() {
               </div>
             </div>
 
+            {/* Terms Checkbox */}
             <div className="flex items-center">
               <input
                 id="terms"
@@ -161,6 +165,7 @@ function SignUpPage() {
               </label>
             </div>
 
+            {/* Submit Button */}
             <div>
               <button
                 type="submit"
@@ -176,6 +181,7 @@ function SignUpPage() {
             </div>
           </form>
 
+          {/* Divider */}
           <div className="mt-6">
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
@@ -186,6 +192,7 @@ function SignUpPage() {
               </div>
             </div>
 
+            {/* Google Button */}
             <div className="mt-6">
               <button
                 type="button"

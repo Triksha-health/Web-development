@@ -19,7 +19,7 @@ const MultiStepProgress: React.FC<MultiStepProgressProps> = ({
   currentStep = 1,
 }) => {
   return (
-    <div className="w-full max-w-2xl mx-auto p-6">
+    <div className="w-full max-w-2xl mx-auto p-6 lg:mt-0 md:mt-10 max-[640px]:mt-8">
       <div className="flex items-center justify-between">
         {steps.map((step, index) => (
           <React.Fragment key={step.id}>
