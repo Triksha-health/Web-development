@@ -11,7 +11,7 @@ const newsletterRoutes = require('./routes/newsletterRoutes');
 const systemRoutes = require("./routes/systemRoutes");
 const paymentRoutes = require("./routes/paymentRoutes");
 const preorderRoutes = require('./routes/preorderRoutes');
-const adminRoutes = require("./routes/adminRoutes");
+//const adminRoutes = require("./routes/adminRoutes");
 const userRoutes = require('./routes/userRoutes');
 
 dotenv.config();
@@ -31,7 +31,7 @@ app.use('/api/blogs', blogRoutes);
 app.use('/api/newsletter', newsletterRoutes);
 app.use("/api/system", systemRoutes);
 app.use('/api/preorder', preorderRoutes);
-app.use("/api/admin", adminRoutes);
+//app.use("/api/admin", adminRoutes);
 app.use('/api/user', userRoutes); // ✅ Registers all user dashboard APIs
 
 
