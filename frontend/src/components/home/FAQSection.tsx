@@ -167,7 +167,7 @@ const FAQ: React.FC = () => {
   ];
 
   return (
-    <section id="faq" className="bg-white py-24 relative overflow-hidden w-full">
+    <section id="faq" className="bg-gray-50 py-24 relative overflow-hidden w-full">
       {/* Decorative blob */}
      
 

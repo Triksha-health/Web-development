@@ -3,7 +3,7 @@ import Container from "../ui/Container";
 import SectionHeading from "../ui/SectionHeading";
 import ToggleButtons from "../ui/ToggleButtons";
 import FeatureCards from "../ui/FeatureCards";
-import TestimonialSection from "../ui/TestimonialSection";
+// import TestimonialSection from "../ui/TestimonialSection";
 import { Heart, AlertTriangle, Shield } from "lucide-react";
 import { Activity, Clock, BarChart3 } from "lucide-react";
 import doctorImage from "../../public/doctorimage.jpg";
@@ -64,10 +64,10 @@ const UseCaseSection = () => {
   const handleLearnMore = (cardId: string) => {
     console.log(`Learn more clicked for: ${cardId}`);
   };
-  const handleReadSuccessStories = () => {
-    console.log("Navigate to success stories page");
-    // Handle navigation or modal opening
-  };
+  // const handleReadSuccessStories = () => {
+  //   console.log("Navigate to success stories page");
+  //   // Handle navigation or modal opening
+  // };
   return (
     <section id="usecases" className="py-24 relative overflow-hidden bg-white text-black">
       <div className="absolute top-0 inset-x-0 h-40 bg-gradient-to-b from-slate-50 to-transparent"></div>
@@ -84,7 +84,7 @@ const UseCaseSection = () => {
           cards={currentSelection === "Health Risk Monitoring" ? items : fitnessitems}
           onLearnMore={handleLearnMore}
         />
-        <TestimonialSection onReadSuccessStories={handleReadSuccessStories} />
+        {/* <TestimonialSection onReadSuccessStories={handleReadSuccessStories} /> */}
       </Container>
     </section>
   );

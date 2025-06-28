@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import SectionHeading from "../ui/SectionHeading";
 
 function LaunchSection() {
   const navigate = useNavigate();
@@ -66,11 +67,13 @@ function LaunchSection() {
     <section className="section bg-white">
       <div className="container">
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="section-title text-[#3691ff]">Launch Timeline</h2>
-          <p className="section-subtitle">
-            Be among the first to experience Triksha's revolutionary health predictions. Limited devices available for
-            our initial launch.
-          </p>
+          {/* <h2 className="section-title text-[#3691ff]">Launch Timeline</h2> */}
+           <SectionHeading
+          title="Launch Timeline"
+          subtitle="Be among the first to experience Triksha's revolutionary health predictions. Limited devices available for
+            our initial launch."
+        />
+         
         </div>
 
         {/* Countdown timer */}

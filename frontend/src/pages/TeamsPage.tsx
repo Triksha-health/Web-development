@@ -1,6 +1,6 @@
 import Container from "../components/ui/Container";
 import { useEffect } from "react";
-import SectionHeading from "../components/ui/SectionHeading";
+// import SectionHeading from "../components/ui/SectionHeading";
 import { Check } from "lucide-react";
 import familylaptop from "../public/familylaptop.jpg";
 import TeamSection from "../components/ui/TeamSection";
@@ -17,6 +17,7 @@ import sachin from "../public/sachin.jpg";
 import saurabh from "../public/saurabh.jpg";
 import yash from "../public/yash.jpg";
 import ujjwal from "../public/ujjwal.jpg";
+import SectionHeading from "../components/ui/SectionHeading";
 
 const TeamsPage = () => {
   useEffect(() => {
@@ -98,7 +99,7 @@ const TeamsPage = () => {
     {
       name: "Sourabh Dharra",
       role: "Fullstack Developer",
-      bio: "I'm a final year CSE student at RGIPT and a passionate Full Stack Developer skilled in React, Next.js, and Node.js. I enjoy solving problems and have qualified IIT JEE Advanced 2022.",
+      bio: "I’m a final‑year CSE student at RGIPT and a problem‑solving Full‑Stack Developer fluent in DSA, React, Next.js, and Node.js—crafting efficient, scalable solutions with clean, structured code.",
       image: saurabh,
       github: "https://github.com/SOURABH-05",
       linkedin: "https://www.linkedin.com/in/sourabh-dharra-707294288/",
@@ -143,19 +144,17 @@ const TeamsPage = () => {
   ];
   return (
     <div className="min-h-screen py-12 sm:px-6 lg:px-8 bg-[#f9fafc]">
-      <div className={`mb-12 text-center mt-8`}>
+      <div className={`mb-12 text-center mt-14`}>
         <div className="flex gap-2 justify-center">
-          <h2 className="text-3xl md:text-4xl font-extrabold mb-4 bg-clip-text bg-gradient-to-r">Meet the</h2>
-          <h2 className="text-3xl md:text-4xl font-extrabold mb-4 bg-gradient-to-r from-[#3691ff] to-purple-600 bg-clip-text text-transparent text-[#3691ff]">
-            Team
-          </h2>
+           <SectionHeading
+          title="Meets our team"
+          subtitle=" We're a team of doctors, engineers, and health enthusiasts united by a single mission: using technology to
+          prevent chronic disease before it happens."
+        />
         </div>
-        <p className="text-lg text-slate-600 max-w-3xl mx-auto">
-          We're a team of doctors, engineers, and health enthusiasts united by a single mission: using technology to
-          prevent chronic disease before it happens.
-        </p>
+       
       </div>
-      <TeamSection team={team} />
+      <TeamSection team={team}  />
       <Container className="relative z-10 mt-16">
         <div className={` px-8 py-10 sm:px-6 lg:px-8 bg-primary-50  rounded-2xl`}>
           <div className="max-w-7xl mx-auto">
