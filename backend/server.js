@@ -33,6 +33,10 @@ app.use("/api/system", systemRoutes);
 app.use('/api/preorder', preorderRoutes);
 //app.use("/api/admin", adminRoutes);
 app.use('/api/user', userRoutes); // ✅ Registers all user dashboard APIs
+app.get('/', (req, res) => {
+  res.send('✅ Triksha Backend is Running!');
+});
+
 
 
 const PORT = process.env.PORT || 5000;
