@@ -26,9 +26,14 @@ function Hero() {
             <span className="inline-block px-4 py-2 rounded-full bg-primary-100 text-primary-600 font-medium text-sm mb-6">
               Launching Soon - Limited Pre-orders Available
             </span>
-            <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight mb-6">
-              Predict <span className="text-primary-500">Before</span> It's Too Late
-            </h1>
+           <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight mb-6">
+  Predict{" "}
+  <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-cyan-500 to-violet-600">
+    Before
+  </span>{" "}
+  It's Too Late
+</h1>
+
             <p className="text-xl text-gray-600 mb-8 max-w-lg">
               The AI-driven wearable that detects chronic health risks early, giving you time to prevent serious conditions before they develop.
             </p>

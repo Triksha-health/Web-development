@@ -1,6 +1,5 @@
 import { useInView } from "react-intersection-observer";
-import { Linkedin, Twitter } from "lucide-react";
-import { FaGithub } from "react-icons/fa";
+import { Linkedin,  } from "lucide-react";
 
 interface TeamMember {
   name: string;
@@ -23,7 +22,7 @@ const TeamSection: React.FC<teamsectionprops> = ({ team = [] }) => {
   });
 
   return (
-    <section id="team" ref={ref} className="">
+    <section id="team" ref={ref} className="-mt-[60px]">
       <div className="container">
         {/* Team grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-16">
