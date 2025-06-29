@@ -4,8 +4,8 @@ const UserSchema = new mongoose.Schema(
   {
     username: {
       type: String,
-      required: true,
-      unique: true,
+      required: false,
+      unique: false, // Google users might not have one
     },
 
     email: {
@@ -16,7 +16,17 @@ const UserSchema = new mongoose.Schema(
 
     password: {
       type: String,
-      required: true,
+      required: false, // Not required for Google users
+    },
+
+    googleId: {
+      type: String,
+      required: false,
+    },
+
+    avatar: {
+      type: String,
+      required: false,
     },
 
     role: {
@@ -25,14 +35,12 @@ const UserSchema = new mongoose.Schema(
       default: 'user',
     },
 
-    // Notification settings
     settings: {
       emailNotifications: { type: Boolean, default: true },
       smsNotifications: { type: Boolean, default: false },
       darkMode: { type: Boolean, default: false },
     },
 
-    // To enable user alerts in the future
     notifications: [
       {
         message: String,
