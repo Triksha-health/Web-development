@@ -11,10 +11,8 @@ function LaunchSection() {
     seconds: 0,
   });
 
-  // Set launch date to 3 months from now
-  const launchDate = new Date();
-  launchDate.setMonth(launchDate.getMonth() + 3);
-
+  
+const launchDate = new Date("2026-01-01T00:00:00");
   // Early bird stock remaining
   const [earlyBirdStock, setEarlyBirdStock] = useState(50);
   const [standardStock, setStandardStock] = useState(150);
@@ -70,33 +68,33 @@ function LaunchSection() {
           {/* <h2 className="section-title text-[#3691ff]">Launch Timeline</h2> */}
            <SectionHeading
           title="Launch Timeline"
-          subtitle="Be among the first to experience Triksha's revolutionary health predictions. Limited devices available for
+          subtitle=" Be among the first to experience Triksha's revolutionary health predictions. Limited devices available for
             our initial launch."
         />
-         
+          
         </div>
 
         {/* Countdown timer */}
-        <div className="bg-white rounded-2xl shadow-lg p-8 md:p-10 mb-16">
+        <div className="bg-neutral-50 rounded-2xl shadow-lg p-8 md:p-10 mb-16">
           <div className="text-center mb-8">
             <h3 className="text-2xl font-bold mb-2">Shipping Begins: {formattedLaunchDate}</h3>
             <p className="text-gray-600">Secure your device now before we sell out</p>
           </div>
 
           <div className="grid grid-cols-4 gap-4 max-w-2xl mx-auto">
-            <div className="bg-gray-50 rounded-lg p-4 text-center">
+            <div className="bg-white rounded-lg p-4 text-center">
               <div className="text-3xl md:text-4xl font-bold text-primary-500">{timeLeft.days}</div>
               <div className="text-sm text-gray-500 mt-1">Days</div>
             </div>
-            <div className="bg-gray-50 rounded-lg p-4 text-center">
+            <div className="bg-white rounded-lg p-4 text-center">
               <div className="text-3xl md:text-4xl font-bold text-primary-500">{timeLeft.hours}</div>
               <div className="text-sm text-gray-500 mt-1">Hours</div>
             </div>
-            <div className="bg-gray-50 rounded-lg p-4 text-center">
+            <div className="bg-white rounded-lg p-4 text-center">
               <div className="text-3xl md:text-4xl font-bold text-primary-500">{timeLeft.minutes}</div>
               <div className="text-sm text-gray-500 mt-1">Minutes</div>
             </div>
-            <div className="bg-gray-50 rounded-lg p-4 text-center">
+            <div className="bg-white rounded-lg p-4 text-center">
               <div className="text-3xl md:text-4xl font-bold text-primary-500">{timeLeft.seconds}</div>
               <div className="text-sm text-gray-500 mt-1">Seconds</div>
             </div>
