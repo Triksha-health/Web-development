@@ -192,19 +192,19 @@ const FAQ: React.FC = () => {
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <a
-              href="mailto:support@triksha.com"
+              href="mailto:support@trikshahealth.com"
               className="flex items-center px-5 py-2.5 bg-white rounded-[10px] shadow-md text-slate-700 hover:bg-indigo-50 hover:text-[#3691ff] transition"
             >
-              📧 support@triksha.com
+              📧 support@trikshahealth.com
             </a>
             <a
-              href="tel:+918001234567"
+              href="tel:+917899940382"
               className="flex items-center px-5 py-2.5 bg-white rounded-[10px] shadow-md text-slate-700 hover:bg-indigo-50 hover:text-[#3691ff] transition"
             >
-              📞 +91 800 123 4567
+              📞 +91 (789) 994-0382 
             </a>
             <a
-              href="https://wa.me/918001234567"
+              href="https://wa.me/917899940382"
               className="flex items-center px-5 py-2.5 bg-white rounded-[10px] shadow-md text-slate-700 hover:bg-indigo-50 hover:text-[#3691ff] transition"
             >
               💬 WhatsApp Support

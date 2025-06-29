@@ -35,7 +35,7 @@ function Footer() {
               <a href="#" className="text-gray-400 hover:text-white transition-colors">
                 <FiInstagram size={20} />
               </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
+              <a href="https://www.linkedin.com/company/triksha" className="text-gray-400 hover:text-white transition-colors ">
                 <FiLinkedin size={20} />
               </a>
             </div>
@@ -106,11 +106,11 @@ function Footer() {
             <ul className="space-y-4">
               <li className="flex items-start">
                 <Mail className="w-5 h-5 text-gray-400 mr-3 mt-0.5" />
-                <span className="text-gray-400">support@triksha.com</span>
+                <span className="text-gray-400">support@trikshahealth.com</span>
               </li>
               <li className="flex items-start">
                 <Phone className="w-5 h-5 text-gray-400 mr-3 mt-0.5" />
-                <span className="text-gray-400">+91 (800) 123-4567</span>
+                <span className="text-gray-400">+91 (789) 994-0382</span>
               </li>
             </ul>
           </div>

@@ -12,7 +12,7 @@ const CoFoundersSection = () => {
     quote:
       "Every preventable health crisis is a failure of early detection. We're here to change that.",
     education: " NIT Andhra pradesh",
-    experience: "3+ years experience in AI and deep learning",
+    experience: "Experience in AI and deep learning",
     expertise: ["AI & Machine Learning", "Healthcare Technology"],
     linkedin: "https://www.linkedin.com/in/vemuri-yashwanth-b39189254",
     mail: "hiyashwanth77@gmail.com",
