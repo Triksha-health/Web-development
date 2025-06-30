@@ -26,14 +26,7 @@ function App() {
         <Route path="pre-order" element={<PreOrderPage />} />
         <Route path="teams" element={<TeamsPage />} />
         <Route path="applyjob" element={<ApplyPage />} />
-        <Route 
-          path="userdashboard/*" 
-          element={
-            
-              <UserDashBored />
-            
-          } 
-        />
+        <Route path="userdashboard/*" element={<UserDashBored />} />
         <Route path="userdashboard/*" element={<UserDashBored />} />
         <Route path="/admindashboard" element={<AdminDashboard />} />
         <Route path="forgot-password" element={<ForgotPassword />} />

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Mail, ArrowLeft } from "lucide-react";
+import { Link } from "react-router-dom";
 
 function ForgotPassword() {
   const [email, setEmail] = useState("");
@@ -48,12 +49,12 @@ function ForgotPassword() {
                 >
                   Try again
                 </button>
-                <a
-                  href="/signin"
+                <Link
+                  to="/signin"
                   className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-500 hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
                 >
                   Back to sign in
-                </a>
+                </Link>
               </div>
             </div>
           </div>
@@ -124,13 +125,13 @@ function ForgotPassword() {
             </div>
 
             <div className="mt-6">
-              <a
-                href="/signin"
+              <Link
+                to="/signin"
                 className="w-full flex justify-center items-center py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
               >
                 <ArrowLeft className="h-4 w-4 mr-2" />
                 Back to sign in
-              </a>
+              </Link>
             </div>
           </div>
         </div>
