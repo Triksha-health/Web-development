@@ -11,8 +11,7 @@ function LaunchSection() {
     seconds: 0,
   });
 
-  
-const launchDate = new Date("2026-01-01T00:00:00");
+  const launchDate = new Date("2026-01-01T00:00:00");
   // Early bird stock remaining
   const [earlyBirdStock, setEarlyBirdStock] = useState(50);
   const [standardStock, setStandardStock] = useState(150);
@@ -66,12 +65,11 @@ const launchDate = new Date("2026-01-01T00:00:00");
       <div className="container">
         <div className="text-center max-w-3xl mx-auto mb-16">
           {/* <h2 className="section-title text-[#3691ff]">Launch Timeline</h2> */}
-           <SectionHeading
-          title="Launch Timeline"
-          subtitle=" Be among the first to experience Triksha's revolutionary health predictions. Limited devices available for
+          <SectionHeading
+            title="Launch Timeline"
+            subtitle=" Be among the first to experience Triksha's revolutionary health predictions. Limited devices available for
             our initial launch."
-        />
-          
+          />
         </div>
 
         {/* Countdown timer */}
