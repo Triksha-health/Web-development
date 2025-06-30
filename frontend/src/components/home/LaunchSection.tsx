@@ -288,7 +288,7 @@ function LaunchSection() {
   const launchDate = new Date("2026-01-01T00:00:00");
   // Early bird stock remaining
   const [earlyBirdStock, setEarlyBirdStock] = useState(50);
-  const [standardStock, setStandardStock] = useState(150);
+  // const [standardStock, setStandardStock] = useState(150);
 
   useEffect(() => {
     const timer = setInterval(() => {
