@@ -18,6 +18,7 @@ import saurabh from "../public/saurabh.jpg";
 import yash from "../public/yash.jpg";
 import ujjwal from "../public/ujjwal.jpg";
 import SectionHeading from "../components/ui/SectionHeading";
+import { Link } from "react-router-dom";
 
 const TeamsPage = () => {
   useEffect(() => {
@@ -220,12 +221,12 @@ const TeamsPage = () => {
                     We're always looking for passionate individuals who share our vision of revolutionizing preventive
                     healthcare through technology.
                   </p>
-                  <a
-                    href="#"
+                  <Link
+                    to="/applyjob"
                     className="inline-flex items-center text-primary-500 font-medium hover:text-primary-700 transition-colors"
                   >
                     View open positions →
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
