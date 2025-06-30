@@ -1,10 +1,12 @@
-import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { ArrowDown, Heart } from 'lucide-react';
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { ArrowDown, Heart, X, Play } from "lucide-react";
+import introvideo from "../../public/introvideo.mp4";
 
 function Hero() {
   const [isVisible, setIsVisible] = useState(false);
-  
+  const [showVideo, setShowVideo] = useState(false);
+
   useEffect(() => {
     setIsVisible(true);
   }, []);
@@ -13,69 +15,106 @@ function Hero() {
     <section className="relative pt-28 sm:pt-28 lg:pt-24 overflow-hidden min-h-screen flex items-center">
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-green-50 z-0"></div>
-      
+      {showVideo && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70">
+          <div className="relative bg-white rounded-lg shadow-lg  max-w-4xl w-full">
+            <button
+              className="absolute -top-6 -right-10 text-gray-600 z-10"
+              onClick={() => setShowVideo(false)}
+              aria-label="Close"
+            >
+              <X className="w-8 h-8 text-white" />
+            </button>
+            <video src={introvideo} controls autoPlay className="w-full rounded-lg" />
+          </div>
+        </div>
+      )}
+
       {/* Decorative circles */}
       <div className="absolute top-1/3 -right-64 w-96 h-96 bg-primary-100 rounded-full opacity-20 blur-3xl"></div>
       <div className="absolute bottom-1/4 -left-64 w-96 h-96 bg-secondary-100 rounded-full opacity-20 blur-3xl"></div>
-      
+
       <div className="container relative z-10 pt-20 pb-24 lg:pt-10 lg:pb-32">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">
-         <div className='-mt-[120px]'>
+          <div className="-mt-[120px]">
+            <div className={`${isVisible ? "fade-in" : "opacity-0"}`}>
+              <span className="inline-block px-4 py-2 rounded-full bg-primary-100 text-primary-600 font-medium text-sm mb-6">
+                Launching Soon - Limited Pre-orders Available
+              </span>
+              <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight mb-6">
+                Predict{" "}
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-cyan-500 to-violet-600">
+                  Before
+                </span>{" "}
+                It's Too Late
+              </h1>
 
-          <div className={`${isVisible ? 'fade-in' : 'opacity-0'}`}>
-            <span className="inline-block px-4 py-2 rounded-full bg-primary-100 text-primary-600 font-medium text-sm mb-6">
-              Launching Soon - Limited Pre-orders Available
-            </span>
-           <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight mb-6">
-  Predict{" "}
-  <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-cyan-500 to-violet-600">
-    Before
-  </span>{" "}
-  It's Too Late
-</h1>
+              <p className="text-xl text-gray-600 mb-8 max-w-lg">
+                The AI-driven wearable that detects chronic health risks early, giving you time to prevent serious
+                conditions before they develop.
+              </p>
+              <div className="flex lg:flex-col sm:flex-row gap-4">
+                <div className="flex gap-4">
+                  <Link to="/pre-order" className="btn-primary">
+                    Pre-Order Now
+                  </Link>
+                  <a href="/learn-more" className="btn-outline">
+                    Learn More
+                  </a>
+                </div>
+                <div className="w-[319px]">
+                  <button
+                    onClick={() => setShowVideo(true)}
+                    className="group relative w-full overflow-hidden rounded-xl border-2 border-gray-300 bg-white text-gray-800 py-3 px-6 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:border-blue-500 active:scale-95"
+                  >
+                    {/* Animated gradient background */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
-            <p className="text-xl text-gray-600 mb-8 max-w-lg">
-              The AI-driven wearable that detects chronic health risks early, giving you time to prevent serious conditions before they develop.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Link to="/pre-order" className="btn-primary">
-                Pre-Order Now
-              </Link>
-              <a href="#join" className="btn-outline">
-                
-                Join Waitlist
-              </a>
+                    {/* Pulsing and rotating play icon */}
+                    <div className="relative flex items-center justify-center">
+                      <div className="relative mr-3">
+                        <div className="absolute inset-0 top-[-15%] left-[-25%] w-5 h-5 p-4 bg-blue-500/30 rounded-full animate-pulse group-hover:animate-ping"></div>
+                        <Play className="w-6 h-6 text-blue-600 group-hover:text-blue-700 transition-all duration-300 transform group-hover:scale-125 group-hover:rotate-12" />
+                      </div>
+                      <span className="relative z-10 font-semibold group-hover:text-blue-700 transition-colors duration-300">
+                        Watch Product Demo
+                      </span>
+                    </div>
+
+                    {/* Shimmer effect */}
+                    <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12"></div>
+                  </button>
+                </div>
+              </div>
             </div>
-            
-            
           </div>
-         </div>
-          
-          <div className={`relative ${isVisible ? 'slide-up' : 'opacity-0'} lg:ml-auto`}>
+
+          <div className={`relative ${isVisible ? "slide-up" : "opacity-0"} lg:ml-auto`}>
             {/* Main device image */}
             <div className="relative z-10 rounded-lg overflow-hidden shadow-xl">
-              <img 
-                src="https://images.pexels.com/photos/4386467/pexels-photo-4386467.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" 
-                alt="Triksha Wearable Device" 
+              <img
+                src="https://images.pexels.com/photos/4386467/pexels-photo-4386467.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                alt="Triksha Wearable Device"
                 className="w-[400px] h-[580px]"
               />
-              
+
               {/* Animated health data overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent flex flex-col justify-end p-6">
                 <div className="flex items-center text-white mb-4">
                   <Heart className="w-6 h-6 text-red-500 mr-2 animate-pulse" />
                   <div className="text-lg font-medium">Heart Rate: 72 BPM</div>
                 </div>
-                
+
                 <div className="bg-white/90 backdrop-blur-sm rounded-lg p-4 max-w-xs">
                   <div className="text-xs text-primary-600 font-medium uppercase mb-1">AI Prediction</div>
                   <div className="text-gray-800 font-medium">
-                    Blood glucose levels indicate pre-diabetic trend. Taking action now can prevent diabetes development.
+                    Blood glucose levels indicate pre-diabetic trend. Taking action now can prevent diabetes
+                    development.
                   </div>
                 </div>
               </div>
             </div>
-            
+
             {/* Floating elements */}
             <div className="absolute -top-10 -right-10 bg-white rounded-lg shadow-lg p-4 z-20 hidden md:block">
               <div className="flex items-center">
@@ -83,14 +122,14 @@ function Hero() {
                 <span className="text-sm font-medium">Early Detection Alert</span>
               </div>
             </div>
-            
+
             <div className="absolute -bottom-8 -left-8 bg-white rounded-lg shadow-lg p-4 z-20 hidden md:block">
               <div className="text-xs text-gray-500 mb-1">Risk Reduction</div>
               <div className="text-2xl font-bold text-primary-500">87%</div>
             </div>
           </div>
         </div>
-        
+
         {/* Scroll indicator */}
         <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center">
           <span className="text-sm text-gray-500 mb-2">Scroll to learn more</span>
