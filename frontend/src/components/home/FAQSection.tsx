@@ -1,5 +1,3 @@
-
-
 import React, { useState } from 'react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import Container from '../ui/Container';
@@ -16,15 +14,15 @@ const FAQItem: React.FC<FAQItemProps> = ({ question, answer }) => {
   return (
     <div className="border-b border-slate-200 last:border-0 transition-all duration-300">
       <button
-        className={`flex justify-between items-center w-full py-5 text-left font-semibold text-lg transition-colors duration-300 ${
-          isOpen ? "text-[#3691ff]" : "text-slate-800"
+        className={`flex justify-between items-center w-full py-5 text-left font-semibold text-xl tracking-wide transition-colors duration-300 ${
+          isOpen ? "" : "text-slate-600"
         }`}
         onClick={() => setIsOpen(!isOpen)}
         aria-expanded={isOpen}
       >
         <span>{question}</span>
         {isOpen ? (
-          <ChevronUp className="h-5 w-5 text-[#3691ff] flex-shrink-0 transition-transform duration-300 rotate-180" />
+          <ChevronUp className="h-5 w-5 flex-shrink-0 transition-transform duration-300 rotate-180" />
         ) : (
           <ChevronDown className="h-5 w-5 text-slate-500 flex-shrink-0 transition-transform duration-300" />
         )}
@@ -35,7 +33,9 @@ const FAQItem: React.FC<FAQItemProps> = ({ question, answer }) => {
           isOpen ? "max-h-screen" : "max-h-0"
         }`}
       >
-        <div className="pb-5 text-slate-600 space-y-3">{answer}</div>
+        <div className="pb-5 text-slate-600 space-y-3 leading-relaxed text-base">
+          {answer}
+        </div>
       </div>
     </div>
   );
@@ -48,10 +48,10 @@ const FAQ: React.FC = () => {
       answer: (
         <>
           <p>
-            Unlike typical fitness trackers that simply monitor your current health metrics, Triksha uses advanced AI algorithms to analyze patterns and predict potential health issues before symptoms appear.
+            <strong>Triksha</strong> is not an ordinary tracking wearable device—it’s an <strong>AI-powered predictive health monitoring system</strong>. The wearable collects your real-time health data 24/7, while the AI in our app and cloud analyzes your metrics, history, and trends to <strong>predict potential health issues before they become serious</strong>.
           </p>
           <p>
-            Our technology is specifically designed to detect early signs of chronic diseases like diabetes, heart conditions, and respiratory problems, giving you valuable time to take preventive action.
+            This ensures <strong>personalized, actionable health insights</strong>—anytime, anywhere.
           </p>
         </>
       )
@@ -61,14 +61,10 @@ const FAQ: React.FC = () => {
       answer: (
         <>
           <p>
-            Shipping begins in November 2025, with exact delivery timeframes depending on your pre-order tier:
+            <strong>Shipping for pre-orders begins on January 1st.</strong> Once your order is shipped, tracking details will be sent to your email.
           </p>
-          <ul className="list-disc pl-5 mt-2 space-y-1">
-            <li>Early Bird tier: Within 30 days of shipping start (by early December 2025)</li>
-            <li>Standard tier: Within 45 days of shipping start (by mid-December 2025)</li>
-          </ul>
-          <p className="mt-2">
-            We'll keep you updated with regular production and shipping updates via email.
+          <p>
+            Delivery time may vary based on your location.
           </p>
         </>
       )
@@ -77,18 +73,8 @@ const FAQ: React.FC = () => {
       question: "What data does Triksha collect?",
       answer: (
         <>
-          <p>Triksha collects a range of physiological data including:</p>
-          <ul className="list-disc pl-5 mt-2 space-y-1">
-            <li>Heart rate and heart rate variability</li>
-            <li>Blood oxygen levels</li>
-            <li>Respiratory rate</li>
-            <li>Skin temperature</li>
-            <li>Activity and sleep patterns</li>
-            <li>Optional: blood glucose levels (with compatible third-party devices)</li>
-          </ul>
-          <p className="mt-2">
-            This data is analyzed to identify patterns and potential early warning signs of health issues.
-          </p>
+          <p><strong>Triksha collects:</strong> heart rate, stress levels, sleep quality, and other vital signs in real time.</p>
+          <p>This data is used to generate <strong>personalized insights and predictions</strong> that help you stay proactive about your well-being.</p>
         </>
       )
     },
@@ -96,14 +82,8 @@ const FAQ: React.FC = () => {
       question: "Is my health data secure?",
       answer: (
         <>
-          <p>Absolutely. We take data security and privacy extremely seriously:</p>
-          <ul className="list-disc pl-5 mt-2 space-y-1">
-            <li>All data is encrypted both in transit and at rest using industry-standard encryption</li>
-            <li>We comply with HIPAA and GDPR regulations</li>
-            <li>You maintain full ownership of your data and can delete it at any time</li>
-            <li>We never sell your personal data to third parties</li>
-            <li>You control exactly what data is shared with healthcare providers or family members</li>
-          </ul>
+          <p><strong>Yes, your data is fully secure.</strong></p>
+          <p>We use <strong>encryption</strong> and follow strict privacy practices. Your health data will <strong>never be sold</strong> to third parties.</p>
         </>
       )
     },
@@ -111,15 +91,8 @@ const FAQ: React.FC = () => {
       question: "How accurate are Triksha's health predictions?",
       answer: (
         <>
-          <p>Triksha's AI models have been trained on extensive medical datasets and validated through clinical studies. Our current accuracy rates:</p>
-          <ul className="list-disc pl-5 mt-2 space-y-1">
-            <li>Cardiac anomaly detection: 92% accuracy compared to clinical tests</li>
-            <li>Pre-diabetic state detection: 87% accuracy with 3-week advance warning</li>
-            <li>Respiratory issue prediction: 89% accuracy with 5–10 day advance warning</li>
-          </ul>
-          <p className="mt-2">
-            Our technology continues to improve as our AI learns from more data and user feedback.
-          </p>
+          <p>Triksha uses a <strong>proprietary AI model</strong> trained on large medical datasets for high prediction accuracy.</p>
+          <p>While it doesn't replace medical diagnosis, it helps you catch issues early and consult doctors in time.</p>
         </>
       )
     },
@@ -127,14 +100,13 @@ const FAQ: React.FC = () => {
       question: "Is there a subscription fee?",
       answer: (
         <>
-          <p>Your Triksha purchase includes a complimentary subscription period:</p>
+          <p><strong>Yes.</strong> Triksha is a subscription service that combines the wearable device and our AI-powered health monitoring app.</p>
+          <p>Pricing is ₹2000/month. We offer discounted plans:</p>
           <ul className="list-disc pl-5 mt-2 space-y-1">
-            <li>Early Bird tier: 12-month premium subscription included</li>
-            <li>Standard tier: 6-month premium subscription included</li>
+            <li><strong>6-month plan:</strong> ₹10,999 (≈₹1830/month)</li>
+            <li><strong>12-month plan:</strong> ₹17,999 (≈₹1500/month)</li>
           </ul>
-          <p className="mt-2">
-            After this period, you can continue with a premium subscription (₹999/month or ₹9,999/year) or downgrade to our basic plan with core functionality at no cost.
-          </p>
+          <p className="mt-2"><strong>Early Bird Offer:</strong> Get 12 months for just ₹14,999!</p>
         </>
       )
     },
@@ -142,12 +114,7 @@ const FAQ: React.FC = () => {
       question: "What if I need to return my Triksha device?",
       answer: (
         <>
-          <p>
-            We offer a 30-day satisfaction guarantee. If you're not completely satisfied with your Triksha device, you can return it within 30 days of receipt for a full refund.
-          </p>
-          <p className="mt-2">
-            Additionally, all Triksha devices come with a 1-year warranty against manufacturing defects.
-          </p>
+          <p>We offer a <strong>30-day hassle-free return policy</strong>. If you're not satisfied, contact our support team to initiate the return.</p>
         </>
       )
     },
@@ -155,12 +122,8 @@ const FAQ: React.FC = () => {
       question: "Can Triksha replace medical devices or doctor visits?",
       answer: (
         <>
-          <p>
-            No, Triksha is not intended to replace medical devices prescribed by your doctor or regular check-ups. It complements traditional healthcare with predictive insights.
-          </p>
-          <p className="mt-2">
-            Always consult healthcare professionals for diagnosis and treatment.
-          </p>
+          <p><strong>No.</strong> Triksha is not a medical device and is not intended to diagnose or treat medical conditions.</p>
+          <p>It is designed to <strong>detect early signs of health risks</strong> and complement regular healthcare.</p>
         </>
       )
     }
@@ -168,9 +131,6 @@ const FAQ: React.FC = () => {
 
   return (
     <section id="faq" className="bg-gray-50 py-24 relative overflow-hidden w-full">
-      {/* Decorative blob */}
-     
-
       <Container className="relative z-10">
         <SectionHeading
           title="Frequently Asked Questions"
@@ -186,7 +146,7 @@ const FAQ: React.FC = () => {
         </div>
 
         <div className="mt-16 text-center">
-          <div className="font-semibold text-lg mb-2">Still have questions?</div>
+          <div className="font-semibold text-xl mb-2">Still have questions?</div>
           <p className="text-slate-500 max-w-xl mx-auto leading-relaxed mb-6">
             Our team is ready to help you with any questions you might have about Triksha.
           </p>

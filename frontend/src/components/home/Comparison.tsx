@@ -91,7 +91,7 @@ const Comparison: React.FC = () => {
                       className={`flex justify-center items-center px-4 min-h-[60px] w-full ${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}`}
                     >
                       {feature.triksha ? (
-                        <Check className="h-6 w-6 text-[#3691ff]" />
+                        <Check className="h-6 w-6 text-black" />
                       ) : (
                         <X className="h-6 w-6 text-slate-300" />
                       )}

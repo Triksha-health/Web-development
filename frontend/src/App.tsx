@@ -9,6 +9,7 @@ import TeamsPage from "./pages/TeamsPage";
 import UserDashBored from "./pages/UserDashBored";
 
 import AdminDashboard from "./dashboard/admindashboard/AdminDashboard";
+import ApplyPage from "./pages/ApplyPage";
 
 function App() {
   useEffect(() => {
@@ -23,6 +24,7 @@ function App() {
         <Route path="signup" element={<SignUpPage />} />
         <Route path="pre-order" element={<PreOrderPage />} />
         <Route path="teams" element={<TeamsPage />} />
+        <Route path="applyjob" element={<ApplyPage />} />
         <Route 
           path="userdashboard/*" 
           element={
