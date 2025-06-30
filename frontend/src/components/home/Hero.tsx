@@ -65,24 +65,27 @@ function Hero() {
                 <div className="w-[319px]">
                   <button
                     onClick={() => setShowVideo(true)}
-                    className="group relative w-full overflow-hidden rounded-xl border-2 border-gray-300 bg-white text-gray-800 py-3 px-6 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:border-blue-500 active:scale-95"
+                    className="group relative w-full overflow-hidden rounded-2xl border border-gray-300 bg-white/80 backdrop-blur-md text-gray-800 py-3 px-6 shadow-md transition-all duration-300 hover:scale-105 hover:shadow-xl hover:border-blue-400 active:scale-95"
                   >
                     {/* Animated gradient background */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div className="absolute inset-0 bg-gradient-to-r from-blue-400/10 via-purple-400/10 to-pink-400/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
 
-                    {/* Pulsing and rotating play icon */}
-                    <div className="relative flex items-center justify-center">
+                    {/* Icon + Label */}
+                    <div className="relative flex items-center justify-center z-10">
                       <div className="relative mr-3">
-                        <div className="absolute inset-0 top-[-15%] left-[-25%] w-5 h-5 p-4 bg-blue-500/30 rounded-full animate-pulse group-hover:animate-ping"></div>
-                        <Play className="w-6 h-6 text-blue-600 group-hover:text-blue-700 transition-all duration-300 transform group-hover:scale-125 group-hover:rotate-12" />
+                        {/* Pulsing background */}
+                        <div className="absolute -inset-1 bg-blue-400/20 rounded-full blur-xl animate-ping group-hover:scale-110 transition-transform duration-300"></div>
+
+                        {/* Icon */}
+                        <Play className="relative z-10 w-6 h-6 text-blue-600 group-hover:text-blue-700 transition-transform duration-300 group-hover:scale-125 group-hover:rotate-6" />
                       </div>
-                      <span className="relative z-10 font-semibold group-hover:text-blue-700 transition-colors duration-300">
-                        Watch Product Demo
+                      <span className="relative z-10 font-semibold text-base group-hover:text-blue-700 transition-colors duration-300">
+                        Watch Video
                       </span>
                     </div>
 
-                    {/* Shimmer effect */}
-                    <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12"></div>
+                    {/* Elegant shimmer */}
+                    <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12 pointer-events-none"></div>
                   </button>
                 </div>
               </div>
