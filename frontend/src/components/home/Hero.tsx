@@ -53,16 +53,16 @@ function Hero() {
                 The AI-driven wearable that detects chronic health risks early, giving you time to prevent serious
                 conditions before they develop.
               </p>
-              <div className="flex lg:flex-col sm:flex-row gap-4">
-                <div className="flex gap-4">
-                  <Link to="/pre-order" className="btn-primary">
+              <div className="flex lg:flex-col max-sm:flex-col  gap-4">
+                <div className="flex lg:gap-4 max-sm:justify-between max-sm:gap-2 md:gap-4">
+                  <Link to="/pre-order" className="btn-primary max-sm:w-1/2">
                     Pre-Order Now
                   </Link>
-                  <a href="/learn-more" className="btn-outline">
+                  <a href="/learn-more" className="btn-outline max-sm:w-1/2">
                     Learn More
                   </a>
                 </div>
-                <div className="w-[319px]">
+                <div className="w-[319px] max-sm:w-full">
                   <button
                     onClick={() => setShowVideo(true)}
                     className="group relative w-full overflow-hidden rounded-2xl border border-gray-300 bg-white/80 backdrop-blur-md text-gray-800 py-3 px-6 shadow-md transition-all duration-300 hover:scale-105 hover:shadow-xl hover:border-blue-400 active:scale-95"
