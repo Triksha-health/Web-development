@@ -1,12 +1,11 @@
-
-import React from 'react';
-import { Check, X } from 'lucide-react';
-import Container from '../ui/Container';
-import SectionHeading from '../ui/SectionHeading';
-import trikshaLogo from '../../public/Triksha_logo.png';
-import appleLogo from '../../public/apple-logo.png';
-import whoopLogo from '../../public/whoop_logo.png';
-import ouraLogo from '../../public/ultra_human_logo.png';
+import React from "react";
+import { Check, X } from "lucide-react";
+import Container from "../ui/Container";
+import SectionHeading from "../ui/SectionHeading";
+import trikshaLogo from "../../public/Triksha_logo.png";
+import appleLogo from "../../public/apple-logo.png";
+import whoopLogo from "../../public/whoop_logo.png";
+import ouraLogo from "../../public/ultra_human_logo.png";
 
 const Comparison: React.FC = () => {
   const features = [
@@ -22,10 +21,10 @@ const Comparison: React.FC = () => {
   ];
 
   const brands = [
-    { name: 'Triksha', logo: trikshaLogo },
-    { name: 'Apple Watch', logo: appleLogo },
-    { name: 'WHOOP', logo: whoopLogo },
-    { name: 'Ultrahuman', logo: ouraLogo },
+    { name: "Triksha", logo: trikshaLogo },
+    { name: "Apple Watch", logo: appleLogo },
+    { name: "WHOOP", logo: whoopLogo },
+    { name: "Ultrahuman", logo: ouraLogo },
   ];
 
   return (
@@ -43,7 +42,6 @@ const Comparison: React.FC = () => {
           {/* Comparison Table */}
           <div className="mt-12 overflow-x-auto">
             <div className="min-w-[768px]">
-
               {/* Table Header */}
               <div className="grid grid-cols-5 gap-0 mb-4 min-w-[600px]">
                 <div></div>
@@ -72,7 +70,12 @@ const Comparison: React.FC = () => {
                 {/* Feature Names */}
                 <div className="flex flex-col space-y-0">
                   {features.map((feature, index) => (
-                    <div key={index} className={`font-medium flex items-center text-sm md:text-base px-4 min-h-[60px] ${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}`}>
+                    <div
+                      key={index}
+                      className={`font-medium flex items-center text-sm md:text-base px-4 min-h-[60px] ${
+                        index % 2 === 0 ? "bg-gray-50" : "bg-white"
+                      }`}
+                    >
                       {feature.name}
                       {[0, 1, 2, 3].includes(index) && (
                         <span className="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
@@ -88,10 +91,12 @@ const Comparison: React.FC = () => {
                   {features.map((feature, index) => (
                     <div
                       key={index}
-                      className={`flex justify-center items-center px-4 min-h-[60px] w-full ${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}`}
+                      className={`flex justify-center items-center px-4 min-h-[60px] w-full ${
+                        index % 2 === 0 ? "bg-gray-50" : "bg-white"
+                      }`}
                     >
                       {feature.triksha ? (
-                        <Check className="h-6 w-6 text-black" />
+                        <Check className="h-6 w-6 text-green-600" />
                       ) : (
                         <X className="h-6 w-6 text-slate-300" />
                       )}
@@ -105,12 +110,14 @@ const Comparison: React.FC = () => {
                     {features.map((feature, index) => (
                       <div
                         key={index}
-                        className={`flex justify-center items-center px-4 min-h-[60px] w-full ${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}`}
+                        className={`flex justify-center items-center px-4 min-h-[60px] w-full ${
+                          index % 2 === 0 ? "bg-gray-50" : "bg-white"
+                        }`}
                       >
-                        {feature[brandIdx === 1 ? 'apple' : brandIdx === 2 ? 'whoop' : 'ultrahuman'] ? (
-                          <Check className="h-6 w-6 text-slate-600" />
+                        {feature[brandIdx === 1 ? "apple" : brandIdx === 2 ? "whoop" : "ultrahuman"] ? (
+                          <Check className="h-6 w-6 text-slate-500" />
                         ) : (
-                          <X className="h-6 w-6 text-slate-300" />
+                          <X className="h-6 w-6 text-red-300" />
                         )}
                       </div>
                     ))}
@@ -125,14 +132,24 @@ const Comparison: React.FC = () => {
             <div className="p-6 md:p-12">
               <h3 className="text-2xl md:text-3xl font-bold mb-6 text-center md:text-left">The Triksha Difference</h3>
               <p className="text-white/90 text-base md:text-lg mb-8 max-w-3xl mx-auto md:mx-0 text-center md:text-left">
-                While other wearables track what's happening now, only Triksha uses advanced AI to predict what might happen in the future—giving you precious time to take preventive action.
+                While other wearables track what's happening now, only Triksha uses advanced AI to predict what might
+                happen in the future—giving you precious time to take preventive action.
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {[
-                  { title: 'Proprietary AI', desc: "Developed by top AI researchers from India's premier technical institutions." },
-                  { title: 'Early Warning System', desc: 'Alerts you to potential health issues days or weeks before symptoms appear.' },
-                  { title: 'Holistic Analysis', desc: 'Considers all vital signs together, not in isolation, for comprehensive insights.' },
+                  {
+                    title: "Proprietary AI",
+                    desc: "Developed by top AI researchers from India's premier technical institutions.",
+                  },
+                  {
+                    title: "Early Warning System",
+                    desc: "Alerts you to potential health issues days or weeks before symptoms appear.",
+                  },
+                  {
+                    title: "Holistic Analysis",
+                    desc: "Considers all vital signs together, not in isolation, for comprehensive insights.",
+                  },
                 ].map((box, i) => (
                   <div key={i} className="bg-white/20 backdrop-blur-md p-6 rounded-xl text-center lg:text-left">
                     <div className="font-bold text-xl mb-2">{box.title}</div>
