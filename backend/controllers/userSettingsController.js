@@ -1,5 +1,5 @@
 // controllers/userSettingsController.js
-const User = require('../models/User'); // Assuming your User model contains a `settings` field
+const User = require('../models/User'); // Assuming  User model contains a `settings` field
 
 // PATCH /user/settings
 exports.updateSettings = async (req, res) => {

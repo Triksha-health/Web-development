@@ -5,6 +5,7 @@ const session = require('express-session');
 const passport = require('passport');
 
 const connectDB = require('./config/db');
+connectDB();
 
 // 🛠 Load route files
 const authRoutes = require('./routes/authRoutes');
@@ -17,14 +18,12 @@ const paymentRoutes = require('./routes/paymentRoutes');
 const preorderRoutes = require('./routes/preorderRoutes');
 const adminRoutes = require('./routes/adminRoutes');
 const userRoutes = require('./routes/userRoutes');
-const googleAuthRoutes = require('./routes/googleauthRoutes'); // ✅ Google Auth Route
+const googleauthRoutes = require('./routes/googleauthRoutes'); // ✅ Google Auth Route
 
 // 🛠 Passport config (Google strategy)
 require('./config/passport');
 
-// 🧠 Connect to MongoDB
-connectDB();
-
+console.log("MONGO_URL from .env is:", process.env.MONGO_URL);
 const app = express();
 
 // 🌐 Middleware
@@ -62,4 +61,4 @@ app.get('/', (req, res) => {
 
 // 🚀 Server Start
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+app.listen(PORT, () => console.log(` Server running on port ${PORT}`));
