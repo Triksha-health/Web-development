@@ -44,7 +44,7 @@ const TrikshaForm: React.FC<trikshaformprops> = ({ currenttriksha, setselectedtr
         </div>
       </div>
 
-      <div
+      {/*<div
         className={`border rounded-lg p-4 cursor-pointer ${
           selected === "standard" ? "border-blue-500 bg-blue-50" : "border-gray-300"
         }`}
@@ -63,7 +63,7 @@ const TrikshaForm: React.FC<trikshaformprops> = ({ currenttriksha, setselectedtr
             <input id="standardinput" className="h-5 w-5" type="radio" checked={selected === "standard"} readOnly />
           </div>
         </div>
-      </div>
+      </div>*/}
       <div className="w-full flex justify-end mt-8">
         <button onClick={() => onbtnclick?.(2)} className="btn-primary">
           Continue to Shipping
