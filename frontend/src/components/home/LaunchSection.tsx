@@ -11,7 +11,6 @@
 //     seconds: 0,
 //   });
 
-  
 // const launchDate = new Date("2026-01-01T00:00:00");
 //   // Early bird stock remaining
 //   const [earlyBirdStock, setEarlyBirdStock] = useState(50);
@@ -71,7 +70,7 @@
 //           subtitle=" Be among the first to experience Triksha's revolutionary health predictions. Limited devices available for
 //             our initial launch."
 //         />
-          
+
 //         </div>
 
 //         {/* Countdown timer */}
@@ -332,12 +331,11 @@ function LaunchSection() {
       <div className="container">
         <div className="text-center max-w-3xl mx-auto mb-16">
           {/* <h2 className="section-title text-[#3691ff]">Launch Timeline</h2> */}
-           <SectionHeading
-          title="Launch Timeline"
-          subtitle=" Be among the first to experience Triksha's revolutionary health predictions. Limited devices available for
+          <SectionHeading
+            title="Launch Timeline"
+            subtitle=" Be among the first to experience Triksha's revolutionary health predictions. Limited devices available for
             our initial launch."
-        />
-          
+          />
         </div>
 
         <div className="bg-neutral-50 rounded-2xl shadow-lg p-8 md:p-10 mb-16">
@@ -367,79 +365,103 @@ function LaunchSection() {
         </div>
 
         {/* Centered Early Bird Box */}
-       <div className="flex justify-center">
-  <div className="w-full md:w-4/5 lg:w-3/5 bg-white rounded-2xl shadow-2xl overflow-hidden border-2 border-primary-500 hover:scale-[1.02] transition-transform">
-    <div className="bg-primary-500 text-white text-center py-3">
-      <span className="font-medium text-lg">Limited Early Access</span>
-    </div>
-    <div className="p-10">
-      <h3 className="text-3xl font-bold mb-4 text-center">Early Bird Offer</h3>
+        <div className="flex justify-center">
+          <div className="w-full md:w-4/5 lg:w-3/5 bg-white rounded-2xl shadow-2xl overflow-hidden border-2 border-grey hover:scale-[1.02] transition-transform">
+            <div className="bg-primary-500 text-white text-center py-3">
+              <span className="font-medium text-lg">Limited Early Access</span>
+            </div>
+            <div className="p-10">
+              <h3 className="text-3xl font-bold mb-4 text-center">Early Bird Offer</h3>
 
-      <div className="flex justify-center items-baseline mb-6">
-        <span className="text-5xl font-bold text-primary-500">₹14,999</span>
-        <span className="text-gray-500 ml-3 line-through text-lg">₹17,999</span>
-      </div>
+              <div className="flex justify-center items-baseline mb-6">
+                <span className="text-5xl font-bold text-primary-500">₹14,999</span>
+                <span className="text-gray-500 ml-3 line-through text-lg">₹17,999</span>
+              </div>
 
-      <p className="text-center text-lg text-green-600 font-semibold mb-6">
-        ⭐ Save over 15% with this special pre-order price!
-      </p>
+              <p className="text-center text-lg text-green-600 font-semibold mb-6">
+                ⭐ Save over 15% with this special pre-order price!
+              </p>
 
-      <ul className="space-y-4 mb-8 text-lg">
-        <li className="flex items-start">
-          <svg className="w-6 h-6 text-[#3691ff] mr-3 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-          </svg>
-          <span>12-month premium subscription (Wearable + App)</span>
-        </li>
-        <li className="flex items-start">
-          <svg className="w-6 h-6 text-[#3691ff] mr-3 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-          </svg>
-          <span>Free personalized AI Coach</span>
-        </li>
-        <li className="flex items-start">
-          <svg className="w-6 h-6 text-[#3691ff] mr-3 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-          </svg>
-          <span>Lifetime priority support</span>
-        </li>
-        <li className="flex items-start">
-          <svg className="w-6 h-6 text-[#3691ff] mr-3 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-          </svg>
-          <span>Priority shipping from Jan 1</span>
-        </li>
-        <li className="flex items-start">
-          <svg className="w-6 h-6 text-[#3691ff] mr-3 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-          </svg>
-          <span>Limited to 200 units only</span>
-        </li>
-      </ul>
+              <ul className="space-y-4 mb-8 text-lg">
+                <li className="flex items-start">
+                  <svg
+                    className="w-6 h-6 text-[#3691ff] mr-3 mt-1"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                  <span>12-month premium subscription (Wearable + App)</span>
+                </li>
+                <li className="flex items-start">
+                  <svg
+                    className="w-6 h-6 text-[#3691ff] mr-3 mt-1"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                  <span>Free personalized AI Coach</span>
+                </li>
+                <li className="flex items-start">
+                  <svg
+                    className="w-6 h-6 text-[#3691ff] mr-3 mt-1"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                  <span>Lifetime priority support</span>
+                </li>
+                <li className="flex items-start">
+                  <svg
+                    className="w-6 h-6 text-[#3691ff] mr-3 mt-1"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                  <span>Priority shipping from Jan 1</span>
+                </li>
+                <li className="flex items-start">
+                  <svg
+                    className="w-6 h-6 text-[#3691ff] mr-3 mt-1"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                  <span>Limited to 200 units only</span>
+                </li>
+              </ul>
 
-      <div className="mb-6">
-        <div className="flex justify-between items-center mb-2">
-          <span className="text-sm text-gray-600">Limited Stock</span>
-          <span className="text-sm font-medium">{earlyBirdStock}/200 remaining</span>
+              <div className="mb-6">
+                <div className="flex justify-between items-center mb-2">
+                  <span className="text-sm text-gray-600">Limited Stock</span>
+                  <span className="text-sm font-medium">{earlyBirdStock}/200 remaining</span>
+                </div>
+                <div className="w-full bg-gray-200 rounded-full h-3">
+                  <div
+                    className="bg-primary-500 h-3 rounded-full transition-all"
+                    style={{ width: `${(earlyBirdStock / 200) * 100}%` }}
+                  ></div>
+                </div>
+              </div>
+
+              <button
+                onClick={() => navigate("/pre-order?triksha=early-bird")}
+                className="w-full bg-gradient-to-r from-blue-600 via-sky-500 to-cyan-400 text-white py-4 rounded-lg font-semibold text-lg hover:from-primary-600 hover:to-cyan-500 transition-colors"
+              >
+                Pre-Order Now
+              </button>
+            </div>
+          </div>
         </div>
-        <div className="w-full bg-gray-200 rounded-full h-3">
-          <div
-            className="bg-primary-500 h-3 rounded-full transition-all"
-            style={{ width: `${(earlyBirdStock / 200) * 100}%` }}
-          ></div>
-        </div>
-      </div>
-
-      <button
-        onClick={() => navigate("/pre-order?triksha=early-bird")}
-        className="w-full bg-primary-500 text-white py-4 rounded-lg font-semibold text-lg hover:bg-primary-600 transition-colors"
-      >
-        Pre-Order Now
-      </button>
-    </div>
-  </div>
-</div>
-
       </div>
     </section>
   );
