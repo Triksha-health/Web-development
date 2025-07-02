@@ -4,7 +4,7 @@ import axios from 'axios';
 interface User {
   id: string;
   email: string;
-  name: string; // 👈 Keeping your existing 'name' key (from email.split('@')[0])
+  name: string; // 👈 Display name in your UI
 }
 
 interface AuthContextType {
@@ -18,7 +18,16 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-const API_URL = 'http://localhost:5000/api/auth'; // ✅ Update when deploying
+// ✅ Change this to your deployed backend URL (already correct):
+const API_URL = 'https://triksha-backend-f5f0cth4f9c0b8g9.southindia-01.azurewebsites.net/api/auth';
+
+// ✅ Create a pre-configured Axios instance for cleaner requests
+const api = axios.create({
+  baseURL: API_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
@@ -36,22 +45,27 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setIsLoading(true);
 
     try {
-      const res = await axios.post(`${API_URL}/login`, { email, password });
-      const backendUser = res.data.user;  // backend sends: { id, username, email }
+      const res = await api.post('/login', { email, password });
+      const backendUser = res.data.user; // expected: { id, username, email }
       const token = res.data.token;
 
       const transformedUser: User = {
         id: backendUser.id,
         email: backendUser.email,
-        name: backendUser.username, // ✅ Keeping your code structure (name used in UI)
+        name: backendUser.username,
       };
 
       localStorage.setItem('triksha_user', JSON.stringify(transformedUser));
       localStorage.setItem('triksha_token', token);
 
       setUser(transformedUser);
+
+      // Optionally, set Authorization header for authenticated requests:
+      // api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     } catch (error) {
-      throw new Error((error as any).response?.data?.msg || 'Invalid credentials');
+      throw new Error(
+        (error as any).response?.data?.message || 'Invalid credentials'
+      );
     } finally {
       setIsLoading(false);
     }
@@ -61,14 +75,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setIsLoading(true);
 
     try {
-      await axios.post(`${API_URL}/register`, {
-        username: name,  // ✅ Your backend expects "username"
+      await api.post('/register', {
+        username: name, // backend expects "username"
         email,
         password,
       });
-      await login(email, password); // Auto-login after signup (as in mock)
+      await login(email, password); // Auto-login after signup
     } catch (error) {
-      throw new Error((error as any).response?.data?.msg || 'Failed to create an account');
+      throw new Error(
+        (error as any).response?.data?.message || 'Failed to create an account'
+      );
     } finally {
       setIsLoading(false);
     }
@@ -78,10 +94,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setUser(null);
     localStorage.removeItem('triksha_user');
     localStorage.removeItem('triksha_token');
+    // api.defaults.headers.common['Authorization'] = '';
   };
 
   return (
-    <AuthContext.Provider value={{ user, isAuthenticated: !!user, isLoading, login, signup, logout }}>
+    <AuthContext.Provider
+      value={{ user, isAuthenticated: !!user, isLoading, login, signup, logout }}
+    >
       {children}
     </AuthContext.Provider>
   );
@@ -94,4 +113,3 @@ export function useAuth() {
   }
   return context;
 }
-
