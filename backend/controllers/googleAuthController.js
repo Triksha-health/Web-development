@@ -1,3 +1,5 @@
+//Google Auth Controller
+
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const generateToken = require('../utils/generateToken');
