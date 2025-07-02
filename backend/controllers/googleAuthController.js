@@ -1,33 +1,33 @@
 const jwt = require('jsonwebtoken');
-const User = require('../models/User'); // Make sure User model exists
-const generateToken = require('../utils/generateToken'); // helper for JWT
+const User = require('../models/User');
+const generateToken = require('../utils/generateToken');
 
 exports.googleAuthCallback = async (req, res) => {
   try {
     const googleUser = req.user;
 
-    const existingUser = await User.findOne({ email: googleUser.emails[0].value });
+    // Normalize email
+    const email = googleUser.emails[0].value.toLowerCase();
 
-    let user;
-    if (existingUser) {
-      user = existingUser;
-    } else {
+    // Look for existing user
+    let user = await User.findOne({ email });
+
+    if (!user) {
       // Create new user
       user = await User.create({
-        name: googleUser.displayName,
-        email: googleUser.emails[0].value,
+        username: googleUser.displayName, // uses schema's 'username' field
+        email,
         googleId: googleUser.id,
         avatar: googleUser.photos[0].value,
       });
     }
 
-    const token = generateToken(user._id); // JWT token
+    const token = generateToken(user._id); // Generate JWT token
 
-    // Redirect with token or send JSON
-    res.redirect(`https://your-frontend-url.com/dashboard?token=${token}`);
-    // or: res.json({ success: true, token, user });
+    // Redirect to your frontend with token in query param
+    res.redirect(`https://trikshahealth.com/dashboard?token=${token}`);
   } catch (err) {
-    console.error("Google Auth Error:", err);
+    console.error("❌ Google Auth Error:", err);
     res.status(500).json({ message: 'Google authentication failed' });
   }
 };
