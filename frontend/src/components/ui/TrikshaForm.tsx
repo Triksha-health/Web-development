@@ -36,7 +36,7 @@ const TrikshaForm: React.FC<trikshaformprops> = ({ currenttriksha, setselectedtr
             <p className="text-base font-semibold text-gray-500 mt-3">
               Be among the first to receive Triksha with exclusive early adopter benefits.
             </p>
-            <p className="text-sm text-gray-400 mt-2">Ships in 30 days • Limited to 50 units</p>
+            <p className="text-sm text-gray-400 mt-2">Ships start from 1 January • Limited to 200 units</p>
           </div>
           <div className="h-full">
             <input id="earlybirdinput" className="h-5 w-5" type="radio" checked={selected === "early"} readOnly />

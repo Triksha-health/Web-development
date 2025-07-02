@@ -215,7 +215,7 @@ const PreOrderPage: React.FC = () => {
                           </p>
                           <div className="text-xs text-gray-500 space-y-1">
                             <p>✓ Secure payment processing</p>
-                            <p>✓ 30-day money-back guarantee</p>
+                            
                             <p>✓ Free shipping across India</p>
                           </div>
                         </div>
@@ -227,11 +227,11 @@ const PreOrderPage: React.FC = () => {
                           <h4 className="font-semibold mb-2">Terms and Conditions</h4>
                           <div className="space-y-1 sm:space-y-2 text-xs">
                             <p>• Pre-order amount is non-refundable except as per our refund policy</p>
-                            <p>• Expected delivery: 8-12 weeks from order confirmation</p>
+                            <p>• Expected delivery: Delivery start from Jan 1</p>
                             <p>• Specifications may vary slightly from images shown</p>
                             <p>• We reserve the right to modify delivery timelines due to manufacturing constraints</p>
                             <p>• All prices are inclusive of applicable taxes</p>
-                            <p>• For support, contact us at support@triksha.com or +91-XXXX-XXXX</p>
+                            <p>• For support, contact us at Support@trikshahealth.com or +91-(789) 994-0382</p>
                           </div>
                         </div>
 

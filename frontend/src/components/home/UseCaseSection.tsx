@@ -10,6 +10,8 @@ import doctorImage from "../../public/doctorimage.jpg";
 import realtime from "../../public/realtime.jpg";
 import headache from "../../public/headache.jpg";
 import smartwatch from "../../public/smartwatch.jpg";
+import EmergencyImage from "../../public/emergency.jpg"
+import LongTermImage from "../../public/Longterm.jpg"
 
 const UseCaseSection = () => {
   const [currentSelection, setCurrentSelection] = useState<string>("Health Risk Monitoring");
@@ -27,14 +29,14 @@ const UseCaseSection = () => {
       icon: <AlertTriangle className="w-7 h-7 text-blue-500" />,
       title: "Emergency Alerts to Family",
       description: "Automatic notifications to loved ones during critical health events.",
-      image: doctorImage,
+      image: EmergencyImage,
     },
     {
       id: "insights",
       icon: <Shield className="w-7 h-7 text-blue-500" />,
       title: "Long-term Health Insights",
       description: "Preventive analysis to detect patterns indicating potential chronic disease risk.",
-      image: doctorImage,
+      image: LongTermImage,
     },
   ];
   const fitnessitems = [

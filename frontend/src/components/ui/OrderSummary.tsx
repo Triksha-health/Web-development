@@ -23,15 +23,15 @@ interface OrderSummaryProps {
 const OrderSummary: React.FC<OrderSummaryProps> = ({ triksha }) => {
   const earlybird: Product = {
     name: "Triksha - Early Bird",
-    description: "AI-Powered Health Wearable",
+    description: "AI powered predictive health monitoring system",
     price: 14999,
     originalPrice: 17999,
     image: womanlaptop,
     features: [
-      { id: "1", text: "Premium health coaching session" },
-      { id: "2", text: "12 months premium subscription" },
+      { id: "1", text: "12-month premium subscription (Wearable + App)" },
+      { id: "2", text: "Free personalized AI Coach" },
       { id: "3", text: "Lifetime priority support" },
-      { id: "4", text: "Early access to new features" },
+      { id: "4", text: "Priority shipping from Jan 1" },
     ],
     shippingDays: 30,
   };
@@ -93,7 +93,8 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({ triksha }) => {
       {/* Shipping Info */}
       <div className="flex items-center text-sm text-gray-500 mb-6 gap-2">
         <Package className="w-5 h-5 text-gray-400" />
-        Ships in approximately {product.shippingDays} days
+        {/* Ships in approximately {product.shippingDays} days */}
+        Shiping start from 1 January
       </div>
 
       {/* Price Summary */}
