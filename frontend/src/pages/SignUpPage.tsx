@@ -1,3 +1,5 @@
+//Sign Up
+
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { User, Mail, Lock } from 'lucide-react';
@@ -193,9 +195,10 @@ function SignUpPage() {
             </div>
 
             {/* Google Button */}
-            <div className="mt-6">
+           <div className="mt-6">
               <button
                 type="button"
+                onClick={() => window.location.href = "https://triksha-backend-f5f0cth4f9c0b8g9.southindia-01.azurewebsites.net/auth/google"}
                 className="w-full flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
               >
                 <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24">
@@ -219,6 +222,7 @@ function SignUpPage() {
                 Sign up with Google
               </button>
             </div>
+
           </div>
         </div>
       </div>
