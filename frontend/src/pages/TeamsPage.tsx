@@ -29,8 +29,8 @@ const TeamsPage = () => {
       name: "Vemuri Toshan Yashwanth",
       role: "Founder & CEO",
       image: yash,
-      bio: "Former NIT student who dropped out after witnessing his father's preventable health crisis. Driven to revolutionize early detection of chronic diseases.",
-      linkedin: "#",
+      bio: "NIT AP student passionate about building AI-powered predictive health systems. Leading Triksha to enable early detection of chronic diseases and empower proactive healthcare.",
+      linkedin: "http://www.linkedin.com/in/vemuri-yashwanth-b39189254",
       twitter: "#",
       github: "https://github.com/janedoe",
     },
@@ -100,7 +100,7 @@ const TeamsPage = () => {
     {
       name: "Sourabh Dharra",
       role: "Fullstack Developer",
-      bio: "I’m a final‑year CSE student at RGIPT and a problem‑solving Full‑Stack Developer fluent in DSA, React, Next.js, and Node.js—crafting efficient, scalable solutions with clean, structured code.",
+      bio: "RGIPT student specializing in full-stack development, passionate about building efficient, scalable solutions for real-time applications.",
       image: saurabh,
       github: "https://github.com/SOURABH-05",
       linkedin: "https://www.linkedin.com/in/sourabh-dharra-707294288/",
@@ -148,7 +148,7 @@ const TeamsPage = () => {
       <div className={`mb-12 text-center mt-14`}>
         <div className="flex gap-2 justify-center">
            <SectionHeading
-          title="Meets our team"
+          title="Meet our team"
           subtitle=" We're a team of doctors, engineers, and health enthusiasts united by a single mission: using technology to
           prevent chronic disease before it happens."
         />
@@ -225,7 +225,7 @@ const TeamsPage = () => {
                     to="/applyjob"
                     className="inline-flex items-center text-primary-500 font-medium hover:text-primary-700 transition-colors"
                   >
-                    View open positions →
+                    Join our team →
                   </Link>
                 </div>
               </div>

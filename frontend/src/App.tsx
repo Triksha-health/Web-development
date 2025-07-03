@@ -14,7 +14,7 @@ import ApplyPage from "./pages/ApplyPage";
 
 function App() {
   useEffect(() => {
-    document.title = "Triksha - AI-Powered Health Wearable";
+    document.title = "Triksha - AI powered predictive health monitoring system";
   }, []);
 
   return (
