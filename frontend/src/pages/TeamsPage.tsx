@@ -147,15 +147,14 @@ const TeamsPage = () => {
     <div className="min-h-screen py-12 sm:px-6 lg:px-8 bg-[#f9fafc]">
       <div className={`mb-12 text-center mt-14`}>
         <div className="flex gap-2 justify-center">
-           <SectionHeading
-          title="Meet our team"
-          subtitle=" We're a team of doctors, engineers, and health enthusiasts united by a single mission: using technology to
+          <SectionHeading
+            title="Meet our team"
+            subtitle=" We're a team of doctors, engineers, and health enthusiasts united by a single mission: using technology to
           prevent chronic disease before it happens."
-        />
+          />
         </div>
-       
       </div>
-      <TeamSection team={team}  />
+      <TeamSection team={team} />
       <Container className="relative z-10 mt-16">
         <div className={` px-8 py-10 sm:px-6 lg:px-8 bg-primary-50  rounded-2xl`}>
           <div className="max-w-7xl mx-auto">
