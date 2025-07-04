@@ -39,7 +39,7 @@ function Hero() {
           <div className="-mt-[120px]">
             <div className={`${isVisible ? "fade-in" : "opacity-0"}`}>
               <span className="inline-block px-4 py-2 rounded-full bg-primary-100 text-primary-600 font-medium text-sm mb-6">
-                Launching Soon - Limited Pre-orders Available
+                India’s First Predictive Health Monitoring Platform
               </span>
               <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight mb-6">
                 Predict{" "}
@@ -50,8 +50,7 @@ function Hero() {
               </h1>
 
               <p className="text-xl text-gray-600 mb-8 max-w-lg">
-                The AI-driven wearable that detects chronic health risks early, giving you time to prevent serious
-                conditions before they develop.
+                Advanced AI that doesn’t just track, but predicts potential health issues before they become problems. Giving you time to act early, stay safe, and stay healthy.
               </p>
               <div className="flex lg:flex-col max-sm:flex-col  gap-4">
                 <div className="flex lg:gap-4 max-sm:justify-between max-sm:gap-2 md:gap-4">

@@ -385,7 +385,7 @@ function LaunchSection() {
 
               <ul className="space-y-4 mb-8 text-lg">
                 {[
-                  "12-month premium subscription (Wearable + App)",
+                  "12-month premium subscription (App + Wearable)",
                   "Free personalized AI Coach",
                   "Lifetime priority support",
                   "Priority shipping from Jan 1",

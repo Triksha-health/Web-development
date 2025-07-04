@@ -38,7 +38,7 @@ const Comparison: React.FC = () => {
         <Container>
           <SectionHeading
             title="Why Triksha is Different"
-            subtitle="See how Triksha compares to other popular health wearables in the market."
+            subtitle="See how Triksha compares to other popular  health monitoring platforms in the market."
           />
 
           {/* Comparison Table */}

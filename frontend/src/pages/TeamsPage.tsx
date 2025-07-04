@@ -149,8 +149,7 @@ const TeamsPage = () => {
         <div className="flex gap-2 justify-center">
            <SectionHeading
           title="Meet our team"
-          subtitle=" We're a team of doctors, engineers, and health enthusiasts united by a single mission: using technology to
-          prevent chronic disease before it happens."
+          subtitle=" We're a team of AI engineers and innovators dedicated to a single mission: using cutting-edge technology to predict and prevent chronic health issues before they happen."
         />
         </div>
        
