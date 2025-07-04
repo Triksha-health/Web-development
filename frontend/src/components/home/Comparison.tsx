@@ -13,11 +13,13 @@ const Comparison: React.FC = () => {
     { name: "Chronic Disease Early Detection", triksha: true, apple: false, whoop: false, ultrahuman: false },
     { name: "EHR Integration", triksha: true, apple: false, whoop: false, ultrahuman: false },
     { name: "Health Book", triksha: true, apple: false, whoop: false, ultrahuman: false },
+    { name: "Monthly health reports", triksha: true, apple: false, whoop: false, ultrahuman: false },
+    { name: "family emergency alerts", triksha: true, apple: false, whoop: false, ultrahuman: false },
     { name: "Real-time Health Monitoring", triksha: true, apple: true, whoop: true, ultrahuman: true },
     { name: "AI-Powered Insights", triksha: true, apple: false, whoop: true, ultrahuman: true },
-    { name: "Family Emergency Alerts", triksha: true, apple: true, whoop: false, ultrahuman: false },
+    { name: "User Emergency Alerts", triksha: true, apple: false, whoop: false, ultrahuman: false },
     { name: "Personalized Health Recommendations", triksha: true, apple: false, whoop: true, ultrahuman: true },
-    { name: "Dedicated Health Community", triksha: true, apple: false, whoop: true, ultrahuman: false },
+   
   ];
 
   const brands = [
@@ -36,91 +38,79 @@ const Comparison: React.FC = () => {
         <Container>
           <SectionHeading
             title="Why Triksha is Different"
-            subtitle="See how Triksha compares to other popular health wearables in the market."
+            subtitle="See how Triksha compares to other popular  health monitoring platforms in the market."
           />
 
           {/* Comparison Table */}
-          <div className="mt-12 overflow-x-auto">
-            <div className="min-w-[768px]">
+          <div className="mt-12 overflow-x-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+            <div className="min-w-[640px] lg:min-w-full">
               {/* Table Header */}
               <div className="grid grid-cols-5 gap-0 mb-4 min-w-[600px]">
                 <div></div>
 
-                {/* Triksha Header */}
-                <div className="flex flex-col items-center">
-                  <div className="w-16 h-16 shadow-xl scale-110 border-2 bg-slate-100 rounded-full flex items-center justify-center mb-3 transition-transform duration-300 mt-4">
-                    <img src={trikshaLogo} alt="Triksha" className="object-contain h-14 w-14" />
-                  </div>
-                  <div className="font-bold text-center text-sm mb-4">Triksha</div>
-                </div>
-
-                {/* Other Brands */}
-                {brands.slice(1).map((brand, idx) => (
+                {brands.map((brand, idx) => (
                   <div key={idx} className="flex flex-col items-center pt-4">
-                    <div className="w-16 h-16 border border-gray-300 bg-slate-100 rounded-full flex items-center justify-center mb-3">
+                    <div className="w-16 h-16 border border-gray-300 bg-slate-100 rounded-full flex items-center justify-center mb-3 shadow-lg">
                       <img src={brand.logo} alt={brand.name} className="object-contain h-10 w-10" />
                     </div>
-                    <div className="font-bold text-center text-sm mb-4">{brand.name}</div>
+                    <div className="font-bold text-center text-xs md:text-sm mb-4">{brand.name}</div>
                   </div>
                 ))}
               </div>
 
-              {/* Full Table with Aligned Triksha Column */}
-              <div className="grid grid-cols-5 gap-0">
-                {/* Feature Names */}
-                <div className="flex flex-col space-y-0">
-                  {features.map((feature, index) => (
-                    <div
-                      key={index}
-                      className={`font-medium flex items-center text-sm md:text-base px-4 min-h-[60px] ${
-                        index % 2 === 0 ? "bg-gray-50" : "bg-white"
+              {/* Full Table */}
+              <div className="flex flex-col">
+                {features.map((feature, index) => (
+                  <div
+                    key={index}
+                    className={`grid grid-cols-5 gap-0 items-center text-xs md:text-base ${index % 2 === 0 ? "bg-gray-50" : "bg-white"
                       }`}
-                    >
-                      {feature.name}
-                      {[0, 1, 2, 3].includes(index) && (
-                        <span className="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                  >
+                    {/* Feature Name */}
+                    <div className="flex items-center justify-between px-2 md:px-4 py-3 md:py-4">
+                      <span className="flex-1">{feature.name}</span>
+                      {[0, 1, 2, 3, 4,5].includes(index) && (
+                        <span className="ml-2 inline-flex items-center px-2 py-0.5 rounded-full text-[10px] md:text-xs font-medium bg-blue-100 text-blue-800 whitespace-nowrap">
                           Unique
                         </span>
                       )}
                     </div>
-                  ))}
-                </div>
 
-                {/* Triksha Column - Continuous Wrapper */}
-                <div className="flex flex-col w-full bg-white shadow-lg border border-gray-300 rounded-2xl overflow-hidden">
-                  {features.map((feature, index) => (
-                    <div
-                      key={index}
-                      className={`flex justify-center items-center px-4 min-h-[60px] w-full ${
-                        index % 2 === 0 ? "bg-gray-50" : "bg-white"
-                      }`}
-                    >
+                    {/* Triksha Column */}
+                    <div className="flex justify-center items-center px-2 md:px-4 py-3 md:py-4">
                       {feature.triksha ? (
-                        <Check className="h-6 w-6 text-green-600" />
+                        <Check className="h-5 w-5 md:h-6 md:w-6 text-green-600" />
                       ) : (
-                        <X className="h-6 w-6 text-slate-300" />
+                        <X className="h-5 w-5 md:h-6 md:w-6 text-red-300" />
                       )}
                     </div>
-                  ))}
-                </div>
 
-                {/* Other Brands Columns */}
-                {[1, 2, 3].map((brandIdx) => (
-                  <div key={brandIdx} className="flex flex-col space-y-0 w-full">
-                    {features.map((feature, index) => (
-                      <div
-                        key={index}
-                        className={`flex justify-center items-center px-4 min-h-[60px] w-full ${
-                          index % 2 === 0 ? "bg-gray-50" : "bg-white"
-                        }`}
-                      >
-                        {feature[brandIdx === 1 ? "apple" : brandIdx === 2 ? "whoop" : "ultrahuman"] ? (
-                          <Check className="h-6 w-6 text-slate-500" />
-                        ) : (
-                          <X className="h-6 w-6 text-red-300" />
-                        )}
-                      </div>
-                    ))}
+                    {/* Apple Column */}
+                    <div className="flex justify-center items-center px-2 md:px-4 py-3 md:py-4">
+                      {feature.apple ? (
+                        <Check className="h-5 w-5 md:h-6 md:w-6 text-slate-500" />
+                      ) : (
+                        <X className="h-5 w-5 md:h-6 md:w-6 text-red-300" />
+                      )}
+                    </div>
+
+                    {/* WHOOP Column */}
+                    <div className="flex justify-center items-center px-2 md:px-4 py-3 md:py-4">
+                      {feature.whoop ? (
+                        <Check className="h-5 w-5 md:h-6 md:w-6 text-slate-500" />
+                      ) : (
+                        <X className="h-5 w-5 md:h-6 md:w-6 text-red-300" />
+                      )}
+                    </div>
+
+                    {/* Ultrahuman Column */}
+                    <div className="flex justify-center items-center px-2 md:px-4 py-3 md:py-4">
+                      {feature.ultrahuman ? (
+                        <Check className="h-5 w-5 md:h-6 md:w-6 text-slate-500" />
+                      ) : (
+                        <X className="h-5 w-5 md:h-6 md:w-6 text-red-300" />
+                      )}
+                    </div>
                   </div>
                 ))}
               </div>
@@ -130,30 +120,29 @@ const Comparison: React.FC = () => {
           {/* Triksha Difference Section */}
           <div className="mt-16 bg-gradient-to-r from-teal-500 to-blue-600 rounded-2xl shadow-lg text-white">
             <div className="p-6 md:p-12">
-              <h3 className="text-2xl md:text-3xl font-bold mb-6 text-center md:text-left">The Triksha Difference</h3>
-              <p className="text-white/90 text-base md:text-lg mb-8 max-w-3xl mx-auto md:mx-0 text-center md:text-left">
-                While other wearables track what's happening now, only Triksha uses advanced AI to predict what might
-                happen in the future—giving you precious time to take preventive action.
+              <h3 className="text-xl sm:text-2xl md:text-3xl font-bold mb-6 text-center md:text-left">Proactive. Personalized. Predictive.</h3>
+              <p className="text-white/90 text-sm sm:text-base md:text-lg mb-8 max-w-5xl mx-auto md:mx-0 text-center md:text-left">
+                Triksha is an AI-powered health prediction system built to help you stay one step ahead. By analyzing your real-time vitals, medical history, and detected abnormalities, Triksha predicts emerging health risks before they escalate.
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {[
                   {
-                    title: "Proprietary AI",
-                    desc: "Developed by top AI researchers from India's premier technical institutions.",
+                    title: "Advanced AI Predictions",
+                    desc: "Our custom-built Proprietary AI doesn't just analyze what’s happening now. It learns your health patterns over time, combining vitals and history to forecast potential issues early—empowering you to act before problems arise.",
                   },
                   {
-                    title: "Early Warning System",
-                    desc: "Alerts you to potential health issues days or weeks before symptoms appear.",
+                    title: "Personalized Risk Insights",
+                    desc: "Every person is unique. Triksha uses your medical data , medical history, past conditions, and real-time data to deliver personalized risk scores and health alerts tailored specifically to you.",
                   },
                   {
-                    title: "Holistic Analysis",
-                    desc: "Considers all vital signs together, not in isolation, for comprehensive insights.",
+                    title: "Integrated Health Book",
+                    desc: "Forget fragmented records. Triksha’s Health Book securely organizes your medical data and history in one place, making it easy to track, share with doctors, and monitor your health journey over time.",
                   },
                 ].map((box, i) => (
                   <div key={i} className="bg-white/20 backdrop-blur-md p-6 rounded-xl text-center lg:text-left">
-                    <div className="font-bold text-xl mb-2">{box.title}</div>
-                    <p className="text-white/90 text-sm">{box.desc}</p>
+                    <div className="font-bold text-lg sm:text-xl mb-2">{box.title}</div>
+                    <p className="text-white/90 text-sm sm:text-base">{box.desc}</p>
                   </div>
                 ))}
               </div>

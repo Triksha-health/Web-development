@@ -139,7 +139,7 @@ const PreOrderPage: React.FC = () => {
   };
 
   const getOriginalPrice = () => {
-    if (triksha === "early") return "₹19,999";
+    if (triksha === "early") return "₹17,999";
     if (triksha === "standard") return "₹22,999";
     return "₹0";
   };
@@ -215,7 +215,7 @@ const PreOrderPage: React.FC = () => {
                           </p>
                           <div className="text-xs text-gray-500 space-y-1">
                             <p>✓ Secure payment processing</p>
-                            
+
                             <p>✓ Free shipping across India</p>
                           </div>
                         </div>

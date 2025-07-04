@@ -285,9 +285,8 @@ function LaunchSection() {
   });
 
   const launchDate = new Date("2026-01-01T00:00:00");
-  // Early bird stock remaining
+
   const [earlyBirdStock, setEarlyBirdStock] = useState(50);
-  // const [standardStock, setStandardStock] = useState(150);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -330,11 +329,9 @@ function LaunchSection() {
     <section className="section bg-white">
       <div className="container">
         <div className="text-center max-w-3xl mx-auto mb-16">
-          {/* <h2 className="section-title text-[#3691ff]">Launch Timeline</h2> */}
           <SectionHeading
             title="Launch Timeline"
-            subtitle=" Be among the first to experience Triksha's revolutionary health predictions. Limited devices available for
-            our initial launch."
+            subtitle="Be among the first to experience Triksha's revolutionary health predictions. Limited devices available for our initial launch."
           />
         </div>
 
@@ -344,29 +341,33 @@ function LaunchSection() {
             <p className="text-gray-600">Secure your device now before we sell out</p>
           </div>
 
-          <div className="grid grid-cols-4 gap-4 max-w-2xl mx-auto">
-            <div className="bg-white rounded-lg p-4 text-center shadow hover:scale-105 transition-transform">
+          {/* Responsive Countdown Timer */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 max-w-2xl mx-auto px-4">
+            <div className="bg-white rounded-lg p-4 text-center shadow hover:scale-105 transition-transform duration-300">
               <div className="text-3xl md:text-4xl font-bold text-primary-500">{timeLeft.days}</div>
               <div className="text-sm text-gray-500 mt-1">Days</div>
             </div>
-            <div className="bg-white rounded-lg p-4 text-center shadow hover:scale-105 transition-transform">
+
+            <div className="bg-white rounded-lg p-4 text-center shadow hover:scale-105 transition-transform duration-300">
               <div className="text-3xl md:text-4xl font-bold text-primary-500">{timeLeft.hours}</div>
               <div className="text-sm text-gray-500 mt-1">Hours</div>
             </div>
-            <div className="bg-white rounded-lg p-4 text-center shadow hover:scale-105 transition-transform">
+
+            <div className="bg-white rounded-lg p-4 text-center shadow hover:scale-105 transition-transform duration-300">
               <div className="text-3xl md:text-4xl font-bold text-primary-500">{timeLeft.minutes}</div>
               <div className="text-sm text-gray-500 mt-1">Minutes</div>
             </div>
-            <div className="bg-white rounded-lg p-4 text-center shadow hover:scale-105 transition-transform">
+
+            <div className="bg-white rounded-lg p-4 text-center shadow hover:scale-105 transition-transform duration-300">
               <div className="text-3xl md:text-4xl font-bold text-primary-500">{timeLeft.seconds}</div>
               <div className="text-sm text-gray-500 mt-1">Seconds</div>
             </div>
           </div>
         </div>
 
-        {/* Centered Early Bird Box */}
+        {/* Early Bird Offer Box */}
         <div className="flex justify-center">
-          <div className="w-full md:w-4/5 lg:w-3/5 bg-white rounded-2xl shadow-2xl overflow-hidden border-2 border-grey hover:scale-[1.02] transition-transform">
+          <div className="w-full md:w-4/5 lg:w-3/5 bg-white rounded-2xl shadow-2xl overflow-hidden border-2 border-gray-200 hover:scale-[1.02] transition-transform duration-300">
             <div className="bg-primary-500 text-white text-center py-3">
               <span className="font-medium text-lg">Limited Early Access</span>
             </div>
@@ -383,61 +384,25 @@ function LaunchSection() {
               </p>
 
               <ul className="space-y-4 mb-8 text-lg">
-                <li className="flex items-start">
-                  <svg
-                    className="w-6 h-6 text-[#3691ff] mr-3 mt-1"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-                  </svg>
-                  <span>12-month premium subscription (Wearable + App)</span>
-                </li>
-                <li className="flex items-start">
-                  <svg
-                    className="w-6 h-6 text-[#3691ff] mr-3 mt-1"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-                  </svg>
-                  <span>Free personalized AI Coach</span>
-                </li>
-                <li className="flex items-start">
-                  <svg
-                    className="w-6 h-6 text-[#3691ff] mr-3 mt-1"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-                  </svg>
-                  <span>Lifetime priority support</span>
-                </li>
-                <li className="flex items-start">
-                  <svg
-                    className="w-6 h-6 text-[#3691ff] mr-3 mt-1"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-                  </svg>
-                  <span>Priority shipping from Jan 1</span>
-                </li>
-                <li className="flex items-start">
-                  <svg
-                    className="w-6 h-6 text-[#3691ff] mr-3 mt-1"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-                  </svg>
-                  <span>Limited to 200 units only</span>
-                </li>
+                {[
+                  "12-month premium subscription (App + Wearable)",
+                  "Free personalized AI Coach",
+                  "Lifetime priority support",
+                  "Priority shipping from Jan 1",
+                  "Limited to 200 units only",
+                ].map((feature, index) => (
+                  <li key={index} className="flex items-start">
+                    <svg
+                      className="w-6 h-6 text-[#3691ff] mr-3 mt-1"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    <span>{feature}</span>
+                  </li>
+                ))}
               </ul>
 
               <div className="mb-6">
