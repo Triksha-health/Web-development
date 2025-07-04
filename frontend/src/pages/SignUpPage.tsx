@@ -17,8 +17,6 @@ function SignUpPage() {
   const { signup, isLoading } = useAuth();
   const navigate = useNavigate();
 
-  const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError("");
@@ -29,7 +27,7 @@ function SignUpPage() {
     }
 
     try {
-      const response = await fetch(`${API_BASE_URL}/api/auth/send-otp`, {
+      const response = await fetch("/api/auth/send-otp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
@@ -53,7 +51,7 @@ function SignUpPage() {
     setError("");
 
     try {
-      const response = await fetch(`${API_BASE_URL}/api/auth/verify-otp`, {
+      const response = await fetch("/api/auth/verify-otp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, otp }),

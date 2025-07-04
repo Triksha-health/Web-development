@@ -1,6 +1,14 @@
- publish = "dist" # Ensure this points to your build folder
-  command = "npm run build" # Adjust this if your build command is different
- [[redirects]]
+[build]
+  publish = "dist"
+  command = "npm run build"
+
+[[redirects]]
+  from = "/api/*"
+  to = "https://triksha-backend-f5f0cth4f9c0b8g9.southindia-01.azurewebsites.net/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
