@@ -18,31 +18,31 @@ console.log("adminLogout:", typeof adminController.adminLogout);
 
 
 // ✅ Admin Auth
-router.post("/admin/login", adminController.adminLogin);
-router.get("/admin/profile", adminController.getAdminProfile);
-router.post("/admin/logout", adminController.adminLogout);
+router.post("/login", adminController.adminLogin);
+router.get("/profile", adminController.getAdminProfile);
+router.post("/logout", adminController.adminLogout);
 
 // ✅ Orders Management
-router.get("/admin/orders", adminOrders.getAllOrders);
-router.get("/admin/orders/:id", adminOrders.getOrderById);
-router.patch("/admin/orders/:id", adminOrders.updateOrderStatus);
-router.delete("/admin/orders/:id", adminOrders.deleteOrder);
+router.get("/orders", adminOrders.getAllOrders);
+router.get("/orders/:id", adminOrders.getOrderById);
+router.patch("/orders/:id", adminOrders.updateOrderStatus);
+router.delete("/orders/:id", adminOrders.deleteOrder);
 
 // ✅ Payments / Razorpay Integration
-router.get("/admin/payment-status/:orderId", adminPayments.getPaymentStatus);
-router.post("/admin/refund/:orderId", adminPayments.initiateRefund);
+router.get("/payment-status/:orderId", adminPayments.getPaymentStatus);
+router.post("/refund/:orderId", adminPayments.initiateRefund);
 
 // ✅ User Management
-router.get("/admin/users", adminUsers.getAllUsers);
-router.get("/admin/users/:id", adminUsers.getUserById);
+router.get("/users", adminUsers.getAllUsers);
+router.get("/users/:id", adminUsers.getUserById);
 
 // ✅ Analytics
-router.get("/admin/analytics/orders-summary", adminAnalytics.getOrdersSummary);
-router.get("/admin/analytics/daily-sales", adminAnalytics.getDailySales);
-router.get("/admin/analytics/refunds", adminAnalytics.getRefundStats);
+router.get("/analytics/orders-summary", adminAnalytics.getOrdersSummary);
+router.get("/analytics/daily-sales", adminAnalytics.getDailySales);
+router.get("/analytics/refunds", adminAnalytics.getRefundStats);
 
 // ✅ Settings
-router.get("/admin/settings", adminSettings.getSettings);
-router.patch("/admin/settings", adminSettings.updateSettings);
+router.get("/settings", adminSettings.getSettings);
+router.patch("/settings", adminSettings.updateSettings);
 
 module.exports = router;
