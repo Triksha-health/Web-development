@@ -197,7 +197,7 @@ const ProfileTab: React.FC = () => {
                 </div>
 
                 <div className="flex-1 text-white">
-                  <h2 className="text-4xl font-bold mb-3">{user?.name ?? "Hello"}</h2>
+                  <h2 className="text-4xl font-bold mb-3">{user?.name}</h2>
 
                   <div className="flex flex-wrap gap-6 text-sm">
                     <div className="flex items-center bg-white/10 backdrop-blur-sm rounded-lg px-4 py-2">
