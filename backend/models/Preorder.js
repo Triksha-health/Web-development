@@ -26,7 +26,7 @@ const PreorderSchema = new mongoose.Schema({
     paymentId: String,
     status: {
       type: String,
-      enum: ['Success', 'Refunded'],
+      enum: ['Success','refunded','confirmed'],
       default: 'Success'
     }
   },

@@ -1,11 +1,18 @@
 const Preorder = require('../models/Preorder');
 const Razorpay = require('razorpay');
+const stockServices = require('../services/stockServices');
 require('dotenv').config();
 
 // 1. CREATE preorder after payment verification
 exports.createPreorder = async (req, res) => {
   try {
     const { userId, plan, shipping, razorpayDetails } = req.body;
+       
+    const stockAvailable = await stockServices.reduceStock(plan, 1);
+    if (!stockAvailable) {
+      return res.status(400).json({ message: "Out of stock" });
+    }
+
 
     const preorder = new Preorder({
       userId,
@@ -14,7 +21,7 @@ exports.createPreorder = async (req, res) => {
       payment: {
         orderId: razorpayDetails.orderId,
         paymentId: razorpayDetails.paymentId,
-        status: "Success"
+        status: "confirmed"
       }
     });
 
@@ -42,8 +49,12 @@ exports.cancelPreorder = async (req, res) => {
 
   try {
     const order = await Preorder.findById(orderId);
-    if (!order) return res.status(404).json({ message: "Order not found" });
 
+    if (!order){ return res.status(404).json({ message: "Order not found" });
+    }
+    if (order.payment.status === 'confirmed') {
+      await stockServices.restoreStock(order.plan, 1);
+    }
     const razorpay = new Razorpay({
       key_id: process.env.RAZORPAY_KEY_ID,
       key_secret: process.env.RAZORPAY_KEY_SECRET
@@ -53,9 +64,14 @@ exports.cancelPreorder = async (req, res) => {
 
     order.payment.status = "Refunded";
     await order.save();
+     await Preorder.findByIdAndDelete(orderId);
+    res.status(200).json({
+      success: true,
+      message: "Order cancelled, stock restored, and refund processed.",
+      refund
+    });
 
-    res.status(200).json({ message: "Refund successful", refund });
-  } catch (err) {
-    res.status(500).json({ message: "Refund failed", error: err.message });
+  } catch (error) {
+    res.status(500).json({ message: "Failed to cancel preorder", error: error.message });
   }
 };
