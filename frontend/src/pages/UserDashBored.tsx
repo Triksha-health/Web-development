@@ -54,7 +54,7 @@ function DashboardPage() {
           {/* Welcome message */}
           <div className="mb-8 p-4 bg-primary-50 rounded-lg">
             <div className="text-sm text-primary-600 mb-1">Welcome back,</div>
-            <div className="font-medium text-primary-800">{user?.name}</div>
+            <div className="font-medium text-primary-800">{user?.name ?? "John Doe"}</div>
             <div className="text-xs text-primary-500 mt-1">Manage your account and orders</div>
           </div>
 

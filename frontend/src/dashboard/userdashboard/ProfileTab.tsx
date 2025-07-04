@@ -1,16 +1,6 @@
-import { useState, ChangeEvent, FormEvent } from 'react';
-import {
-  User,
-  Mail,
-  Phone,
-  Edit2,
-  MapPin,
-  Calendar,
-  Award,
-  Shield,
-  Star
-} from 'lucide-react';
-import { useAuth } from '../../context/AuthContext';
+import { useState, ChangeEvent, FormEvent } from "react";
+import { User, Mail, Phone, Edit2, MapPin, Calendar, Award, Shield, Star } from "lucide-react";
+import { useAuth } from "../../context/AuthContext";
 
 interface FormData {
   name: string;
@@ -25,21 +15,19 @@ const ProfileTab: React.FC = () => {
   const { user } = useAuth();
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [formData, setFormData] = useState<FormData>({
-    name: user?.name ?? '',
-    email: user?.email ?? '',
-    phone: '+91 98765 43210',
-    address: '123 Main St, Bangalore, Karnataka, India',
-    dateOfBirth: '1990-05-15',
-    emergencyContact: '+91 98765 43211'
+    name: user?.name ?? "",
+    email: user?.email ?? "",
+    phone: "",
+    address: "",
+    dateOfBirth: "",
+    emergencyContact: "",
   });
 
-  const handleChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
@@ -55,20 +43,18 @@ const ProfileTab: React.FC = () => {
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-3xl font-bold text-gray-900">My Profile</h1>
-          <p className="text-gray-600 mt-2">
-            Manage your personal information and account details
-          </p>
+          <p className="text-gray-600 mt-2">Manage your personal information and account details</p>
         </div>
         <button
-          onClick={() => setIsEditing(prev => !prev)}
+          onClick={() => setIsEditing((prev) => !prev)}
           className={`mt-4 sm:mt-0 inline-flex items-center px-6 py-3 rounded-xl font-medium transition-all duration-300 transform hover:scale-105 ${
             isEditing
-              ? 'bg-gray-100 text-gray-700 hover:bg-gray-200 shadow-md'
-              : 'bg-gradient-to-r btn-primary text-white   shadow-lg hover:shadow-xl'
+              ? "bg-gray-100 text-gray-700 hover:bg-gray-200 shadow-md"
+              : "bg-gradient-to-r btn-primary text-white   shadow-lg hover:shadow-xl"
           }`}
         >
           <Edit2 className="w-5 h-5 mr-2" />
-          {isEditing ? 'Cancel' : 'Edit Profile'}
+          {isEditing ? "Cancel" : "Edit Profile"}
         </button>
       </div>
 
@@ -77,22 +63,15 @@ const ProfileTab: React.FC = () => {
         {isEditing ? (
           <form onSubmit={handleSubmit} className="p-8">
             <div className="mb-8">
-              <h2 className="text-2xl font-bold text-gray-900 mb-2">
-                Edit Profile Information
-              </h2>
-              <p className="text-gray-600">
-                Update your personal details below
-              </p>
+              <h2 className="text-2xl font-bold text-gray-900 mb-2">Edit Profile Information</h2>
+              <p className="text-gray-600">Update your personal details below</p>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               <div className="space-y-6">
                 {/* Full Name */}
                 <div>
-                  <label
-                    htmlFor="name"
-                    className="block text-sm font-semibold text-gray-700 mb-3"
-                  >
+                  <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-3">
                     Full Name
                   </label>
                   <input
@@ -108,10 +87,7 @@ const ProfileTab: React.FC = () => {
 
                 {/* Email */}
                 <div>
-                  <label
-                    htmlFor="email"
-                    className="block text-sm font-semibold text-gray-700 mb-3"
-                  >
+                  <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-3">
                     Email Address
                   </label>
                   <input
@@ -127,10 +103,7 @@ const ProfileTab: React.FC = () => {
 
                 {/* Phone */}
                 <div>
-                  <label
-                    htmlFor="phone"
-                    className="block text-sm font-semibold text-gray-700 mb-3"
-                  >
+                  <label htmlFor="phone" className="block text-sm font-semibold text-gray-700 mb-3">
                     Phone Number
                   </label>
                   <input
@@ -147,10 +120,7 @@ const ProfileTab: React.FC = () => {
               <div className="space-y-6">
                 {/* Date of Birth */}
                 <div>
-                  <label
-                    htmlFor="dateOfBirth"
-                    className="block text-sm font-semibold text-gray-700 mb-3"
-                  >
+                  <label htmlFor="dateOfBirth" className="block text-sm font-semibold text-gray-700 mb-3">
                     Date of Birth
                   </label>
                   <input
@@ -165,10 +135,7 @@ const ProfileTab: React.FC = () => {
 
                 {/* Address */}
                 <div>
-                  <label
-                    htmlFor="address"
-                    className="block text-sm font-semibold text-gray-700 mb-3"
-                  >
+                  <label htmlFor="address" className="block text-sm font-semibold text-gray-700 mb-3">
                     Address
                   </label>
                   <textarea
@@ -183,10 +150,7 @@ const ProfileTab: React.FC = () => {
 
                 {/* Emergency Contact */}
                 <div>
-                  <label
-                    htmlFor="emergencyContact"
-                    className="block text-sm font-semibold text-gray-700 mb-3"
-                  >
+                  <label htmlFor="emergencyContact" className="block text-sm font-semibold text-gray-700 mb-3">
                     Emergency Contact
                   </label>
                   <input
@@ -234,9 +198,7 @@ const ProfileTab: React.FC = () => {
 
                 <div className="flex-1 text-white">
                   <h2 className="text-4xl font-bold mb-3">{user?.name}</h2>
-                  <p className="text-primary-100 text-lg mb-6">
-                    Triksha Pre-order Customer
-                  </p>
+                  <p className="text-primary-100 text-lg mb-6">Triksha Pre-order Customer</p>
 
                   <div className="flex flex-wrap gap-6 text-sm">
                     <div className="flex items-center bg-white/10 backdrop-blur-sm rounded-lg px-4 py-2">
@@ -261,9 +223,7 @@ const ProfileTab: React.FC = () => {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 {/* Contact Info */}
                 <div className="space-y-6">
-                  <h3 className="text-xl font-bold text-gray-900 mb-6">
-                    Contact Information
-                  </h3>
+                  <h3 className="text-xl font-bold text-gray-900 mb-6">Contact Information</h3>
                   {/* Email */}
                   <div className="group">
                     <div className="flex items-start p-4 rounded-xl hover:bg-gray-50 transition-colors duration-200">
@@ -271,12 +231,8 @@ const ProfileTab: React.FC = () => {
                         <Mail className="w-6 h-6 text-primary-600" />
                       </div>
                       <div>
-                        <div className="text-sm font-medium text-gray-500 mb-1">
-                          Email Address
-                        </div>
-                        <div className="text-lg font-semibold text-gray-900">
-                          {user?.email}
-                        </div>
+                        <div className="text-sm font-medium text-gray-500 mb-1">Email Address</div>
+                        <div className="text-lg font-semibold text-gray-900">{user?.email}</div>
                       </div>
                     </div>
                   </div>
@@ -288,12 +244,8 @@ const ProfileTab: React.FC = () => {
                         <Phone className="w-6 h-6 text-secondary-600" />
                       </div>
                       <div>
-                        <div className="text-sm font-medium text-gray-500 mb-1">
-                          Phone Number
-                        </div>
-                        <div className="text-lg font-semibold text-gray-900">
-                          {formData.phone}
-                        </div>
+                        <div className="text-sm font-medium text-gray-500 mb-1">Phone Number</div>
+                        <div className="text-lg font-semibold text-gray-900">{formData.phone}</div>
                       </div>
                     </div>
                   </div>
@@ -305,14 +257,12 @@ const ProfileTab: React.FC = () => {
                         <Calendar className="w-6 h-6 text-accent-600" />
                       </div>
                       <div>
-                        <div className="text-sm font-medium text-gray-500 mb-1">
-                          Date of Birth
-                        </div>
+                        <div className="text-sm font-medium text-gray-500 mb-1">Date of Birth</div>
                         <div className="text-lg font-semibold text-gray-900">
                           {new Date(formData.dateOfBirth).toLocaleDateString(undefined, {
-                            month: 'long',
-                            day: 'numeric',
-                            year: 'numeric'
+                            month: "long",
+                            day: "numeric",
+                            year: "numeric",
                           })}
                         </div>
                       </div>
@@ -322,9 +272,7 @@ const ProfileTab: React.FC = () => {
 
                 {/* Additional */}
                 <div className="space-y-6">
-                  <h3 className="text-xl font-bold text-gray-900 mb-6">
-                    Additional Details
-                  </h3>
+                  <h3 className="text-xl font-bold text-gray-900 mb-6">Additional Details</h3>
                   {/* Address */}
                   <div className="group">
                     <div className="flex items-start p-4 rounded-xl hover:bg-gray-50 transition-colors duration-200">
@@ -332,12 +280,8 @@ const ProfileTab: React.FC = () => {
                         <MapPin className="w-6 h-6 text-purple-600" />
                       </div>
                       <div>
-                        <div className="text-sm font-medium text-gray-500 mb-1">
-                          Address
-                        </div>
-                        <div className="text-lg font-semibold text-gray-900">
-                          {formData.address}
-                        </div>
+                        <div className="text-sm font-medium text-gray-500 mb-1">Address</div>
+                        <div className="text-lg font-semibold text-gray-900">{formData.address}</div>
                       </div>
                     </div>
                   </div>
@@ -348,12 +292,8 @@ const ProfileTab: React.FC = () => {
                         <Phone className="w-6 h-6 text-red-600" />
                       </div>
                       <div>
-                        <div className="text-sm font-medium text-gray-500 mb-1">
-                          Emergency Contact
-                        </div>
-                        <div className="text-lg font-semibold text-gray-900">
-                          {formData.emergencyContact}
-                        </div>
+                        <div className="text-sm font-medium text-gray-500 mb-1">Emergency Contact</div>
+                        <div className="text-lg font-semibold text-gray-900">{formData.emergencyContact}</div>
                       </div>
                     </div>
                   </div>
@@ -364,17 +304,12 @@ const ProfileTab: React.FC = () => {
                         <Shield className="w-6 h-6 text-green-600" />
                       </div>
                       <div>
-                        <div className="text-sm font-medium text-gray-500 mb-1">
-                          Account Status
-                        </div>
-                        <div className="text-lg font-semibold text-green-600">
-                          Verified & Active
-                        </div>
+                        <div className="text-sm font-medium text-gray-500 mb-1">Account Status</div>
+                        <div className="text-lg font-semibold text-green-600">Verified & Active</div>
                       </div>
                     </div>
                   </div>
                 </div>
-
               </div>
             </div>
           </div>

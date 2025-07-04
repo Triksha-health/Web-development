@@ -41,7 +41,7 @@ const OrdersTab: React.FC = () => {
   const dispatch = useAppDispatch();
   const order = useAppSelector((state) => state.userData.value as Order);
 
-  React.useEffect(() => {
+  /*React.useEffect(() => {
     const initialOrder: Order = {
       orderId: "TRK-2025-001234",
       date: "July 1, 2025",
@@ -104,10 +104,27 @@ const OrdersTab: React.FC = () => {
       ],
     };
     dispatch(setOrder(initialOrder));
-  }, [dispatch]);
+  }, [dispatch]);*/
+
+  const [loading, setLoading] = React.useState(true);
+
+  React.useEffect(() => {
+    if (!order) {
+      const timer = setTimeout(() => setLoading(false), 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [order]);
 
   if (!order) {
-    return <div>Loading order...</div>;
+    return (
+      <div className="flex items-center justify-center h-screen">
+        {loading ? (
+          <div className="text-gray-500 text-lg">Loading...</div>
+        ) : (
+          <div className="text-gray-500 text-lg">No orders found.</div>
+        )}
+      </div>
+    );
   }
 
   return (
