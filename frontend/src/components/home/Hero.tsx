@@ -38,9 +38,10 @@ function Hero() {
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">
           <div className="-mt-[100px]">
             <div className={`${isVisible ? "fade-in" : "opacity-0"}`}>
-              <span className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-gradient-to-r from-sky-400 via-cyan-500 to-violet-600 text-white font-mono text-sm tracking-wider uppercase shadow-xl hover:scale-105 transition-all duration-300 animate-pulse ring-2 ring-white/30 backdrop-blur-md">
-  ✨ <span>India’s First Predictive Health Monitoring Platform</span>
-</span>
+                <span className="inline-block px-5 py-2.5 rounded-full bg-gradient-to-r from-green-100 via-blue-100 to-purple-100 text-purple-800 font-semibold text-sm shadow-md hover:shadow-lg transition-all duration-300 animate-pulse">
+    ⭐ India’s First Predictive Health Monitoring Platform
+  </span>
+
 
 
               <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight mb-6 mt-8">
