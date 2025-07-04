@@ -197,8 +197,7 @@ const ProfileTab: React.FC = () => {
                 </div>
 
                 <div className="flex-1 text-white">
-                  <h2 className="text-4xl font-bold mb-3">{user?.name}</h2>
-                  <p className="text-primary-100 text-lg mb-6">Triksha Pre-order Customer</p>
+                  <h2 className="text-4xl font-bold mb-3">{user?.name ?? "Hello"}</h2>
 
                   <div className="flex flex-wrap gap-6 text-sm">
                     <div className="flex items-center bg-white/10 backdrop-blur-sm rounded-lg px-4 py-2">
@@ -317,8 +316,8 @@ const ProfileTab: React.FC = () => {
       </div>
 
       {/* Account Statistics */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {/* Active Orders */}
+      {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+       
         <div className="bg-gradient-to-br from-primary-50 to-primary-100 rounded-2xl p-6 border border-primary-200 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
           <div className="flex items-center justify-between mb-4">
             <div className="w-12 h-12 bg-primary-500 rounded-xl flex items-center justify-center">
@@ -329,7 +328,7 @@ const ProfileTab: React.FC = () => {
           <div className="text-3xl font-bold text-primary-700 mb-2">1</div>
           <div className="text-primary-600 font-medium">Active Orders</div>
         </div>
-        {/* Member Since */}
+        
         <div className="bg-gradient-to-br from-secondary-50 to-secondary-100 rounded-2xl p-6 border border-secondary-200 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
           <div className="flex items-center justify-between mb-4">
             <div className="w-12 h-12 bg-secondary-500 rounded-xl flex items-center justify-center">
@@ -340,7 +339,7 @@ const ProfileTab: React.FC = () => {
           <div className="text-3xl font-bold text-secondary-700 mb-2">June 2025</div>
           <div className="text-secondary-600 font-medium">Member Since</div>
         </div>
-        {/* Customer Tier */}
+        
         <div className="bg-gradient-to-br from-accent-50 to-accent-100 rounded-2xl p-6 border border-accent-200 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
           <div className="flex items-center justify-between mb-4">
             <div className="w-12 h-12 bg-accent-500 rounded-xl flex items-center justify-center">
@@ -351,7 +350,7 @@ const ProfileTab: React.FC = () => {
           <div className="text-3xl font-bold text-accent-700 mb-2">Early Bird</div>
           <div className="text-accent-600 font-medium">Customer Tier</div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

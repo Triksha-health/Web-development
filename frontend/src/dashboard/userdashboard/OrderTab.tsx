@@ -117,7 +117,7 @@ const OrdersTab: React.FC = () => {
 
   if (!order) {
     return (
-      <div className="flex items-center justify-center h-screen">
+      <div className="flex items-center justify-center h-[80vh]">
         {loading ? (
           <div className="text-gray-500 text-lg">Loading...</div>
         ) : (
