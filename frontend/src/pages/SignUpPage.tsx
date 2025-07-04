@@ -27,51 +27,51 @@ function SignUpPage() {
     }
 
     try {
-      const response = await fetch("/api/auth/send-otp", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
-      });
+  const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/send-otp`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email }),
+  });
 
-      const data = await response.json();
+  const data = await response.json();
 
-      if (!response.ok) {
-        setError(data?.message || "Failed to send OTP");
-        return;
-      }
+  if (!response.ok) {
+    setError(data?.message || "Failed to send OTP");
+    return;
+  }
 
-      setShowOtpForm(true);
-    } catch (err) {
-      console.error(err);
-      setError("Something went wrong while sending OTP");
+  setShowOtpForm(true);
+} catch (err) {
+  console.error(err);
+  setError("Something went wrong while sending OTP");
+}
+};
+
+const handleVerifyOtp = async () => {
+  setError("");
+
+  try {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/verify-otp`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, otp }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      setError(data?.message || "Invalid OTP");
+      return;
     }
-  };
 
-  const handleVerifyOtp = async () => {
-    setError("");
-
-    try {
-      const response = await fetch("/api/auth/verify-otp", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, otp }),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        setError(data?.message || "Invalid OTP");
-        return;
-      }
-
-      // OTP verified → now create the account
-      await signup(name, email, password);
-      navigate("/userdashboard");
-    } catch (err) {
-      console.error(err);
-      setError("Failed to verify OTP");
-    }
-  };
+    // OTP verified → now create the account
+    await signup(name, email, password);
+    navigate("/userdashboard");
+  } catch (err) {
+    console.error(err);
+    setError("Failed to verify OTP");
+  }
+};
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8">
