@@ -1,15 +1,40 @@
-import { useState } from "react";
-import { Routes, Route, Link, useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Routes, Route, Link, useLocation, useSearchParams } from "react-router-dom";
 import { User, ShoppingBag, LogOut, Menu, X, ChevronRight } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
 import ProfileTab from "../dashboard/userdashboard/ProfileTab";
 import OrdersTab from "../dashboard/userdashboard/OrderTab";
 // import NotFoundPage from './NotFoundPage';
+import jwt_decode from "jwt-decode";
 
 function DashboardPage() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const { user, logout } = useAuth();
+  const { user, logout, setUser } = useAuth();
   const location = useLocation();
+  const [searchParams] = useSearchParams();
+
+  // ✅ Handle ?token= in URL (Google redirect)
+  useEffect(() => {
+    const token = searchParams.get("token");
+    if (token) {
+      localStorage.setItem("triksha_token", token);
+
+      try {
+        const decoded: any = jwt_decode(token);
+        const newUser = {
+          id: decoded.id,
+          email: decoded.email ?? "",
+          name: decoded.username ?? "User",
+        };
+        localStorage.setItem("triksha_user", JSON.stringify(newUser));
+        setUser(newUser);
+      } catch (err) {
+        console.error("Invalid JWT token in URL:", err);
+      }
+
+      window.history.replaceState({}, document.title, "/userdashboard");
+    }
+  }, [searchParams, setUser]);
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -19,13 +44,11 @@ function DashboardPage() {
     setIsSidebarOpen(false);
   };
 
-  // Simplified navigation items - only Profile and Orders
   const navItems = [
     { name: "Profile", path: "/userdashboard", icon: <User className="w-5 h-5" /> },
     { name: "Orders", path: "/userdashboard/orders", icon: <ShoppingBag className="w-5 h-5" /> },
   ];
 
-  // Check if a nav item is active
   const isActive = (path: string) => {
     if (path === "/userdashboard" && location.pathname === "/userdashboard") {
       return true;
