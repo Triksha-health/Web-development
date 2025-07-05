@@ -14,7 +14,7 @@ function SignUpPage() {
   const [otp, setOtp] = useState("");
   const [showOtpForm, setShowOtpForm] = useState(false);
 
-  const { signup, isLoading } = useAuth();
+  const { signup, login, isLoading } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -27,51 +27,71 @@ function SignUpPage() {
     }
 
     try {
-  const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/send-otp`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email }),
-  });
+      const response = await fetch("/api/auth/send-otp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
 
-  const data = await response.json();
+      const data = await response.json();
 
-  if (!response.ok) {
-    setError(data?.message || "Failed to send OTP");
-    return;
-  }
+      if (!response.ok) {
+        setError(data?.message || "Failed to send OTP");
+        return;
+      }
 
-  setShowOtpForm(true);
-} catch (err) {
-  console.error(err);
-  setError("Something went wrong while sending OTP");
-}
-};
-
-const handleVerifyOtp = async () => {
-  setError("");
-
-  try {
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/verify-otp`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, otp }),
-    });
-
-    const data = await response.json();
-
-    if (!response.ok) {
-      setError(data?.message || "Invalid OTP");
-      return;
+      setShowOtpForm(true);
+    } catch (err) {
+      console.error(err);
+      setError("Something went wrong while sending OTP");
     }
+  };
 
-    // OTP verified → now create the account
-    await signup(name, email, password);
-    navigate("/userdashboard");
-  } catch (err) {
-    console.error(err);
-    setError("Failed to verify OTP");
-  }
-};
+  const handleVerifyOtp = async () => {
+    setError("");
+
+    try {
+      const response = await fetch("/api/auth/verify-otp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, otp }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setError(data?.message || "Invalid OTP");
+        return;
+      }
+
+      // ✅ OTP verified successfully → try to login first
+      try {
+        await login(email, password);
+      } catch (loginErr) {
+        // If login fails (e.g., user doesn't exist), fallback to signup
+        const loginErrorMsg = (loginErr as Error).message;
+        console.log("Login failed after OTP, falling back to signup:", loginErrorMsg);
+
+        if (loginErrorMsg.includes("Invalid credentials")) {
+          setError("Wrong password for existing user.");
+          return;
+        }
+
+        try {
+          await signup(name, email, password);
+        } catch (signupErr) {
+          console.error(signupErr);
+          setError((signupErr as Error).message);
+          return;
+        }
+      }
+
+      navigate("/userdashboard");
+    } catch (err) {
+      console.error(err);
+      setError("Failed to verify OTP");
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -109,7 +129,6 @@ const handleVerifyOtp = async () => {
             </>
           ) : (
             <form className="space-y-6" onSubmit={handleSubmit}>
-              {/* Name Field */}
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-gray-700">
                   Full name
@@ -132,7 +151,6 @@ const handleVerifyOtp = async () => {
                 </div>
               </div>
 
-              {/* Email Field */}
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700">
                   Email address
@@ -155,7 +173,6 @@ const handleVerifyOtp = async () => {
                 </div>
               </div>
 
-              {/* Password Field */}
               <div>
                 <label htmlFor="password" className="block text-sm font-medium text-gray-700">
                   Password
@@ -180,16 +197,11 @@ const handleVerifyOtp = async () => {
                     onClick={() => setShowPassword(!showPassword)}
                     className="absolute inset-y-0 right-0 pr-3 flex items-center"
                   >
-                    {showPassword ? (
-                      <EyeOff className="h-5 w-5 text-gray-400 hover:text-gray-600" />
-                    ) : (
-                      <Eye className="h-5 w-5 text-gray-400 hover:text-gray-600" />
-                    )}
+                    {showPassword ? <EyeOff className="h-5 w-5 text-gray-400 hover:text-gray-600" /> : <Eye className="h-5 w-5 text-gray-400 hover:text-gray-600" />}
                   </button>
                 </div>
               </div>
 
-              {/* Confirm Password Field */}
               <div>
                 <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
                   Confirm password
@@ -214,16 +226,11 @@ const handleVerifyOtp = async () => {
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                     className="absolute inset-y-0 right-0 pr-3 flex items-center"
                   >
-                    {showConfirmPassword ? (
-                      <EyeOff className="h-5 w-5 text-gray-400 hover:text-gray-600" />
-                    ) : (
-                      <Eye className="h-5 w-5 text-gray-400 hover:text-gray-600" />
-                    )}
+                    {showConfirmPassword ? <EyeOff className="h-5 w-5 text-gray-400 hover:text-gray-600" /> : <Eye className="h-5 w-5 text-gray-400 hover:text-gray-600" />}
                   </button>
                 </div>
               </div>
 
-              {/* Terms Checkbox */}
               <div className="flex items-center">
                 <input
                   id="terms"
@@ -236,26 +243,20 @@ const handleVerifyOtp = async () => {
                   I agree to the{" "}
                   <a href="#" className="font-medium text-primary-500 hover:text-primary-600">
                     Terms of Service
-                  </a>{" "}
-                  and{" "}
+                  </a>{" "}and{" "}
                   <a href="#" className="font-medium text-primary-500 hover:text-primary-600">
                     Privacy Policy
                   </a>
                 </label>
               </div>
 
-              {/* Submit Button */}
               <div>
                 <button
                   type="submit"
                   disabled={isLoading}
                   className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-500 hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
                 >
-                  {isLoading ? (
-                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                  ) : (
-                    "Sign up"
-                  )}
+                  {isLoading ? <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div> : "Sign up"}
                 </button>
               </div>
             </form>

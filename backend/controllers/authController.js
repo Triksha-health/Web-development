@@ -1,9 +1,10 @@
 const User = require('../models/User');
+const Otp = require('../models/otp');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 // ===================
-// REGISTER USER
+// REGISTER USER OR LOGIN IF EXISTS
 // ===================
 exports.register = async (req, res) => {
   const { username, email, password } = req.body;
@@ -16,29 +17,66 @@ exports.register = async (req, res) => {
 
     // Check for existing user
     const existingUser = await User.findOne({ email });
-    if (existingUser) return res.status(400).json({ message: 'User already exists' });
+    if (existingUser) {
+      // User already exists → check password and login
+      const isMatch = await bcrypt.compare(password, existingUser.password);
+      if (!isMatch) return res.status(400).json({ message: 'Invalid credentials' });
 
-    // Hash password
+      // Create JWT token
+      const token = jwt.sign(
+        { id: existingUser._id, role: existingUser.role },
+        process.env.JWT_SECRET,
+        { expiresIn: '7d' }
+      );
+
+      return res.status(200).json({
+        message: 'Login successful (existing user)',
+        token,
+        user: {
+          id: existingUser._id,
+          username: existingUser.username,
+          email: existingUser.email,
+          role: existingUser.role,
+        },
+      });
+    }
+
+    // User doesn't exist → register new user
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Create user
     const user = await User.create({
       username,
       email,
       password: hashedPassword,
-      role: 'user', // default from schema
+      role: 'user',
     });
 
-    // Return basic info (optional: return token here)
-    return res.status(201).json({ message: 'User registered successfully' });
+    // Create JWT token
+    const token = jwt.sign(
+      { id: user._id, role: user.role },
+      process.env.JWT_SECRET,
+      { expiresIn: '7d' }
+    );
+
+    return res.status(201).json({
+      message: 'User registered successfully',
+      token,
+      user: {
+        id: user._id,
+        username: user.username,
+        email: user.email,
+        role: user.role,
+      },
+    });
+
   } catch (err) {
-    console.error('Registration Error:', err.message);
-    return res.status(500).json({ message: 'Server error during registration' });
+    console.error('Registration/Login Error:', err.message);
+    return res.status(500).json({ message: 'Server error during registration/login' });
   }
 };
 
 // ===================
-// LOGIN USER
+// LOGIN USER (separate route, still available if needed)
 // ===================
 exports.login = async (req, res) => {
   const { email, password } = req.body;
@@ -75,5 +113,34 @@ exports.login = async (req, res) => {
   } catch (err) {
     console.error('Login Error:', err.message);
     return res.status(500).json({ message: 'Server error during login' });
+  }
+};
+
+// ===================
+// VERIFY OTP (DB-backed)
+// ===================
+exports.verifyOtp = async (req, res) => {
+  const { email, otp } = req.body;
+
+  try {
+    if (!email || !otp) {
+      return res.status(400).json({ message: 'Email and OTP are required' });
+    }
+
+    const record = await Otp.findOne({ email });
+
+    if (!record) return res.status(400).json({ message: 'No OTP sent for this email' });
+    if (new Date() > record.expiresAt) {
+      await Otp.deleteOne({ _id: record._id });
+      return res.status(400).json({ message: 'OTP has expired' });
+    }
+    if (record.otp !== otp) return res.status(400).json({ message: 'Invalid OTP' });
+
+    await Otp.deleteOne({ _id: record._id });
+
+    return res.json({ message: 'OTP verified successfully' });
+  } catch (err) {
+    console.error('OTP Verification Error:', err.message);
+    return res.status(500).json({ message: 'Server error during OTP verification' });
   }
 };
