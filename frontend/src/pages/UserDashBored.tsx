@@ -47,8 +47,8 @@ function DashboardPage() {
 
       {/* Sidebar - Desktop (fixed) and Mobile (slideover) */}
       <aside
-        className={fixed lg:bg-transparent max-[770px]:bg-white max-[770px]:top-0 max-[770px]:pt-20 mt-0 top-20 bottom-0 left-0 w-64  border-r border-gray-300 overflow-y-auto transition-transform transform z-10 
-        ${isSidebarOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}}
+        className={`fixed lg:bg-transparent max-[770px]:bg-white max-[770px]:top-0 max-[770px]:pt-20 mt-0 top-20 bottom-0 left-0 w-64  border-r border-gray-300 overflow-y-auto transition-transform transform z-10 
+        ${isSidebarOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}`}
       >
         <div className="px-4 py-6 h-full flex flex-col">
           {/* Welcome message */}
@@ -64,17 +64,17 @@ function DashboardPage() {
               <Link
                 key={item.name}
                 to={item.path}
-                className={flex items-center px-4 py-3 rounded-lg transition-all duration-200 group ${
+                className={`flex items-center px-4 py-3 rounded-lg transition-all duration-200 group ${
                   isActive(item.path)
                     ? "bg-primary-50 text-primary-600 border-r-2 border-primary-500"
                     : "text-gray-700 hover:bg-gray-50 hover:text-primary-600"
-                }}
+                }`}
                 onClick={closeSidebar}
               >
                 <span
-                  className={mr-3 transition-transform duration-200 ${
+                  className={`mr-3 transition-transform duration-200 ${
                     isActive(item.path) ? "scale-110" : "group-hover:scale-105"
-                  }}
+                  }`}
                 >
                   {item.icon}
                 </span>
