@@ -1,40 +1,15 @@
-import { useState, useEffect } from "react";
-import { Routes, Route, Link, useLocation, useSearchParams } from "react-router-dom";
+import { useState } from "react";
+import { Routes, Route, Link, useLocation } from "react-router-dom";
 import { User, ShoppingBag, LogOut, Menu, X, ChevronRight } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
 import ProfileTab from "../dashboard/userdashboard/ProfileTab";
 import OrdersTab from "../dashboard/userdashboard/OrderTab";
 // import NotFoundPage from './NotFoundPage';
-import jwt_decode from "jwt-decode";
 
 function DashboardPage() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const { user, logout, setUser } = useAuth();
+  const { user, logout } = useAuth();
   const location = useLocation();
-  const [searchParams] = useSearchParams();
-
-  // ✅ Handle ?token= in URL (Google redirect)
-  useEffect(() => {
-    const token = searchParams.get("token");
-    if (token) {
-      localStorage.setItem("triksha_token", token);
-
-      try {
-        const decoded: any = jwt_decode(token);
-        const newUser = {
-          id: decoded.id,
-          email: decoded.email ?? "",
-          name: decoded.username ?? "User",
-        };
-        localStorage.setItem("triksha_user", JSON.stringify(newUser));
-        setUser(newUser);
-      } catch (err) {
-        console.error("Invalid JWT token in URL:", err);
-      }
-
-      window.history.replaceState({}, document.title, "/userdashboard");
-    }
-  }, [searchParams, setUser]);
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -44,11 +19,13 @@ function DashboardPage() {
     setIsSidebarOpen(false);
   };
 
+  // Simplified navigation items - only Profile and Orders
   const navItems = [
     { name: "Profile", path: "/userdashboard", icon: <User className="w-5 h-5" /> },
     { name: "Orders", path: "/userdashboard/orders", icon: <ShoppingBag className="w-5 h-5" /> },
   ];
 
+  // Check if a nav item is active
   const isActive = (path: string) => {
     if (path === "/userdashboard" && location.pathname === "/userdashboard") {
       return true;
@@ -70,8 +47,8 @@ function DashboardPage() {
 
       {/* Sidebar - Desktop (fixed) and Mobile (slideover) */}
       <aside
-        className={`fixed lg:bg-transparent max-[770px]:bg-white max-[770px]:top-0 max-[770px]:pt-20 mt-0 top-20 bottom-0 left-0 w-64  border-r border-gray-300 overflow-y-auto transition-transform transform z-10 
-        ${isSidebarOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}`}
+        className={fixed lg:bg-transparent max-[770px]:bg-white max-[770px]:top-0 max-[770px]:pt-20 mt-0 top-20 bottom-0 left-0 w-64  border-r border-gray-300 overflow-y-auto transition-transform transform z-10 
+        ${isSidebarOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}}
       >
         <div className="px-4 py-6 h-full flex flex-col">
           {/* Welcome message */}
@@ -87,17 +64,17 @@ function DashboardPage() {
               <Link
                 key={item.name}
                 to={item.path}
-                className={`flex items-center px-4 py-3 rounded-lg transition-all duration-200 group ${
+                className={flex items-center px-4 py-3 rounded-lg transition-all duration-200 group ${
                   isActive(item.path)
                     ? "bg-primary-50 text-primary-600 border-r-2 border-primary-500"
                     : "text-gray-700 hover:bg-gray-50 hover:text-primary-600"
-                }`}
+                }}
                 onClick={closeSidebar}
               >
                 <span
-                  className={`mr-3 transition-transform duration-200 ${
+                  className={mr-3 transition-transform duration-200 ${
                     isActive(item.path) ? "scale-110" : "group-hover:scale-105"
-                  }`}
+                  }}
                 >
                   {item.icon}
                 </span>
