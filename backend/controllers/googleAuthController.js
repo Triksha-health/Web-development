@@ -27,7 +27,7 @@ exports.googleAuthCallback = async (req, res) => {
     const token = generateToken(user._id); // Generate JWT token
 
     // Redirect to your frontend with token in query param
-    res.redirect(`https://trikshahealth.com/userdashboard?token=${token}`);
+    res.redirect(`https://trikshahealth.com/dashboard?token=${token}`);
   } catch (err) {
     console.error("❌ Google Auth Error:", err);
     res.status(500).json({ message: 'Google authentication failed' });
