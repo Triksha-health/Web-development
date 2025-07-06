@@ -36,3 +36,21 @@ exports.updateFAQ = async (req, res) => {
     res.status(500).json({ message: 'Error updating FAQ' });
   }
 };
+
+// Create a new FAQ
+exports.createFAQ = async (req, res) => {
+  try {
+    const { question, answer } = req.body;
+    if (!question || !answer) {
+      return res.status(400).json({ message: 'Question and answer are required' });
+    }
+
+    const newFAQ = new FAQ({ question, answer });
+    await newFAQ.save();
+
+    res.status(201).json({ message: 'FAQ created successfully', faq: newFAQ });
+  } catch (err) {
+    console.error('Error creating FAQ:', err);
+    res.status(500).json({ message: 'Error creating FAQ' });
+  }
+};

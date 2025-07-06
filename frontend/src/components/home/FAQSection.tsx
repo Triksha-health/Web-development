@@ -8,6 +8,26 @@ interface FAQItemProps {
   answer: React.ReactNode;
 }
 
+// ✅ Add this helper at the top of your file:
+const getBaseApiUrl = async () => {
+  const azureUrl = "https://triksha-backend-f5f0cth4f9c0b8g9.southindia-01.azurewebsites.net";
+  const localUrl = "http://localhost:5000";
+
+  try {
+    const res = await fetch(`${azureUrl}/api/faq`, { method: "HEAD" });
+    if (res.ok) {
+      console.log("✅ Using Azure backend");
+      return azureUrl;
+    } else {
+      console.warn("⚠️ Azure backend not healthy, using local backend");
+      return localUrl;
+    }
+  } catch (err) {
+    console.warn("⚠️ Azure backend unreachable, using local backend");
+    return localUrl;
+  }
+};
+
 const FAQItem: React.FC<FAQItemProps> = ({ question, answer }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -47,13 +67,14 @@ const FAQ: React.FC = () => {
 
   useEffect(() => {
     const fetchFaqs = async () => {
+      const baseApiUrl = await getBaseApiUrl();
       try {
-        const response = await fetch('/api/faq'); // your backend API
+        const response = await fetch(`${baseApiUrl}/api/faq`);
         const data = await response.json();
 
         const formattedFaqs = data.map((faq: { question: string; answer: string }) => ({
           question: faq.question,
-          answer: <p>{faq.answer}</p>, // wrap plain text answer in <p>
+          answer: <p>{faq.answer}</p>,
         }));
 
         setFaqs(formattedFaqs);
