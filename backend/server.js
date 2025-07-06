@@ -7,7 +7,7 @@ const passport = require('passport');
 const connectDB = require('./config/db');
 const authRoutes = require('./routes/authRoutes');
 const contactRoutes = require('./routes/contactRoutes');
-const faqRoutes = require('./routes/faqRoutes');
+
 const blogRoutes = require('./routes/blogRoutes');
 const newsletterRoutes = require('./routes/newsletterRoutes');
 const systemRoutes = require("./routes/systemRoutes");
@@ -44,7 +44,7 @@ app.use(passport.session());
 app.use("/api/payment", paymentRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api', contactRoutes);
-app.use('/api', faqRoutes);
+
 app.use('/api/blogs', blogRoutes);
 app.use('/api/newsletter', newsletterRoutes);
 app.use("/api/system", systemRoutes);
