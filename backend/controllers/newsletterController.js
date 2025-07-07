@@ -14,7 +14,6 @@ exports.subscribeToNewsletter = async (req, res) => {
     }
 
     await Newsletter.create({ email });
-    // TODO: Add email sending logic here (using nodemailer or 3rd party)
 
     res.status(200).json({ success: true, message: 'Subscribed successfully!' });
   } catch (err) {
