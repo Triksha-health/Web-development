@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import Sidebar from "./components/Sidebar";
-import DashboardContent from "./components/DashboardContent";
-import PreOrdersContent from "./components/PreOrdersContent";
-import UsersContent from "./components/UsersContent";
-import AnalyticsContent from "./components/AnalyticsContent";
-import ContentManagement from "./components/ContentManagement";
-import ProfileContent from "./components/ProfileContent";
-import { getDashboardData } from "./components/data";
+import Sidebar from "../dashboard/admindashboard/components/Sidebar";
+import DashboardContent from "../dashboard/admindashboard/components/DashboardContent";
+import PreOrdersContent from "../dashboard/admindashboard/components/PreOrdersContent";
+import UsersContent from "../dashboard/admindashboard/components/UsersContent";
+import AnalyticsContent from "../dashboard/admindashboard/components/AnalyticsContent";
+import ContentManagement from "../dashboard/admindashboard/components/ContentManagement";
+import ProfileContent from "../dashboard/admindashboard/components/ProfileContent";
+import { getDashboardData } from "../dashboard/admindashboard/components/data";
 
 interface DashboardData {
   dashboardStats: {

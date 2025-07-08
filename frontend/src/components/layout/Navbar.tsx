@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 import logo from "../../public/logo (3).png";
-import { HashLink } from 'react-router-hash-link';
+import { HashLink } from "react-router-hash-link";
 
 interface NavbarProps {
   scrolled: boolean;
@@ -20,17 +20,18 @@ function Navbar({ scrolled }: NavbarProps) {
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const closeMenu = () => setIsMenuOpen(false);
 
-  useEffect(() => {
-    closeMenu();
-    setIsDropdownOpen(false);
-  }, [location.pathname]);
-
   const handleLogout = () => {
     logout();
     navigate("/");
   };
 
-  // Close dropdown when clicking outside
+  // Close menu/dropdown on route change
+  useEffect(() => {
+    closeMenu();
+    setIsDropdownOpen(false);
+  }, [location.pathname]);
+
+  // Close dropdown if clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
@@ -47,7 +48,7 @@ function Navbar({ scrolled }: NavbarProps) {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center" onClick={closeMenu}>
-            <img src={logo} alt="" className="w-20 h-10" />
+            <img src={logo} alt="Triksha Logo" className="w-20 h-10" />
           </Link>
 
           {/* Desktop Navigation */}
@@ -59,7 +60,7 @@ function Navbar({ scrolled }: NavbarProps) {
             <HashLink to="/#faq" className="text-gray-700 hover:text-primary-500 font-medium">FAQ</HashLink>
           </nav>
 
-          {/* CTA Buttons (Desktop) */}
+          {/* Desktop CTA / Auth Buttons */}
           <div className="hidden md:flex items-center space-x-4 relative" ref={dropdownRef}>
             {isAuthenticated ? (
               <div className="relative">
@@ -70,7 +71,6 @@ function Navbar({ scrolled }: NavbarProps) {
                   {user?.name}
                   <ChevronDown className="w-4 h-4 ml-1" />
                 </button>
-
                 {isDropdownOpen && (
                   <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-30">
                     <Link
@@ -96,6 +96,10 @@ function Navbar({ scrolled }: NavbarProps) {
               <>
                 <Link to="/signin" className="text-gray-700 hover:text-primary-500 font-medium">Sign in</Link>
                 <Link to="/pre-order" className="btn-primary">Pre-order Now</Link>
+                {/* ✅ Admin Login */}
+                <Link to="/admin/login" className="text-blue-600 hover:text-red-800 font-medium ml-4">
+                  Admin Login
+                </Link>
               </>
             )}
           </div>
@@ -128,6 +132,10 @@ function Navbar({ scrolled }: NavbarProps) {
                   <>
                     <Link to="/signin" onClick={closeMenu} className="block py-2 text-gray-700 hover:text-primary-500 font-medium">Sign in</Link>
                     <Link to="/pre-order" onClick={closeMenu} className="btn-primary mt-4 w-full flex justify-center">Pre-order Now</Link>
+                    {/* ✅ Admin Login (Mobile) */}
+                    <Link to="/admin/login" onClick={closeMenu} className="block py-2 text-blue-600 hover:text-red-800 font-medium text-center mt-2">
+                      Admin Login
+                    </Link>
                   </>
                 )}
               </div>
