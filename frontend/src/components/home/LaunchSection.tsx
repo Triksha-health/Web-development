@@ -271,12 +271,16 @@
 // }
 
 // export default LaunchSection;
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { motion, useInView } from "framer-motion";
 import SectionHeading from "../ui/SectionHeading";
 
 function LaunchSection() {
   const navigate = useNavigate();
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,
@@ -326,64 +330,133 @@ function LaunchSection() {
   });
 
   return (
-    <section className="section bg-white">
+    <motion.section
+      ref={ref}
+      className="section bg-white"
+      initial={{ opacity: 0 }}
+      animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+      transition={{ duration: 0.6 }}
+    >
       <div className="container">
-        <div className="text-center max-w-3xl mx-auto mb-16">
+        <motion.div
+          className="text-center max-w-3xl mx-auto mb-16"
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+        >
           <SectionHeading
             title="Launch Timeline"
             subtitle="Be among the first to experience Triksha's revolutionary health predictions. Limited devices available for our initial launch."
           />
-        </div>
+        </motion.div>
 
-        <div className="bg-neutral-50 rounded-2xl shadow-lg p-8 md:p-10 mb-16">
-          <div className="text-center mb-8">
+        <motion.div
+          className="bg-neutral-50 rounded-2xl shadow-lg p-8 md:p-10 mb-16"
+          initial={{ opacity: 0, y: 50 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+        >
+          <motion.div
+            className="text-center mb-8"
+            initial={{ opacity: 0 }}
+            animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+            transition={{ duration: 0.6, delay: 0.6 }}
+          >
             <h3 className="text-2xl font-bold mb-2">Shipping Begins: {formattedLaunchDate}</h3>
             <p className="text-gray-600">Secure your device now before we sell out</p>
-          </div>
+          </motion.div>
 
           {/* Responsive Countdown Timer */}
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 max-w-2xl mx-auto px-4">
-            <div className="bg-white rounded-lg p-4 text-center shadow hover:scale-105 transition-transform duration-300">
-              <div className="text-3xl md:text-4xl font-bold text-primary-500">{timeLeft.days}</div>
-              <div className="text-sm text-gray-500 mt-1">Days</div>
-            </div>
-
-            <div className="bg-white rounded-lg p-4 text-center shadow hover:scale-105 transition-transform duration-300">
-              <div className="text-3xl md:text-4xl font-bold text-primary-500">{timeLeft.hours}</div>
-              <div className="text-sm text-gray-500 mt-1">Hours</div>
-            </div>
-
-            <div className="bg-white rounded-lg p-4 text-center shadow hover:scale-105 transition-transform duration-300">
-              <div className="text-3xl md:text-4xl font-bold text-primary-500">{timeLeft.minutes}</div>
-              <div className="text-sm text-gray-500 mt-1">Minutes</div>
-            </div>
-
-            <div className="bg-white rounded-lg p-4 text-center shadow hover:scale-105 transition-transform duration-300">
-              <div className="text-3xl md:text-4xl font-bold text-primary-500">{timeLeft.seconds}</div>
-              <div className="text-sm text-gray-500 mt-1">Seconds</div>
-            </div>
+            {[
+              { value: timeLeft.days, label: "Days" },
+              { value: timeLeft.hours, label: "Hours" },
+              { value: timeLeft.minutes, label: "Minutes" },
+              { value: timeLeft.seconds, label: "Seconds" },
+            ].map((item, index) => (
+              <motion.div
+                key={item.label}
+                className="bg-white rounded-lg p-4 text-center shadow hover:scale-105 transition-transform duration-300"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
+                transition={{
+                  duration: 0.5,
+                  delay: isInView ? 0.8 + index * 0.1 : 0,
+                  type: "spring",
+                  stiffness: 100,
+                }}
+                whileHover={{ scale: 1.05 }}
+              >
+                <motion.div
+                  className="text-3xl md:text-4xl font-bold text-primary-500"
+                  key={item.value}
+                  initial={{ scale: 1.2 }}
+                  animate={{ scale: 1 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  {item.value}
+                </motion.div>
+                <div className="text-sm text-gray-500 mt-1">{item.label}</div>
+              </motion.div>
+            ))}
           </div>
-        </div>
+        </motion.div>
 
         {/* Early Bird Offer Box */}
-        <div className="flex justify-center">
-          <div className="w-full md:w-4/5 lg:w-3/5 bg-white rounded-2xl shadow-2xl overflow-hidden border-2 border-gray-200 hover:scale-[1.02] transition-transform duration-300">
-            <div className="bg-primary-500 text-white text-center py-3">
+        <motion.div
+          className="flex justify-center"
+          initial={{ opacity: 0, y: 80 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 80 }}
+          transition={{ duration: 0.8, delay: 1.2 }}
+        >
+          <motion.div
+            className="w-full md:w-4/5 lg:w-3/5 bg-white rounded-2xl shadow-2xl overflow-hidden border-2 border-gray-200"
+            whileHover={{ scale: 1.02 }}
+            transition={{ duration: 0.3 }}
+          >
+            <motion.div
+              className="bg-primary-500 text-white text-center py-3"
+              initial={{ opacity: 0, y: -20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
+              transition={{ duration: 0.6, delay: 1.4 }}
+            >
               <span className="font-medium text-lg">Limited Early Access</span>
-            </div>
+            </motion.div>
             <div className="p-10">
-              <h3 className="text-3xl font-bold mb-4 text-center">Early Bird Offer</h3>
+              <motion.h3
+                className="text-3xl font-bold mb-4 text-center"
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                transition={{ duration: 0.6, delay: 1.6 }}
+              >
+                Early Bird Offer
+              </motion.h3>
 
-              <div className="flex justify-center items-baseline mb-6">
+              <motion.div
+                className="flex justify-center items-baseline mb-6"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
+                transition={{ duration: 0.6, delay: 1.8, type: "spring" }}
+              >
                 <span className="text-5xl font-bold text-primary-500">₹14,999</span>
                 <span className="text-gray-500 ml-3 line-through text-lg">₹17,999</span>
-              </div>
+              </motion.div>
 
-              <p className="text-center text-lg text-green-600 font-semibold mb-6">
+              <motion.p
+                className="text-center text-lg text-green-600 font-semibold mb-6"
+                initial={{ opacity: 0 }}
+                animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+                transition={{ duration: 0.6, delay: 2.0 }}
+              >
                 ⭐ Save over 15% with this special pre-order price!
-              </p>
+              </motion.p>
 
-              <ul className="space-y-4 mb-8 text-lg">
+              <motion.ul
+                className="space-y-4 mb-8 text-lg"
+                initial={{ opacity: 0 }}
+                animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+                transition={{ duration: 0.6, delay: 2.2 }}
+              >
                 {[
                   "12-month premium subscription (App + Wearable)",
                   "Free personalized AI Coach",
@@ -391,7 +464,13 @@ function LaunchSection() {
                   "Priority shipping from Jan 1",
                   "Limited to 200 units only",
                 ].map((feature, index) => (
-                  <li key={index} className="flex items-start">
+                  <motion.li
+                    key={index}
+                    className="flex items-start"
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
+                    transition={{ duration: 0.4, delay: isInView ? 2.4 + index * 0.1 : 0 }}
+                  >
                     <svg
                       className="w-6 h-6 text-[#3691ff] mr-3 mt-1"
                       fill="none"
@@ -401,34 +480,46 @@ function LaunchSection() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
                     </svg>
                     <span>{feature}</span>
-                  </li>
+                  </motion.li>
                 ))}
-              </ul>
+              </motion.ul>
 
-              <div className="mb-6">
+              <motion.div
+                className="mb-6"
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                transition={{ duration: 0.6, delay: 2.8 }}
+              >
                 <div className="flex justify-between items-center mb-2">
                   <span className="text-sm text-gray-600">Limited Stock</span>
                   <span className="text-sm font-medium">{earlyBirdStock}/200 remaining</span>
                 </div>
                 <div className="w-full bg-gray-200 rounded-full h-3">
-                  <div
-                    className="bg-primary-500 h-3 rounded-full transition-all"
-                    style={{ width: `${(earlyBirdStock / 200) * 100}%` }}
-                  ></div>
+                  <motion.div
+                    className="bg-primary-500 h-3 rounded-full"
+                    initial={{ width: 0 }}
+                    animate={isInView ? { width: `${(earlyBirdStock / 200) * 100}%` } : { width: 0 }}
+                    transition={{ duration: 1.5, delay: isInView ? 3.0 : 0, ease: "easeOut" }}
+                  ></motion.div>
                 </div>
-              </div>
+              </motion.div>
 
-              <button
+              <motion.button
                 onClick={() => navigate("/pre-order?triksha=early-bird")}
                 className="w-full bg-gradient-to-r from-blue-600 via-sky-500 to-cyan-400 text-white py-4 rounded-lg font-semibold text-lg hover:from-primary-600 hover:to-cyan-500 transition-colors"
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                transition={{ duration: 0.6, delay: 3.2 }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
               >
                 Pre-Order Now
-              </button>
+              </motion.button>
             </div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
-    </section>
+    </motion.section>
   );
 }
 

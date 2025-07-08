@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
+import { motion, useInView } from "framer-motion";
 import Container from "../ui/Container";
 import SectionHeading from "../ui/SectionHeading";
 import ToggleButtons from "../ui/ToggleButtons";
@@ -10,11 +11,13 @@ import doctorImage from "../../public/doctorimage.jpg";
 import realtime from "../../public/realtime.jpg";
 import headache from "../../public/headache.jpg";
 import smartwatch from "../../public/smartwatch.jpg";
-import EmergencyImage from "../../public/emergency.jpg"
-import LongTermImage from "../../public/Longterm.jpg"
+import EmergencyImage from "../../public/emergency.jpg";
+import LongTermImage from "../../public/Longterm.jpg";
 
 const UseCaseSection = () => {
   const [currentSelection, setCurrentSelection] = useState<string>("Health Risk Monitoring");
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   const items = [
     {
@@ -71,24 +74,48 @@ const UseCaseSection = () => {
   //   // Handle navigation or modal opening
   // };
   return (
-    <section id="usecases" className="py-24 relative overflow-hidden bg-white text-black">
+    <motion.section
+      ref={ref}
+      id="usecases"
+      className="py-24 relative overflow-hidden bg-white text-black"
+      initial={{ opacity: 0 }}
+      animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+      transition={{ duration: 0.6 }}
+    >
       <div className="absolute top-0 inset-x-0 h-40 bg-gradient-to-b from-slate-50 to-transparent"></div>
       <div className="absolute -top-40 -right-40 w-80 h-80 bg-teal-100 rounded-full opacity-30 blur-3xl"></div>
       <Container className="relative z-10">
-        <SectionHeading
-          title="Use Cases"
-          subtitle="Triksha adapts to your specific health needs, whether you're focusing on health risk monitoring or fitness optimization."
-        />
-        <div className="flex justify-center w-full mb-12">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+        >
+          <SectionHeading
+            title="Use Cases"
+            subtitle="Triksha adapts to your specific health needs, whether you're focusing on health risk monitoring or fitness optimization."
+          />
+        </motion.div>
+        <motion.div
+          className="flex justify-center w-full mb-12"
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+        >
           <ToggleButtons onSelectionChange={setCurrentSelection} />
-        </div>
-        <FeatureCards
-          cards={currentSelection === "Health Risk Monitoring" ? items : fitnessitems}
-          onLearnMore={handleLearnMore}
-        />
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
+        >
+          <FeatureCards
+            cards={currentSelection === "Health Risk Monitoring" ? items : fitnessitems}
+            onLearnMore={handleLearnMore}
+          />
+        </motion.div>
         {/* <TestimonialSection onReadSuccessStories={handleReadSuccessStories} /> */}
       </Container>
-    </section>
+    </motion.section>
   );
 };
 
