@@ -1,23 +1,37 @@
-const multer = require('multer');
-const path = require('path');
+const multer = require("multer");
+const path = require("path");
+const fs = require("fs");
 
+// Ensure the resumes folder exists
+const uploadDir = path.join(__dirname, "../uploads/resumes");
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir, { recursive: true });
+}
+
+// Configure Multer storage
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, 'uploads/resumes/'),
-  filename: (req, file, cb) => {
-    cb(null, `${Date.now()}-${file.originalname}`);
-  }
+  destination: function (req, file, cb) {
+    cb(null, uploadDir);
+  },
+  filename: function (req, file, cb) {
+    const uniqueName = `${Date.now()}-${file.originalname}`;
+    cb(null, uniqueName);
+  },
 });
 
 const fileFilter = (req, file, cb) => {
-  if (file.mimetype === 'application/pdf') {
+  const ext = path.extname(file.originalname).toLowerCase();
+  if (ext === ".pdf") {
     cb(null, true);
   } else {
-    cb(new Error('Only PDF files allowed'), false);
+    cb(new Error("Only PDF files are allowed"), false);
   }
 };
 
-module.exports = multer({
+const upload = multer({
   storage,
   fileFilter,
-  limits: { fileSize: 5 * 1024 * 1024 } // 5MB limit
+  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB
 });
+
+module.exports = upload;
