@@ -46,94 +46,54 @@ const FAQ: React.FC = () => {
     {
       question: "How is Triksha different from other health wearables?",
       answer: (
-        <>
-          <p>
-            Unlike typical fitness trackers that simply monitor your current health metrics, Triksha uses advanced AI algorithms to analyze patterns and predict potential health issues before symptoms appear.
-          </p>
-          <p>
-            Our technology is specifically designed to detect early signs of chronic diseases like diabetes, heart conditions, and respiratory problems, giving you valuable time to take preventive action.
-          </p>
-        </>
+        <p>
+          Triksha is not an ordinary tracking wearable device—it’s an AI-powered predictive health monitoring system. The wearable itself is designed to collect your 24/7 real-time health data accurately and comfortably. All the heavy AI analysis happens securely in our app and cloud, where advanced models analyze your data, medical history, and trends to predict potential health issues before they become serious. This ensures you get personalized, actionable health insights wherever you are.
+        </p>
       ),
     },
     {
       question: "When will I receive my Triksha device?",
       answer: (
-        <>
-          <p>
-            Shipping begins in November 2025, with exact delivery timeframes depending on your pre-order tier:
-          </p>
-          <ul className="list-disc pl-5 mt-2 space-y-1">
-            <li>Early Bird tier: Within 30 days of shipping start (by early December 2025)</li>
-            <li>Standard tier: Within 45 days of shipping start (by mid-December 2025)</li>
-          </ul>
-          <p className="mt-2">
-            We'll keep you updated with regular production and shipping updates via email.
-          </p>
-        </>
+        <p>
+          Shipping for pre-orders begins on January 1st. Once shipped, you will receive tracking information via email. Delivery times may vary depending on your location.
+        </p>
       ),
     },
     {
       question: "What data does Triksha collect?",
       answer: (
-        <>
-          <p>Triksha collects a range of physiological data including:</p>
-          <ul className="list-disc pl-5 mt-2 space-y-1">
-            <li>Heart rate and heart rate variability</li>
-            <li>Blood oxygen levels</li>
-            <li>Respiratory rate</li>
-            <li>Skin temperature</li>
-            <li>Activity and sleep patterns</li>
-            <li>Optional: blood glucose levels (with compatible third-party devices)</li>
-          </ul>
-          <p className="mt-2">
-            This data is analyzed to identify patterns and potential early warning signs of health issues.
-          </p>
-        </>
+        <p>
+          Triksha collects real-time health metrics like heart rate, stress levels, sleep quality, and other vital signs. This data is used to provide personalized health insights and predictions to help you stay proactive about your well-being.
+        </p>
       ),
     },
     {
       question: "Is my health data secure?",
       answer: (
-        <>
-          <p>Absolutely. We take data security and privacy extremely seriously:</p>
-          <ul className="list-disc pl-5 mt-2 space-y-1">
-            <li>All data is encrypted both in transit and at rest using industry-standard encryption</li>
-            <li>We comply with HIPAA and GDPR regulations</li>
-            <li>You maintain full ownership of your data and can delete it at any time</li>
-            <li>We never sell your personal data to third parties</li>
-            <li>You control exactly what data is shared with healthcare providers or family members</li>
-          </ul>
-        </>
+        <p>
+          Absolutely. Your data is encrypted and stored securely. We follow best practices to ensure your personal health information remains private and confidential. We will never sell your data to third parties.
+        </p>
       ),
     },
     {
       question: "How accurate are Triksha's health predictions?",
       answer: (
-        <>
-          <p>Triksha's AI models have been trained on extensive medical datasets and validated through clinical studies. Our current accuracy rates:</p>
-          <ul className="list-disc pl-5 mt-2 space-y-1">
-            <li>Cardiac anomaly detection: 92% accuracy compared to clinical tests</li>
-            <li>Pre-diabetic state detection: 87% accuracy with 3-week advance warning</li>
-            <li>Respiratory issue prediction: 89% accuracy with 5–10 day advance warning</li>
-          </ul>
-          <p className="mt-2">
-            Our technology continues to improve as our AI learns from more data and user feedback.
-          </p>
-        </>
+        <p>
+          Triksha uses a proprietary AI model trained on large datasets to deliver highly accurate predictions. While no wearable can replace a medical diagnosis, Triksha is designed to help you catch potential issues early so you can consult a healthcare professional in time.
+        </p>
       ),
     },
     {
       question: "Is there a subscription fee?",
       answer: (
         <>
-          <p>Your Triksha purchase includes a complimentary subscription period:</p>
+          <p>Yes. Triksha is offered as a subscription service that combines both the wearable device and the app experience. We have two simple plans:</p>
           <ul className="list-disc pl-5 mt-2 space-y-1">
-            <li>Early Bird tier: 12-month premium subscription included</li>
-            <li>Standard tier: 6-month premium subscription included</li>
+            <li>6-month plan at ₹10,999</li>
+            <li>12-month plan at ₹17,999</li>
           </ul>
           <p className="mt-2">
-            After this period, you can continue with a premium subscription (₹999/month or ₹9,999/year) or downgrade to our basic plan with core functionality at no cost.
+            Your subscription covers the Triksha wearable (delivered to you) and unlimited access to our AI-powered predictive health monitoring app. There are no hidden charges—just choose your plan and get everything you need for proactive, personalized health insights.
           </p>
         </>
       ),
@@ -141,27 +101,17 @@ const FAQ: React.FC = () => {
     {
       question: "What if I need to return my Triksha device?",
       answer: (
-        <>
-          <p>
-            We offer a 30-day satisfaction guarantee. If you're not completely satisfied with your Triksha device, you can return it within 30 days of receipt for a full refund.
-          </p>
-          <p className="mt-2">
-            Additionally, all Triksha devices come with a 1-year warranty against manufacturing defects.
-          </p>
-        </>
+        <p>
+          We offer a hassle-free return policy within 30 days of delivery. If you're not satisfied with your purchase, please contact our support team to initiate the return process.
+        </p>
       ),
     },
     {
       question: "Can Triksha replace medical devices or doctor visits?",
       answer: (
-        <>
-          <p>
-            No, Triksha is not intended to replace medical devices prescribed by your doctor or regular check-ups. It complements traditional healthcare with predictive insights.
-          </p>
-          <p className="mt-2">
-            Always consult healthcare professionals for diagnosis and treatment.
-          </p>
-        </>
+        <p>
+          No, Triksha is not a medical device and is not intended to diagnose or treat conditions. It is designed to help you track your health and spot early warning signs to find unnoticed existing health issues or upcoming future health risks, so you can consult a qualified healthcare provider if needed.
+        </p>
       ),
     },
   ];
