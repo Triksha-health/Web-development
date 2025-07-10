@@ -1,9 +1,9 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const auth = require('../middleware/authMiddleware');
-const upload = require('../middleware/upload');
-const { submitApplication } = require('../controllers/jobApplicationController');
+const upload = require("../middleware/upload");
+const { submitApplication } = require("../controllers/jobApplicationController");
 
-router.post('/apply', auth, upload.single('resume'), submitApplication);
+// Optional: add `auth` middleware if user should be logged in
+router.post("/", upload.single("resume"), submitApplication);
 
 module.exports = router;

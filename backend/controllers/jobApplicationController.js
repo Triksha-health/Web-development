@@ -8,13 +8,13 @@ exports.submitApplication = async (req, res) => {
       position,
       stipend,
       availableFrom,
-      coverLetter
+      coverLetter,
     } = req.body;
 
-    const resumeUrl = req.file?.path || ''; // Will be added via multer
+    const resumeUrl = req.file ? req.file.path : "";
 
-    const application = new JobApplication({
-      userId: req.user.id,
+    const newApplication = new JobApplication({
+      userId: req.user?.id || null,
       fullName,
       email,
       position,
@@ -24,9 +24,10 @@ exports.submitApplication = async (req, res) => {
       resumeUrl,
     });
 
-    await application.save();
-    res.status(201).json({ message: "Application submitted successfully" });
+    await newApplication.save();
+    res.status(201).json({ message: 'Application submitted successfully' });
   } catch (error) {
-    res.status(500).json({ message: "Failed to submit application", error: error.message });
+    console.error("Submit Error:", error);
+    res.status(500).json({ message: 'Failed to submit application', error: error.message });
   }
 };
