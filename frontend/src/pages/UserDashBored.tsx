@@ -1,3 +1,5 @@
+import { jwtDecode } from 'jwt-decode';
+import { useEffect } from 'react';  
 import { useState } from "react";
 import { Routes, Route, Link, useLocation } from "react-router-dom";
 import { User, ShoppingBag, LogOut, Menu, X, ChevronRight } from "lucide-react";
@@ -5,11 +7,44 @@ import { useAuth } from "../context/AuthContext";
 import ProfileTab from "../dashboard/userdashboard/ProfileTab";
 import OrdersTab from "../dashboard/userdashboard/OrderTab";
 // import NotFoundPage from './NotFoundPage';
+interface DecodedToken {
+  id: string;
+  iat: number;
+  exp: number;
+}
+
+interface UserProfile {
+  username: string;
+  email: string;
+}
 
 function DashboardPage() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const { user, logout } = useAuth();
+  const { logout } = useAuth();
   const location = useLocation();
+  const [userData, setUserData] = useState<UserProfile | null>(null);
+useEffect(() => {
+  let token = new URLSearchParams(location.search).get("token");
+
+  if (token) {
+    localStorage.setItem("token", token);
+  } else {
+    token = localStorage.getItem("token"); // ✅ fallback for later visits
+  }
+
+  if (token) {
+    const decoded: any = jwtDecode<DecodedToken>(token);
+    console.log("User ID from token:", decoded.id);
+    fetch(`https://triksha-backend-f5f0cth4f9c0b8g9.southindia-01.azurewebsites.net/api/user/profile`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => setUserData(data))
+      .catch((err) => console.error("Error fetching user:", err));
+  }
+}, [location]);
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -54,7 +89,7 @@ function DashboardPage() {
           {/* Welcome message */}
           <div className="mb-8 p-4 bg-primary-50 rounded-lg">
             <div className="text-sm text-primary-600 mb-1">Welcome back,</div>
-            <div className="font-medium text-primary-800">{user?.name ?? "John Doe"}</div>
+            <div className="font-medium text-primary-800">{userData?.username ?? "John Doe"}</div>
             <div className="text-xs text-primary-500 mt-1">Manage your account and orders</div>
           </div>
 
@@ -110,6 +145,17 @@ function DashboardPage() {
             <Route path="orders" element={<OrdersTab />} />
             {/* <Route path="*" element={<NotFoundPage />} /> */}
           </Routes>
+    {/* Show user info below */}
+    {userData ? (
+      <div className="bg-white p-4 rounded-md shadow-md mt-6">
+        <h2 className="text-xl font-semibold mb-2">Your Info</h2>
+        <p><strong>Name:</strong> {userData.username}</p>
+        <p><strong>Email:</strong> {userData.email}</p>
+      </div>
+    ) : (
+      <p className="mt-6 text-gray-500">Loading user info...</p>
+    )}
+
         </div>
       </main>
     </div>
