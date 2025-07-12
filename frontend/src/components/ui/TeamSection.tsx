@@ -81,21 +81,16 @@ const TeamSection: React.FC<teamsectionprops> = ({ team = [] }) => {
                 <motion.img
                   src={member.image}
                   alt={member.name}
-                  className="w-full h-80 object-cover object-top"
+                  className="w-full h-80 object-cover object-top transition-transform duration-500 group-hover:scale-105"
                   whileHover={{ scale: 1.02 }}
                   transition={{ duration: 0.3 }}
                 />
 
-                {/* Gradient overlay */}
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"
-                  initial={{ opacity: 0 }}
-                  whileHover={{ opacity: 1 }}
-                  transition={{ duration: 0.3 }}
-                />
+                {/* Updated Gradient overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300" />
 
-                {/* Social links */}
-                <div className="absolute inset-0 flex items-end">
+                {/* Social links container - move it here to be above gradient */}
+                <div className="absolute inset-0 flex items-end z-10">
                   <div className="p-6 w-full">
                     <div className="flex justify-end space-x-3">
                       <motion.a

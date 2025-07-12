@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Mail, Lock, Eye, EyeOff } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, useAnimation } from "framer-motion";
 import { useAuth } from "../context/AuthContext";
 
 function SignInPage() {
@@ -11,91 +11,173 @@ function SignInPage() {
   const [error, setError] = useState("");
   const { login, isLoading } = useAuth();
   const navigate = useNavigate();
+  const controls = useAnimation();
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  interface HandleSubmitEvent extends React.FormEvent<HTMLFormElement> {}
+
+  interface LoginFunction {
+    (email: string, password: string): Promise<void>;
+  }
+
+  const handleSubmit = async (e: HandleSubmitEvent) => {
     e.preventDefault();
     setError("");
 
     try {
-      await login(email, password);
+      await (login as LoginFunction)(email, password);
       navigate("/userdashboard");
-    } catch (err) {
+    } catch (err: unknown) {
       setError("Invalid email or password");
+      controls.start({
+        x: [0, -10, 10, -10, 10, 0],
+        transition: { duration: 0.4 },
+      });
     }
   };
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.3,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: "spring" as const,
+        stiffness: 100,
+        damping: 12,
+      },
+    },
+  };
+
+  // First, update the inputVariants to include a container variant
+  const inputContainerVariants = {
+    rest: { scale: 1 },
+    hover: {
+      scale: 1.02,
+      transition: { duration: 0.3 },
+    },
+    focus: {
+      scale: 1.03,
+      transition: { duration: 0.3 },
+    },
+  };
+
+  // Update the input variants to only handle shadow
+  const inputVariants = {
+    rest: { boxShadow: "0 0 0 0 rgba(0, 0, 0, 0)" },
+    hover: {
+      boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
+      transition: { duration: 0.3 },
+    },
+    focus: {
+      boxShadow: "0 0 15px rgba(59, 130, 246, 0.3)",
+      transition: { duration: 0.3 },
+    },
+  };
+
+  const buttonVariants = {
+    rest: { scale: 1 },
+    hover: {
+      scale: 1.05,
+      boxShadow: "0 5px 15px rgba(0, 0, 0, 0.2)",
+      transition: { duration: 0.3 },
+    },
+    tap: { scale: 0.95 },
+  };
+
+  const backgroundVariants = {
+    animate: {
+      background: ["linear-gradient(45deg, #f7fafc, #edf2f7)", "linear-gradient(45deg, #edf2f7, #f7fafc)"],
+      transition: {
+        duration: 5,
+        repeat: Infinity,
+        repeatType: "reverse" as "reverse",
+      },
+    },
+  };
+
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+    <motion.div
+      className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8"
+      variants={backgroundVariants}
+      animate="animate"
+    >
       <motion.div
         className="sm:mx-auto sm:w-full sm:max-w-md"
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.2 }}
-        viewport={{ once: true }}
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
       >
-        <motion.h2
-          className="mt-6 text-center text-3xl font-bold text-gray-900"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-        >
+        <motion.h2 className="mt-6 text-center text-3xl font-bold text-gray-900" variants={itemVariants}>
           Sign in to your account
         </motion.h2>
-        <motion.p
-          className="mt-2 text-center text-sm text-gray-600"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-        >
+        <motion.p className="mt-2 text-center text-sm text-gray-600" variants={itemVariants}>
           Or{" "}
           <Link to="/signup" className="font-medium text-primary-500 hover:text-primary-600">
             create a new account
           </Link>
-        </p>
-      </div>
+        </motion.p>
+      </motion.div>
 
       <motion.div
         className="mt-8 sm:mx-auto sm:w-full sm:max-w-md"
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.6, delay: 0.5 }}
-        viewport={{ once: true }}
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
       >
-        <motion.div
-          className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.6 }}
-        >
+        <motion.div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10" variants={itemVariants}>
           {error && (
             <motion.div
               className="mb-4 bg-red-50 text-red-500 p-3 rounded-md text-sm"
+              animate={controls}
               initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.3 }}
             >
               {error}
             </motion.div>
           )}
 
-          <form className="space-y-6" onSubmit={handleSubmit}>
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.4, delay: 0.7 }}
-              viewport={{ once: true }}
-            >
+          <motion.form
+            className="space-y-6"
+            onSubmit={handleSubmit}
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+          >
+            <motion.div variants={itemVariants}>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700">
                 Email address
               </label>
-              <div className="mt-1 relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <motion.div
+                className="mt-1 relative"
+                variants={inputContainerVariants}
+                initial="rest"
+                whileHover="hover"
+                whileFocus="focus"
+              >
+                <motion.div
+                  className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.3 }}
+                >
                   <Mail className="h-5 w-5 text-gray-400" />
-                </div>
-                <input
+                </motion.div>
+                <motion.input
                   id="email"
                   name="email"
                   type="email"
@@ -105,24 +187,25 @@ function SignInPage() {
                   onChange={(e) => setEmail(e.target.value)}
                   className="appearance-none block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-500 focus:border-primary-500 transition-all duration-200"
                   placeholder="you@gmail.com"
+                  variants={inputVariants}
                 />
-              </div>
+              </motion.div>
             </motion.div>
 
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.4, delay: 0.8 }}
-              viewport={{ once: true }}
-            >
+            <motion.div variants={itemVariants}>
               <label htmlFor="password" className="block text-sm font-medium text-gray-700">
                 Password
               </label>
               <div className="mt-1 relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <motion.div
+                  className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.3 }}
+                >
                   <Lock className="h-5 w-5 text-gray-400" />
-                </div>
-                <input
+                </motion.div>
+                <motion.input
                   id="password"
                   name="password"
                   type={showPassword ? "text" : "password"}
@@ -132,13 +215,18 @@ function SignInPage() {
                   onChange={(e) => setPassword(e.target.value)}
                   className="appearance-none block w-full pl-10 pr-12 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-500 focus:border-primary-500 transition-all duration-200"
                   placeholder="••••••••"
+                  variants={inputVariants}
+                  initial="rest"
+                  whileHover="hover"
+                  whileFocus="focus"
                 />
                 <motion.button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute inset-y-0 right-0 pr-3 flex items-center"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                  transition={{ type: "spring", stiffness: 200 }}
                 >
                   {showPassword ? (
                     <EyeOff className="h-5 w-5 text-gray-400 hover:text-gray-600 transition-colors" />
@@ -149,13 +237,7 @@ function SignInPage() {
               </div>
             </motion.div>
 
-            <motion.div
-              className="flex items-center justify-between"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.4, delay: 0.9 }}
-              viewport={{ once: true }}
-            >
+            <motion.div className="flex items-center justify-between" variants={itemVariants}>
               <div className="flex items-center">
                 <input
                   id="remember-me"
@@ -178,51 +260,52 @@ function SignInPage() {
               </div>
             </motion.div>
 
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.4, delay: 1.0 }}
-              viewport={{ once: true }}
-            >
+            <motion.div variants={itemVariants}>
               <motion.button
                 type="submit"
                 disabled={isLoading}
                 className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-500 hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-all duration-200"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+                variants={buttonVariants}
+                initial="rest"
+                whileHover="hover"
+                whileTap="tap"
               >
                 {isLoading ? (
-                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                  <motion.div
+                    className="w-5 h-5 border-2 border-white border-t-transparent rounded-full"
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                  ></motion.div>
                 ) : (
                   "Sign in"
                 )}
               </motion.button>
             </motion.div>
-          </form>
+          </motion.form>
 
-          <motion.div
-            className="mt-6"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: 1.1 }}
-            viewport={{ once: true }}
-          >
+          <motion.div className="mt-6" variants={itemVariants}>
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-300" />
+                <motion.div
+                  className="w-full border-t border-gray-300"
+                  initial={{ scaleX: 0 }}
+                  animate={{ scaleX: 1 }}
+                  transition={{ duration: 0.5, ease: "easeOut" }}
+                />
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white text-gray-500">Or continue with</span>
+                <motion.span
+                  className="px-2 bg-white text-gray-500"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4 }}
+                >
+                  Or continue with
+                </motion.span>
               </div>
             </div>
 
-            <motion.div
-              className="mt-6"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 1.2 }}
-              viewport={{ once: true }}
-            >
+            <motion.div className="mt-6" variants={itemVariants}>
               <motion.button
                 type="button"
                 onClick={() =>
@@ -230,14 +313,16 @@ function SignInPage() {
                     "https://triksha-backend-f5f0cth4f9c0b8g9.southindia-01.azurewebsites.net/auth/google")
                 }
                 className="w-full flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-all duration-200"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+                variants={buttonVariants}
+                initial="rest"
+                whileHover="hover"
+                whileTap="tap"
               >
                 <motion.svg
                   className="w-5 h-5 mr-2"
                   viewBox="0 0 24 24"
-                  initial={{ rotate: 0 }}
-                  whileHover={{ rotate: 360 }}
+                  initial={{ scale: 1 }}
+                  whileHover={{ scale: 1.2, rotate: 360 }}
                   transition={{ duration: 0.6 }}
                 >
                   <path
@@ -263,7 +348,7 @@ function SignInPage() {
           </motion.div>
         </motion.div>
       </motion.div>
-    </div>
+    </motion.div>
   );
 }
 
