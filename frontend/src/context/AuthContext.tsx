@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
 import axios from 'axios';
+import {jwtDecode} from 'jwt-decode';
 
 interface User {
   id: string;
@@ -18,7 +19,6 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-// ✅ Backend API URL (adjust if needed):
 const API_URL = 'https://triksha-backend-f5f0cth4f9c0b8g9.southindia-01.azurewebsites.net/api/auth';
 
 const api = axios.create({
@@ -31,19 +31,49 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const savedUser = localStorage.getItem('triksha_user');
-    if (savedUser) {
-      setUser(JSON.parse(savedUser));
+    const params = new URLSearchParams(window.location.search);
+    const urlToken = params.get('token');
+
+    let token = urlToken || localStorage.getItem('triksha_token');
+
+    if (urlToken) {
+      localStorage.setItem('triksha_token', urlToken);
+
+      // Clean up URL so ?token=... goes away
+      window.history.replaceState({}, document.title, '/userdashboard');
     }
+
+    if (token) {
+      try {
+        const decoded: any = jwtDecode(token);
+        const userData: User = {
+          id: decoded.id,
+          email: decoded.email,
+          name: decoded.username,
+        };
+        localStorage.setItem('triksha_user', JSON.stringify(userData));
+        setUser(userData);
+      } catch (err) {
+        console.error('Invalid token:', err);
+        localStorage.removeItem('triksha_user');
+        localStorage.removeItem('triksha_token');
+        setUser(null);
+      }
+    } else {
+      const savedUser = localStorage.getItem('triksha_user');
+      if (savedUser) {
+        setUser(JSON.parse(savedUser));
+      }
+    }
+
     setIsLoading(false);
   }, []);
 
   const login = async (email: string, password: string) => {
     setIsLoading(true);
-
     try {
       const res = await api.post('/login', { email, password });
-      const backendUser = res.data.user; // returned from backend
+      const backendUser = res.data.user;
       const token = res.data.token;
 
       const transformedUser: User = {
@@ -54,57 +84,45 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       localStorage.setItem('triksha_user', JSON.stringify(transformedUser));
       localStorage.setItem('triksha_token', token);
-
       setUser(transformedUser);
-
-      // Optionally: api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     } catch (error) {
-      throw new Error(
-        (error as any).response?.data?.message || 'Invalid credentials'
-      );
+      throw new Error((error as any).response?.data?.message || 'Invalid credentials');
     } finally {
       setIsLoading(false);
     }
   };
 
   const signup = async (name: string, email: string, password: string) => {
-  setIsLoading(true);
+    setIsLoading(true);
+    try {
+      const res = await api.post('/register', {
+        username: name,
+        email,
+        password,
+      });
+      const backendUser = res.data.user;
+      const token = res.data.token;
 
-  try {
-    const res = await api.post('/register', {
-      username: name,
-      email,
-      password,
-    });
-    const backendUser = res.data.user;
-    const token = res.data.token;
+      const transformedUser: User = {
+        id: backendUser.id,
+        email: backendUser.email,
+        name: backendUser.username,
+      };
 
-    const transformedUser: User = {
-      id: backendUser.id,
-      email: backendUser.email,
-      name: backendUser.username,
-    };
-
-    localStorage.setItem('triksha_user', JSON.stringify(transformedUser));
-    localStorage.setItem('triksha_token', token);
-
-    setUser(transformedUser);
-  } catch (error) {
-    const errorMessage =
-      (error as any).response?.data?.message || 'Failed to create an account';
-    throw new Error(errorMessage); // ✅ Send exact server message back to SignUpPage
-  } finally {
-    setIsLoading(false);
-  }
-};
-
+      localStorage.setItem('triksha_user', JSON.stringify(transformedUser));
+      localStorage.setItem('triksha_token', token);
+      setUser(transformedUser);
+    } catch (error) {
+      throw new Error((error as any).response?.data?.message || 'Failed to create an account');
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const logout = () => {
     setUser(null);
     localStorage.removeItem('triksha_user');
     localStorage.removeItem('triksha_token');
-    // Optionally clear Authorization header
-    // delete api.defaults.headers.common['Authorization'];
   };
 
   return (

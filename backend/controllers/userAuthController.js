@@ -1,7 +1,7 @@
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-
+const nodemailer=require('nodemailer')
 // ======================
 // Register New User
 // ======================
@@ -78,10 +78,58 @@ exports.logout = (req, res) => {
   // In stateless auth, logout is handled client-side
   res.status(200).json({ msg: "Logout successful (token removed from client)" });
 };
+//reset link
+exports.sendResetLink = async (req, res) => {
+  const { email } = req.body;
+
+  try {
+    const user = await User.findOne({ email });
+    if (!user) return res.status(404).json({ msg: "User not found" });
+
+    const resetToken = jwt.sign(
+      { id: user._id },
+      process.env.JWT_SECRET,
+      { expiresIn: '10m' }
+    );
+
+    const resetURL = `https://trikshahealth.com/reset-password/${resetToken}`;
+
+    // Configure transporter
+    const transporter = nodemailer.createTransport({
+      host: process.env.SMTP_HOST,
+      port: process.env.SMTP_PORT,
+      secure: false,
+      auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS
+      }
+    });
+
+    await transporter.sendMail({
+      from: process.env.FROM_EMAIL,
+      to: email,
+      subject: "Reset your Triksha password",
+      html: `<p>Click <a href="${resetURL}">here</a> to reset your password. Link expires in 10 minutes.</p>`
+    });
+
+    res.status(200).json({ msg: "Reset link sent successfully" });
+
+  } catch (err) {
+    console.error("Send reset link error:", err.message);
+    res.status(500).json({ msg: "Failed to send reset link" });
+  }
+};
+
 
 // Reset password (simple email-based simulation)
 exports.resetPassword = async (req, res) => {
-  const { email, newPassword } = req.body;
+  const { email, newPassword, confirmPassword } = req.body;
+
+  if (!email || !newPassword || !confirmPassword)
+    return res.status(400).json({ msg: "All fields are required" });
+
+  if (newPassword !== confirmPassword)
+    return res.status(400).json({ msg: "Passwords do not match" });
 
   try {
     const user = await User.findOne({ email });

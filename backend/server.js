@@ -74,6 +74,7 @@ app.use('/api/jobs', jobApplicationRoutes); // 👈 Job Application Form Route
 app.get('/', (req, res) => {
   res.send('✅ Triksha Backend is Running!');
 });
+console.log("JWT_SECRET:", process.env.JWT_SECRET); // ❗️TEMP debug line
 
 // Start Server
 const PORT = process.env.PORT || 5000;
