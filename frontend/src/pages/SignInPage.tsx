@@ -1,5 +1,3 @@
-//Sign In
-
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Mail, Lock, Eye, EyeOff } from "lucide-react";
@@ -33,6 +31,10 @@ function SignInPage() {
           Or{" "}
           <Link to="/signup" className="font-medium text-primary-500 hover:text-primary-600">
             create a new account
+          </Link>
+          {" "}·{" "}
+          <Link to="/admin/login" className="font-medium text-blue-600 hover:text-red-800">
+            Admin Login
           </Link>
         </p>
       </div>
