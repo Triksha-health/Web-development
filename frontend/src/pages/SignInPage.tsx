@@ -54,8 +54,8 @@ function SignInPage() {
           <Link to="/signup" className="font-medium text-primary-500 hover:text-primary-600">
             create a new account
           </Link>
-        </motion.p>
-      </motion.div>
+        </p>
+      </div>
 
       <motion.div
         className="mt-8 sm:mx-auto sm:w-full sm:max-w-md"

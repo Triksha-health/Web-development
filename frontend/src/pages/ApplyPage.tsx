@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import { File, X } from "lucide-react";
 
 const ApplyPage = () => {
@@ -14,7 +15,9 @@ const ApplyPage = () => {
     resume: null as File | null,
   });
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
@@ -25,11 +28,45 @@ const ApplyPage = () => {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(formData);
-    alert("Application Submitted Successfully!");
-    navigate("/");
+
+    try {
+      const form = new FormData();
+      form.append("fullName", formData.name);
+      form.append("email", formData.email);
+      form.append("position", formData.jobRole);
+      form.append("stipend", formData.stipend);
+      form.append("availableFrom", formData.startDate);
+      form.append("coverLetter", formData.coverLetter);
+      if (formData.resume) {
+        form.append("resume", formData.resume);
+      }
+
+      // Optional: if you're using auth token
+      const token = localStorage.getItem("token");
+
+      const res = await axios.post(
+        `${import.meta.env.VITE_API_URL}/api/jobs`,
+        form,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            ...(token && { Authorization: `Bearer ${token}` }),
+          },
+          withCredentials: true,
+        }
+      );
+
+      alert("Application Submitted Successfully!");
+      navigate("/");
+    } catch (error: any) {
+      console.error("Error submitting form:", error);
+      alert(
+        error.response?.data?.message ||
+          "Failed to submit application. Please try again."
+      );
+    }
   };
 
   return (
@@ -42,7 +79,9 @@ const ApplyPage = () => {
           <X size={28} />
         </button>
 
-        <h2 className="text-4xl font-bold mb-8 text-center text-gray-900">Job Application Form</h2>
+        <h2 className="text-4xl font-bold mb-8 text-center text-gray-900">
+          Job Application Form
+        </h2>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -113,35 +152,38 @@ const ApplyPage = () => {
             className="w-full p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500"
           ></textarea>
 
-         
           <div className="space-y-2">
-  <label className="block text-gray-700 font-medium">Upload Your Resume (PDF Only)</label>
+            <label className="block text-gray-700 font-medium">
+              Upload Your Resume (PDF Only)
+            </label>
 
-  <div className="flex items-center w-full border border-gray-300 rounded-xl p-3 bg-gray-50 hover:shadow-md transition-all">
-    <File className="w-6 h-6 text-primary-500 mr-3" />
+            <div className="flex items-center w-full border border-gray-300 rounded-xl p-3 bg-gray-50 hover:shadow-md transition-all">
+              <File className="w-6 h-6 text-primary-500 mr-3" />
 
-    <span className="flex-1 text-gray-600 truncate">
-      {formData.resume ? formData.resume.name : "No file selected"}
-    </span>
+              <span className="flex-1 text-gray-600 truncate">
+                {formData.resume ? formData.resume.name : "No file selected"}
+              </span>
 
-    <label
-      htmlFor="resume"
-      className="cursor-pointer bg-primary-500 text-white px-4 py-2 rounded-lg hover:bg-primary-600 transition-all text-sm"
-    >
-      Select File
-      <input
-        id="resume"
-        type="file"
-        accept=".pdf"
-        required
-        onChange={handleFileChange}
-        className="hidden"
-      />
-    </label>
-  </div>
+              <label
+                htmlFor="resume"
+                className="cursor-pointer bg-primary-500 text-white px-4 py-2 rounded-lg hover:bg-primary-600 transition-all text-sm"
+              >
+                Select File
+                <input
+                  id="resume"
+                  type="file"
+                  accept=".pdf"
+                  required
+                  onChange={handleFileChange}
+                  className="hidden"
+                />
+              </label>
+            </div>
 
-  <span className="text-gray-400 text-sm mt-1">Only PDF files (Max: 5MB)</span>
-</div>
+            <span className="text-gray-400 text-sm mt-1">
+              Only PDF files (Max: 5MB)
+            </span>
+          </div>
 
           <button
             type="submit"
