@@ -68,7 +68,10 @@ const AboutSection: React.FC = () => {
           viewport={{ once: true, amount: 0.2 }}
           className="relative mt-16"
         >
-          <div className="absolute hidden md:block top-24 left-0 right-0 h-1 bg-gradient-to-r from-teal-500 via-blue-500 to-purple-500 z-0"></div>
+          <motion.div
+            variants={fadeInUp}
+            className="absolute hidden md:block top-24 left-0 right-0 h-1 bg-gradient-to-r from-teal-500 via-blue-500 to-purple-500 z-0"
+          />
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
             {steps.map((step, index) => (
