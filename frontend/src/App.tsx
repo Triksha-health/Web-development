@@ -38,7 +38,7 @@ function App() {
       {/* Admin Routes */}
       <Route path="/admin/login" element={<AdminLoginPage />} />
 
-      {/* Protect admin dashboard route */}
+      {/* Protected Admin Dashboard */}
       <Route
         path="/admin/dashboard"
         element={
@@ -48,8 +48,11 @@ function App() {
         }
       />
 
-      {/* Optional: Redirect /admin to /admin/dashboard */}
-      <Route path="/admin" element={<Navigate to="/admin/dashboard" />} />
+      {/* Optional: redirect /admin to /admin/dashboard */}
+      <Route path="/admin" element={<Navigate to="/admin/dashboard" replace />} />
+      
+      {/* Catch all unknown routes */}
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
 }

@@ -9,6 +9,9 @@ const path = require('path');
 // DB connection
 const connectDB = require('./config/db');
 
+// Passport config
+require('./config/passport');
+
 // Route files
 const authRoutes = require('./routes/authRoutes');
 const contactRoutes = require('./routes/contactRoutes');
@@ -21,9 +24,7 @@ const adminRoutes = require('./routes/adminRoutes');
 const userRoutes = require('./routes/userRoutes');
 const googleauthRoutes = require('./routes/googleauthRoutes');
 const jobApplicationRoutes = require('./routes/jobApplicationRoutes');
-
-// Passport config
-require('./config/passport');
+const notificationRoutes = require('./routes/notificationRoutes'); // ✅ NEW
 
 // Connect to MongoDB
 console.log("MONGO_URL from .env is:", process.env.MONGO_URL);
@@ -68,7 +69,8 @@ app.use('/api/preorder', preorderRoutes);
 app.use("/api/admin", adminRoutes);
 app.use('/api/user', userRoutes);
 app.use('/auth', googleauthRoutes);
-app.use('/api/jobs', jobApplicationRoutes); // 👈 Job Application Form Route
+app.use('/api/jobs', jobApplicationRoutes);
+app.use('/api/notifications', notificationRoutes); // ✅ NEW
 
 // Health Check Route
 app.get('/', (req, res) => {
