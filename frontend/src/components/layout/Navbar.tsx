@@ -140,5 +140,5 @@ function Navbar({ scrolled }: NavbarProps) {
     </header>
   );
 }
-
+//help this to join
 export default Navbar;

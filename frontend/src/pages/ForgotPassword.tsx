@@ -15,12 +15,19 @@ function ForgotPassword() {
     setError("");
     setIsLoading(true);
 
-    try {
-      // Simulate API call
-      await new Promise<void>((resolve) => setTimeout(resolve, 2000));
+   try {
+      const res = await fetch("https://localhost:5000/api/user/sendResetLink", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || "Something went wrong");
+
       setIsSubmitted(true);
-    } catch (err) {
-      setError("Failed to send reset email. Please try again.");
+    } catch (err: any) {
+      setError(err.message || "Failed to send reset link");
     } finally {
       setIsLoading(false);
     }
