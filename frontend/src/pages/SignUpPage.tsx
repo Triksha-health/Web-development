@@ -69,81 +69,75 @@ function SignUpPage() {
   };
 
   const handleVerifyOtp = async () => {
-    setError("");
+  setError("");
 
-    try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/verify-otp`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, otp }),
+  try {
+    // Step 1: Verify OTP
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/verify-otp`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, otp }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      setError(data?.message || "Invalid OTP");
+      controls.start({
+        x: [0, -10, 10, -10, 10, 0],
+        transition: { duration: 0.4 },
       });
+      return;
+    }
 
-      const data = await response.json();
+    // Step 2: Register the user after OTP verified
+    try {
+      await signup(name, email, password);
+    } catch (signupErr) {
+      let signupErrorMsg = "Unknown error";
+      if (
+        signupErr &&
+        typeof signupErr === "object" &&
+        "message" in signupErr &&
+        typeof (signupErr as any).message === "string"
+      ) {
+        signupErrorMsg = (signupErr as any).message;
+      }
 
-      if (!response.ok) {
-        setError(data?.message || "Invalid OTP");
+      if (signupErrorMsg.toLowerCase().includes("already exists")) {
+        // If user already exists, fallback to login
+        try {
+          await login(email, password);
+        } catch (loginErr) {
+          setError("User already exists. Please try signing in.");
+          controls.start({
+            x: [0, -10, 10, -10, 10, 0],
+            transition: { duration: 0.4 },
+          });
+          return;
+        }
+      } else {
+        setError(signupErrorMsg);
         controls.start({
           x: [0, -10, 10, -10, 10, 0],
           transition: { duration: 0.4 },
         });
         return;
       }
-
-      try {
-        await login(email, password);
-      } catch (loginErr) {
-        let loginErrorMsg = "Unknown error";
-        if (
-          loginErr &&
-          typeof loginErr === "object" &&
-          "message" in loginErr &&
-          typeof (loginErr as any).message === "string"
-        ) {
-          loginErrorMsg = (loginErr as any).message;
-        }
-        console.log("Login failed after OTP, falling back to signup:", loginErrorMsg);
-
-        if (loginErrorMsg.includes("Invalid credentials")) {
-          setError("Wrong password for existing user.");
-          controls.start({
-            x: [0, -10, 10, -10, 10, 0],
-            transition: { duration: 0.4 },
-          });
-          return;
-        }
-
-        try {
-          await signup(name, email, password);
-        } catch (signupErr) {
-          console.error(signupErr);
-          let signupErrorMsg = "Unknown error";
-          if (
-            signupErr &&
-            typeof signupErr === "object" &&
-            "message" in signupErr &&
-            typeof (signupErr as any).message === "string"
-          ) {
-            signupErrorMsg = (signupErr as any).message;
-          }
-          setError(signupErrorMsg);
-          controls.start({
-            x: [0, -10, 10, -10, 10, 0],
-            transition: { duration: 0.4 },
-          });
-          return;
-        }
-      }
-
-      navigate("/userdashboard");
-    } catch (err) {
-      console.error(err);
-      setError("Failed to verify OTP");
-      controls.start({
-        x: [0, -10, 10, -10, 10, 0],
-        transition: { duration: 0.4 },
-      });
     }
-  };
+
+    // ✅ Done: Redirect to dashboard
+    navigate("/userdashboard");
+  } catch (err) {
+    console.error(err);
+    setError("Failed to verify OTP or register");
+    controls.start({
+      x: [0, -10, 10, -10, 10, 0],
+      transition: { duration: 0.4 },
+    });
+  }
+};
+
 
   useEffect(() => {
     window.scrollTo(0, 0);
