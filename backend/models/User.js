@@ -5,43 +5,34 @@ const UserSchema = new mongoose.Schema(
     username: {
       type: String,
       required: false,
-      unique: false, // Google users might not have one
+      unique: false,
     },
-
     email: {
       type: String,
       required: true,
       unique: true,
     },
-
     password: {
       type: String,
-      required: false, // Not required for Google users
+      required: false,
     },
-
     googleId: {
       type: String,
       default: null,
-      required: false,
     },
-
     avatar: {
       type: String,
-      required: false,
     },
-
     role: {
       type: String,
       enum: ['user', 'admin'],
       default: 'user',
     },
-
     settings: {
       emailNotifications: { type: Boolean, default: true },
       smsNotifications: { type: Boolean, default: false },
       darkMode: { type: Boolean, default: false },
     },
-
     notifications: [
       {
         message: String,
