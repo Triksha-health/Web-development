@@ -23,13 +23,14 @@ exports.googleAuthCallback = async (req, res) => {
         avatar: googleUser.photos[0].value,
       });
     }
+    const token = generateToken(user);
+    console.log('Generated user for token:', user);
 
-    const token = generateToken(user._id); // Generate JWT token
-
-    // Redirect to your frontend with token in query param
-    res.redirect(`https://trikshahealth.com/userdashboard?token=${token}`);
+    // Redirect to frontend with token in query param
+   const redirectURL = `https://trikshahealth.com/userdashboard?token=${token}`;
+    res.redirect(redirectURL);
   } catch (err) {
-    console.error("❌ Google Auth Error:", err);
+    console.error("❌ Google Auth Error:", err.message);
     res.status(500).json({ message: 'Google authentication failed' });
   }
 };

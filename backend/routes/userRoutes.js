@@ -6,6 +6,7 @@ const {
   signup,
   login,
   logout,
+  sendResetLink,
   resetPassword,
 } = require('../controllers/userAuthController');
 
@@ -40,7 +41,11 @@ const {
 router.post('/signup', signup);                  // Register
 router.post('/login', login);                    // Login
 router.post('/logout', auth, logout);            // Logout
-router.post('/reset-password', resetPassword);       // Forgot password
+console.log('resetPassword:', typeof resetPassword); // should be 'function'
+console.log('sendResetLink:', typeof sendResetLink); // should be 'function'
+console.log("sendResetLink:", sendResetLink); // should not be undefined
+router.post('/sendResetLink', sendResetLink);        // Send email with token
+router.post('/resetPassword', resetPassword);         // Accept token and new password
 
 // ===============================
 // USER PROFILE
