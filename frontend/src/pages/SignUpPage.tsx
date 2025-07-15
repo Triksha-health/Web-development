@@ -27,29 +27,39 @@ function SignUpPage() {
     }
 
     try {
+      localStorage.setItem("signup_email", email);
       const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/send-otp`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
       });
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        setError(data?.message || "Failed to send OTP");
-        return;
-      }
-
-      setShowOtpForm(true);
+      let data = {};
+    try {
+      data = await response.json();
     } catch (err) {
-      console.error(err);
-      setError("Something went wrong while sending OTP");
+      console.warn("JSON parse error:", err);
     }
-  };
+
+    if (!response.ok) {
+      setError((data as any)?.message || "Failed to send OTP");
+      return;
+    }
+
+    setShowOtpForm(true);
+  } catch (err) {
+    console.error(err);
+    setError("Something went wrong while sending OTP");
+  }
+};
 
   const handleVerifyOtp = async () => {
     setError("");
-
+    const email = localStorage.getItem("signup_email");
+    if (!email) {
+  setError("Email not found. Please restart signup.");
+  return;
+}
     try {
       const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/verify-otp`, {
         method: "POST",
@@ -64,34 +74,31 @@ function SignUpPage() {
         return;
       }
 
-      // ✅ OTP verified successfully → try to login first
-      try {
-        await login(email, password);
-      } catch (loginErr) {
-        // If login fails (e.g., user doesn't exist), fallback to signup
-        const loginErrorMsg = (loginErr as Error).message;
-        console.log("Login failed after OTP, falling back to signup:", loginErrorMsg);
-
-        if (loginErrorMsg.includes("Invalid credentials")) {
-          setError("Wrong password for existing user.");
-          return;
-        }
-
-        try {
-          await signup(name, email, password);
-        } catch (signupErr) {
-          console.error(signupErr);
-          setError((signupErr as Error).message);
-          return;
-        }
-      }
-
+     // ✅ OTP verified → proceed with signup
+    try {
+      await signup(name, email, password);
       navigate("/userdashboard");
-    } catch (err) {
-      console.error(err);
-      setError("Failed to verify OTP");
+    } catch (signupErr) {
+      const msg = (signupErr as Error).message;
+
+      // User already exists → try login
+      if (msg.includes("already") || msg.includes("exists")) {
+        try {
+          await login(email, password);
+          navigate("/userdashboard");
+        } catch (loginErr) {
+          setError("Account exists but login failed: " + (loginErr as Error).message);
+        }
+      } else {
+        setError(msg);
+      }
     }
-  };
+
+  } catch (err) {
+    console.error(err);
+    setError("Failed to verify OTP");
+  }
+};
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8">
