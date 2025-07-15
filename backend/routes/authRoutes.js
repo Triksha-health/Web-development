@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const nodemailer = require('nodemailer');
-const { register, login } = require('../controllers/authController');
+const { register, login, verifyOtp} = require('../controllers/authController');
 
 // ===============================
 // BASIC AUTH ROUTES
@@ -16,7 +16,7 @@ router.post('/login', login);
 // ===============================
 // OTP SETUP
 // ===============================
-const otpStore = {}; // In-memory store: { email: { otp, expires } }
+const Otp = require('../models/otp'); //this will store otp in mongodb
 
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
@@ -37,11 +37,15 @@ router.post('/send-otp', async (req, res) => {
   if (!email) return res.status(400).json({ message: 'Email is required' });
 
   const otp = Math.floor(100000 + Math.random() * 900000).toString();
-  const expires = Date.now() + 5 * 60 * 1000; // 5 minutes expiry
-
-  otpStore[email] = { otp, expires };
+  const expiresAt = Date.now() + 5 * 60 * 1000; // 5 minutes expiry
 
   try {
+    // Saves otp to DB or (overwrites if exists)
+    await Otp.findOneAndUpdate(
+      { email },
+      { otp, expiresAt },
+      { upsert: true, new: true }
+    );
     await transporter.sendMail({
       from: process.env.FROM_EMAIL,
       to: email,
@@ -62,20 +66,6 @@ router.post('/send-otp', async (req, res) => {
 // ===============================
 // VERIFY OTP
 // ===============================
-router.post('/verify-otp', (req, res) => {
-  const { email, otp } = req.body;
-
-  if (!email || !otp) return res.status(400).json({ message: 'Email and OTP are required' });
-
-  const record = otpStore[email];
-
-  if (!record) return res.status(400).json({ message: 'No OTP sent for this email' });
-  if (Date.now() > record.expires) return res.status(400).json({ message: 'OTP has expired' });
-  if (record.otp !== otp) return res.status(400).json({ message: 'Invalid OTP' });
-
-  delete otpStore[email]; // OTP verified, remove from store
-
-  return res.json({ message: 'OTP verified successfully' });
-});
+router.post('/verify-otp', verifyOtp);
 
 module.exports = router;

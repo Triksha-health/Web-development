@@ -2,6 +2,12 @@ const razorpay = require("../config/razorpay");
 const crypto = require("crypto");
 exports.createOrder = async (req, res) => {
   const { amount, currency, receipt} = req.body;
+  console.log("Incoming createOrder request:");
+  console.log("Amount:", amount);
+  console.log("Currency:", currency);
+  console.log("Receipt:", receipt);
+  console.log("Razorpay Key ID:", process.env.RAZORPAY_KEY_ID);
+
 
   try {
     const options = {

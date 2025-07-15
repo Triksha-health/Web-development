@@ -65,6 +65,7 @@ app.get('/', (req, res) => {
   res.send('✅ Triksha Backend is Running!');
 });
 console.log("JWT_SECRET:", process.env.JWT_SECRET); // ❗️TEMP debug line
+console.log("Razorpay Key ID:", process.env.RAZORPAY_KEY_ID);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
