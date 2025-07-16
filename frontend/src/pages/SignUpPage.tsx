@@ -49,6 +49,11 @@ localStorage.setItem("otp_email", email);
 
   const handleVerifyOtp = async () => {
     setError("");
+    if (!password || !name || !email) {
+  setError("Please fill all fields before verifying OTP");
+  return;
+}
+
 
     try {
       localStorage.setItem("otp_email", email); 
@@ -73,10 +78,24 @@ localStorage.setItem("otp_email", email);
         const loginErrorMsg = (loginErr as Error).message;
         console.log("Login failed after OTP, falling back to signup:", loginErrorMsg);
 
-        if (loginErrorMsg.includes("Invalid credentials")) {
-          setError("Wrong password for existing user.");
-          return;
-        }
+              console.error("Login error:", loginErr);
+
+      if (loginErrorMsg.includes("Wrong password")) {
+      setError("Wrong password for existing user.");
+      return;
+      }
+
+      if (loginErrorMsg.includes("user not found")) {
+      console.log("User not found, registering now...");
+      try {
+        await signup(name, email, password);
+      } catch (signupErr) {
+      console.error("Signup failed:", signupErr);
+       setError((signupErr as Error).message || "Signup failed");
+      return;
+  }
+}
+      
 
         try {
           await signup(name, email, password);
