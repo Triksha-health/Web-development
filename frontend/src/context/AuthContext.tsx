@@ -1,6 +1,8 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
 import axios from 'axios';
-import { jwtDecode } from 'jwt-decode';
+
+import {jwtDecode} from 'jwt-decode';
+
 
 interface User {
   id: string;
@@ -35,39 +37,39 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const urlToken = params.get('token');
-    const storedToken = urlToken || localStorage.getItem('triksha_token');
+
+    let token = urlToken || localStorage.getItem('triksha_token');
 
     if (urlToken) {
       localStorage.setItem('triksha_token', urlToken);
+
+      // Clean up URL so ?token=... goes away
       window.history.replaceState({}, document.title, '/userdashboard');
     }
 
-    if (storedToken) {
+    if (token) {
       try {
-        const decoded: any = jwtDecode(storedToken);
+        const decoded: any = jwtDecode(token);
         const userData: User = {
           id: decoded.id,
           email: decoded.email,
           name: decoded.username,
         };
-        setUser(userData);
-        setToken(storedToken);
         localStorage.setItem('triksha_user', JSON.stringify(userData));
+        setUser(userData);
       } catch (err) {
         console.error('Invalid token:', err);
         localStorage.removeItem('triksha_user');
         localStorage.removeItem('triksha_token');
         setUser(null);
-        setToken(null);
       }
     } else {
       const savedUser = localStorage.getItem('triksha_user');
-      const savedToken = localStorage.getItem('triksha_token');
-      if (savedUser && savedToken) {
+      if (savedUser) {
         setUser(JSON.parse(savedUser));
-        setToken(savedToken);
       }
     }
+
 
     setIsLoading(false);
   }, []);
@@ -88,7 +90,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       localStorage.setItem('triksha_user', JSON.stringify(transformedUser));
       localStorage.setItem('triksha_token', token);
       setUser(transformedUser);
-      setToken(token);
+
     } catch (error) {
       throw new Error((error as any).response?.data?.message || 'Invalid credentials');
     } finally {
@@ -116,9 +118,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       localStorage.setItem('triksha_user', JSON.stringify(transformedUser));
       localStorage.setItem('triksha_token', token);
       setUser(transformedUser);
-      setToken(token);
+
     } catch (error) {
-      throw new Error((error as any).response?.data?.message || 'Signup failed');
+      throw new Error((error as any).response?.data?.message || 'Failed to create an account');
+
     } finally {
       setIsLoading(false);
     }
