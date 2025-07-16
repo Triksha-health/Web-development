@@ -7,7 +7,7 @@ import { FiLinkedin } from "react-icons/fi";
 // import logo from "../../public/logo (3).png";
 import trikshawordlogo from "../../public/Trikshawordlogo.png";
 import trikshaeyelogo from "../../public/trikshaeyelogo(2).png";
-import { HashLink } from 'react-router-hash-link';
+import { HashLink } from "react-router-hash-link";
 
 function Footer() {
   const currentYear = new Date().getFullYear();
@@ -35,7 +35,10 @@ function Footer() {
               <a href="#" className="text-gray-400 hover:text-white transition-colors">
                 <FiInstagram size={20} />
               </a>
-              <a href="https://www.linkedin.com/company/triksha" className="text-gray-400 hover:text-white transition-colors ">
+              <a
+                href="https://www.linkedin.com/company/triksha"
+                className="text-gray-400 hover:text-white transition-colors "
+              >
                 <FiLinkedin size={20} />
               </a>
             </div>
@@ -61,13 +64,18 @@ function Footer() {
                 </HashLink>
               </li>
               <li>
-                 <HashLink smooth to="/#cofounder" className="text-gray-400 hover:text-white transition-colors">
+                <HashLink smooth to="/#cofounder" className="text-gray-400 hover:text-white transition-colors">
                   Meet Our Founder
                 </HashLink>
               </li>
               <li>
                 <HashLink smooth to="/#faq" className="text-gray-400 hover:text-white transition-colors">
                   FAQ
+                </HashLink>
+              </li>
+              <li>
+                <HashLink smooth to="/admin/login" className="text-gray-400 hover:text-white transition-colors">
+                  Admin Login
                 </HashLink>
               </li>
             </ul>
@@ -101,36 +109,53 @@ function Footer() {
           </div>
 
           {/* Contact */}
-          
 
           <div>
-  <h3 className="text-lg font-semibold mb-4">Contact Us</h3>
-  <ul className="space-y-4">
-    <li className="flex items-start">
-      <Mail className="w-5 h-5 text-gray-400 mr-3 mt-0.5" />
-      <span className="text-gray-400">support@trikshahealth.com</span>
-    </li>
-    <li className="flex items-start">
-      <Phone className="w-5 h-5 text-gray-400 mr-3 mt-0.5" />
-      <span className="text-gray-400">+91 (789) 994-0382</span>
-    </li>
-    <li className="flex items-start">
-      <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 text-gray-400 mr-3 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 11c1.104 0 2-.896 2-2s-.896-2-2-2-2 .896-2 2 .896 2 2 2z" />
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" />
-      </svg>
-      <div className="text-gray-400 leading-relaxed">
-        5-5-7/29/B, Devi Nagar Road No 2,<br />
-        Kukatpally, Hyderabad, Telangana
-      </div>
-    </li>
-  </ul>
-</div>
-
+            <h3 className="text-lg font-semibold mb-4">Contact Us</h3>
+            <ul className="space-y-4">
+              <li className="flex items-start">
+                <Mail className="w-5 h-5 text-gray-400 mr-3 mt-0.5" />
+                <span className="text-gray-400">support@trikshahealth.com</span>
+              </li>
+              <li className="flex items-start">
+                <Phone className="w-5 h-5 text-gray-400 mr-3 mt-0.5" />
+                <span className="text-gray-400">+91 (789) 994-0382</span>
+              </li>
+              <li className="flex items-start">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="w-5 h-5 text-gray-400 mr-3 mt-0.5 flex-shrink-0"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 11c1.104 0 2-.896 2-2s-.896-2-2-2-2 .896-2 2 .896 2 2 2z"
+                  />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"
+                  />
+                </svg>
+                <div className="text-gray-400 leading-relaxed">
+                  5-5-7/29/B, Devi Nagar Road No 2,
+                  <br />
+                  Kukatpally, Hyderabad, Telangana
+                </div>
+              </li>
+            </ul>
+          </div>
         </div>
 
         <div className="border-t border-gray-800 mt-12 pt-8">
-          <p className="text-gray-400 text-center">&copy; {currentYear} VTY TRIKSHA HEALTH TECH PRIVATE LIMITED. All rights reserved.</p>
+          <p className="text-gray-400 text-center">
+            &copy; {currentYear} VTY TRIKSHA HEALTH TECH PRIVATE LIMITED. All rights reserved.
+          </p>
         </div>
       </div>
     </footer>

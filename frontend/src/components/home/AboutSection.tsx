@@ -1,8 +1,25 @@
+
+
 import React from "react";
 import { BarChart3, Brain, Smartphone, Zap, LineChart } from "lucide-react";
 import Container from "../ui/Container";
 import SectionHeading from "../ui/SectionHeading";
 import Card from "../ui/Card";
+import { motion } from "framer-motion";
+
+const fadeInUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+};
+
+const staggerContainer = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.2,
+    },
+  },
+};
 
 const AboutSection: React.FC = () => {
   const steps = [
@@ -35,7 +52,6 @@ const AboutSection: React.FC = () => {
 
   return (
     <section id="about" className="py-24 relative overflow-hidden bg-white text-black">
-      {/* Background decoration */}
       <div className="absolute top-0 inset-x-0 h-40 bg-gradient-to-b from-slate-50 to-transparent"></div>
       <div className="absolute -top-40 -right-40 w-80 h-80 bg-teal-100 rounded-full opacity-30 blur-3xl"></div>
 
@@ -45,12 +61,25 @@ const AboutSection: React.FC = () => {
           subtitle="Triksha is an AI-powered predictive health system for early detection of chronic diseases like diabetes, heart issues, and respiratory problems."
         />
 
-        <div className="relative mt-16">
-          <div className="absolute hidden md:block top-24 left-0 right-0 h-1 bg-gradient-to-r from-teal-500 via-blue-500 to-purple-500 z-0"></div>
+        <motion.div
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          className="relative mt-16"
+        >
+          <motion.div
+            variants={fadeInUp}
+            className="absolute hidden md:block top-24 left-0 right-0 h-1 bg-gradient-to-r from-teal-500 via-blue-500 to-purple-500 z-0"
+          />
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
             {steps.map((step, index) => (
-              <div key={index} className="relative">
+              <motion.div
+                key={index}
+                variants={fadeInUp}
+                className="relative"
+              >
                 <Card hoverable className="h-full p-6 flex flex-col items-center text-center">
                   <div className="relative mb-6">
                     <div className="absolute -top-3 -right-3 w-6 h-6 bg-[#3691ff] text-white rounded-full flex items-center justify-center text-xs font-bold">
@@ -65,12 +94,18 @@ const AboutSection: React.FC = () => {
                   <h3 className="text-xl font-bold mb-3">{step.title}</h3>
                   <p className="text-slate-600">{step.description}</p>
                 </Card>
-              </div>
+              </motion.div>
             ))}
           </div>
-        </div>
+        </motion.div>
 
-        <div className="mt-20">
+        <motion.div
+          variants={fadeInUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          className="mt-20"
+        >
           <div className="bg-gradient-to-r from-teal-50 to-blue-50 rounded-2xl p-8 md:p-12">
             <div className="flex flex-col md:flex-row gap-8 md:gap-12 items-center">
               <div className="md:w-1/2">
@@ -102,7 +137,7 @@ const AboutSection: React.FC = () => {
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
       </Container>
     </section>
   );

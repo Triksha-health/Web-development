@@ -96,10 +96,7 @@ function Navbar({ scrolled }: NavbarProps) {
               <>
                 <Link to="/signin" className="text-gray-700 hover:text-primary-500 font-medium">Sign in</Link>
                 <Link to="/pre-order" className="btn-primary">Pre-order Now</Link>
-                {/* ✅ Admin Login */}
-                <Link to="/admin/login" className="text-blue-600 hover:text-red-800 font-medium ml-4">
-                  Admin Login
-                </Link>
+              
               </>
             )}
           </div>
@@ -132,10 +129,7 @@ function Navbar({ scrolled }: NavbarProps) {
                   <>
                     <Link to="/signin" onClick={closeMenu} className="block py-2 text-gray-700 hover:text-primary-500 font-medium">Sign in</Link>
                     <Link to="/pre-order" onClick={closeMenu} className="btn-primary mt-4 w-full flex justify-center">Pre-order Now</Link>
-                    {/* ✅ Admin Login (Mobile) */}
-                    <Link to="/admin/login" onClick={closeMenu} className="block py-2 text-blue-600 hover:text-red-800 font-medium text-center mt-2">
-                      Admin Login
-                    </Link>
+                   
                   </>
                 )}
               </div>
@@ -146,5 +140,5 @@ function Navbar({ scrolled }: NavbarProps) {
     </header>
   );
 }
-
+//help this to join
 export default Navbar;

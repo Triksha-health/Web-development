@@ -1,11 +1,13 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
 import axios from 'axios';
+
 import {jwtDecode} from 'jwt-decode';
+
 
 interface User {
   id: string;
   email: string;
-  name: string; // display name
+  name: string;
 }
 
 interface AuthContextType {
@@ -15,6 +17,7 @@ interface AuthContextType {
   login: (email: string, password: string) => Promise<void>;
   signup: (name: string, email: string, password: string) => Promise<void>;
   logout: () => void;
+  token: string | null;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -26,8 +29,9 @@ const api = axios.create({
   headers: { 'Content-Type': 'application/json' },
 });
 
-export function AuthProvider({ children }: { children: React.ReactNode }) {
+export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
+  const [token, setToken] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -66,6 +70,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       }
     }
 
+
     setIsLoading(false);
   }, []);
 
@@ -85,6 +90,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       localStorage.setItem('triksha_user', JSON.stringify(transformedUser));
       localStorage.setItem('triksha_token', token);
       setUser(transformedUser);
+
     } catch (error) {
       throw new Error((error as any).response?.data?.message || 'Invalid credentials');
     } finally {
@@ -112,8 +118,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       localStorage.setItem('triksha_user', JSON.stringify(transformedUser));
       localStorage.setItem('triksha_token', token);
       setUser(transformedUser);
+
     } catch (error) {
       throw new Error((error as any).response?.data?.message || 'Failed to create an account');
+
     } finally {
       setIsLoading(false);
     }
@@ -121,22 +129,31 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const logout = () => {
     setUser(null);
+    setToken(null);
     localStorage.removeItem('triksha_user');
     localStorage.removeItem('triksha_token');
   };
 
   return (
     <AuthContext.Provider
-      value={{ user, isAuthenticated: !!user, isLoading, login, signup, logout }}
+      value={{
+        user,
+        isAuthenticated: !!user,
+        isLoading,
+        login,
+        signup,
+        logout,
+        token,
+      }}
     >
       {children}
     </AuthContext.Provider>
   );
-}
+};
 
 export function useAuth() {
   const context = useContext(AuthContext);
-  if (context === undefined) {
+  if (!context) {
     throw new Error('useAuth must be used within an AuthProvider');
   }
   return context;
