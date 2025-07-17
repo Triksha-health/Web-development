@@ -127,7 +127,7 @@ exports.verifyOtp = async (req, res) => {
       return res.status(400).json({ message: 'Email and OTP are required' });
     }
 
-    const record = await Otp.findOne({ email });
+    const record = await Otp.findOne({ email }).sort({ updatedAt: -1 });
 
     if (!record) return res.status(400).json({ message: 'No OTP sent for this email' });
     if (new Date() > record.expiresAt) {
