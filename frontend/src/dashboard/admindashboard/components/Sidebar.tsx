@@ -1,5 +1,6 @@
 import React from "react";
 import { Home, ShoppingBag, Users, BarChart3, FileText, User, Settings, LogOut, LucideIcon } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 interface SidebarItem {
   id: string;
@@ -22,6 +23,11 @@ const Sidebar: React.FC<SidebarProps> = ({ activeSection, setActiveSection }) =>
     { id: "profile", label: "Profile", icon: User },
     { id: "settings", label: "Settings", icon: Settings },
   ];
+  const navigate = useNavigate();
+
+  const handleBackToHome = () => {
+    navigate("/");
+  };
 
   return (
     <aside className="w-64 bg-white shadow-sm border-r border-gray-200 min-h-screen">
@@ -54,6 +60,13 @@ const Sidebar: React.FC<SidebarProps> = ({ activeSection, setActiveSection }) =>
           <button className="w-full flex items-center space-x-3 px-3 py-2 text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded-lg transition-colors">
             <LogOut className="w-5 h-5" />
             <span className="font-medium">Sign out</span>
+          </button>
+          <button
+            onClick={handleBackToHome}
+            className="flex items-center px-4 py-3 w-full text-left rounded-lg text-gray-700 hover:bg-primary-50 hover:text-primary-600 group"
+          >
+            <Home className="w-5 h-5 mr-3 group-hover:scale-105 transition-transform duration-200" />
+            <span className="hidden sm:inline">Home</span>
           </button>
         </div>
       </div>

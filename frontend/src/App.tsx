@@ -50,7 +50,7 @@ function App() {
 
       {/* Optional: redirect /admin to /admin/dashboard */}
       <Route path="/admin" element={<Navigate to="/admin/dashboard" replace />} />
-      
+
       {/* Catch all unknown routes */}
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
