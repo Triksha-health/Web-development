@@ -275,6 +275,7 @@ import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, useInView } from "framer-motion";
 import SectionHeading from "../ui/SectionHeading";
+import axios from 'axios';
 
 function LaunchSection() {
   const navigate = useNavigate();
@@ -290,9 +291,21 @@ function LaunchSection() {
 
   const launchDate = new Date("2026-01-01T00:00:00");
 
-  const [earlyBirdStock, setEarlyBirdStock] = useState(50);
+  const [earlyBirdStock, setEarlyBirdStock] = useState<number | null>(null);
+
 
   useEffect(() => {
+    const fetchEarlyBirdStock = async () => {
+    try {
+      const response = await axios.get('http://localhost:5000/api/stock/early');
+      setEarlyBirdStock(response.data.stock);
+    } catch (error) {
+      console.error('Failed to fetch early bird stock:', error);
+    }
+  };
+
+  fetchEarlyBirdStock();
+
     const timer = setInterval(() => {
       const now = new Date();
       const difference = launchDate.getTime() - now.getTime();
@@ -310,12 +323,19 @@ function LaunchSection() {
       setTimeLeft({ days, hours, minutes, seconds });
     }, 1000);
 
-    const stockTimer = setInterval(() => {
-      const randomDecrease = Math.random() > 0.7 ? 1 : 0;
-      if (earlyBirdStock > 0 && randomDecrease === 1) {
-        setEarlyBirdStock((prevStock) => Math.max(0, prevStock - randomDecrease));
+   const stockTimer = setInterval(() => {
+  const randomDecrease = Math.random() > 0.7 ? 1 : 0;
+
+  if (earlyBirdStock !== null && earlyBirdStock > 0 && randomDecrease === 1) {
+    setEarlyBirdStock((prevStock) => {
+      if (prevStock !== null) {
+        return Math.max(0, prevStock - randomDecrease);
       }
-    }, 10000);
+      return prevStock;
+    });
+  }
+}, 10000);
+
 
     return () => {
       clearInterval(timer);
@@ -498,7 +518,10 @@ function LaunchSection() {
                   <motion.div
                     className="bg-primary-500 h-3 rounded-full"
                     initial={{ width: 0 }}
-                    animate={isInView ? { width: `${(earlyBirdStock / 200) * 100}%` } : { width: 0 }}
+                    animate={isInView && earlyBirdStock !== null
+    ? { width: `${(earlyBirdStock / 200) * 100}%` }
+    : { width: 0 }
+}
                     transition={{ duration: 1.5, delay: isInView ? 3.0 : 0, ease: "easeOut" }}
                   ></motion.div>
                 </div>
