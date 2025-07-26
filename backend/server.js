@@ -25,6 +25,7 @@ const userRoutes = require('./routes/userRoutes');
 const googleauthRoutes = require('./routes/googleauthRoutes');
 const jobApplicationRoutes = require('./routes/jobApplicationRoutes');
 const notificationRoutes = require('./routes/notificationRoutes'); // ✅ NEW
+const stockRoutes = require("./routes/stockRoutes");
 
 // Connect to MongoDB
 console.log("MONGO_URL from .env is:", process.env.MONGO_URL);
@@ -81,6 +82,7 @@ app.use('/api/user', userRoutes);
 app.use('/auth', googleauthRoutes);
 app.use('/api/jobs', jobApplicationRoutes);
 app.use('/api/notifications', notificationRoutes); // ✅ NEW
+app.use("/api/stock", stockRoutes);
 
 // Health Check Route
 app.get('/', (req, res) => {
