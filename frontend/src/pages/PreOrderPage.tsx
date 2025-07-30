@@ -74,15 +74,16 @@ const PreOrderPage: React.FC = () => {
       });
 
       const data = await response.json();
-      if (!data.success) throw new Error("Order creation failed");
+      if (!data.id) throw new Error("Order creation failed"); // Razorpay returns `id`
+
 
       const options = {
-        key: "rzp_test_XsAIDp6ecIDoke",
-        amount: data.order.amount,
-        currency: data.order.currency,
+        key: "rzp_test_rAUcARv2kGvlO9",
+        amount: data.amount,
+        currency: data.currency,
         name: "Triksha",
         description: `Pre-order for Triksha ${triksha.charAt(0).toUpperCase() + triksha.slice(1)} Edition`,
-        order_id: data.order.id,
+        order_id: data.id,
         handler: async (response: any) => {
           try {
             const verifyRes = await fetch("http://localhost:5000/api/payment/verify", {
