@@ -1,5 +1,5 @@
 import { useState, ChangeEvent, FormEvent } from "react";
-import { User, Mail, Phone, Edit2, MapPin, Calendar, Award, Shield, Star } from "lucide-react";
+import { User, Mail, Phone, Edit2, MapPin, Calendar, Award, Shield } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 
 interface FormData {
