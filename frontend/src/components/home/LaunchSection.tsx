@@ -289,7 +289,7 @@ function LaunchSection() {
     seconds: 0,
   });
 
-  const launchDate = new Date("2026-01-01T00:00:00");
+  const launchDate = new Date("2026-03-19T00:00:00");
 
   const [earlyBirdStock, setEarlyBirdStock] = useState<number | null>(null);
 
@@ -458,8 +458,8 @@ function LaunchSection() {
                 animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
                 transition={{ duration: 0.6, delay: 1.8, type: "spring" }}
               >
-                <span className="text-5xl font-bold text-primary-500">₹14,999</span>
-                <span className="text-gray-500 ml-3 line-through text-lg">₹17,999</span>
+                <span className="text-5xl font-bold text-primary-500">₹**,***</span>
+                <span className="text-gray-500 ml-3 line-through text-lg">₹19,999</span>
               </motion.div>
 
               <motion.p
