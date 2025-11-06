@@ -468,7 +468,7 @@ function LaunchSection() {
                 animate={isInView ? { opacity: 1 } : { opacity: 0 }}
                 transition={{ duration: 0.6, delay: 2.0 }}
               >
-                ⭐ Save over 15% with this special pre-order price!
+                ⭐ Save over **% with this special pre-order price!
               </motion.p>
 
               <motion.ul
