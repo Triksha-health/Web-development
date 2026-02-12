@@ -291,6 +291,8 @@ function LaunchSection() {
 
   const launchDate = new Date("2026-03-19T00:00:00");
 
+
+
   const [earlyBirdStock, setEarlyBirdStock] = useState<number | null>(null);
 
 
@@ -382,7 +384,7 @@ function LaunchSection() {
             animate={isInView ? { opacity: 1 } : { opacity: 0 }}
             transition={{ duration: 0.6, delay: 0.6 }}
           >
-            <h3 className="text-2xl font-bold mb-2">Shipping Begins: {formattedLaunchDate}</h3>
+            <h3 className="text-2xl font-bold mb-2">Pre Order Begins: {formattedLaunchDate}</h3>
             <p className="text-gray-600">Secure your device now before we sell out</p>
           </motion.div>
 
