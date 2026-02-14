@@ -62,18 +62,24 @@ const AboutSection: React.FC = () => {
         />
 
         <motion.div
-          variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
           className="relative mt-16"
         >
           <motion.div
-            variants={fadeInUp}
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: 1 }}
+            variants={{ hidden: { scaleX: 0 }, visible: { scaleX: 1 } }}
+            transition={{ duration: 1.2, ease: "easeInOut" }}
+            style={{ originX: 0 }}
             className="absolute hidden md:block top-24 left-0 right-0 h-1 bg-gradient-to-r from-teal-500 via-blue-500 to-purple-500 z-0"
           />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
+          <motion.div
+            variants={staggerContainer}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 relative z-10"
+          >
             {steps.map((step, index) => (
               <motion.div
                 key={index}
@@ -96,7 +102,7 @@ const AboutSection: React.FC = () => {
                 </Card>
               </motion.div>
             ))}
-          </div>
+          </motion.div>
         </motion.div>
 
         <motion.div
