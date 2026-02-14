@@ -59,9 +59,11 @@ function Hero() {
           >
             <motion.span
               variants={fadeInUp}
-              className="inline-block px-5 py-2.5 rounded-full bg-gradient-to-r from-cyan-100 via-teal-100 to-blue-100 text-gray-900 font-semibold text-sm shadow-md hover:shadow-lg transition-all duration-300 animate-pulse"
+              animate={{ y: [0, -4, 0] }}
+              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+              className="inline-block px-5 py-2.5 rounded-full bg-gradient-to-r from-cyan-100 via-teal-100 to-blue-100 text-gray-900 font-semibold text-sm shadow-md hover:shadow-lg transition-shadow duration-300"
             >
-              ❤️ India’s First Predictive Health Monitoring Platform
+              ❤️ India's First Predictive Health Monitoring Platform
             </motion.span>
 
             <motion.h1

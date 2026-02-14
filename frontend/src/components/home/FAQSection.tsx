@@ -3,7 +3,6 @@
 import React from 'react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import { motion, Variants } from 'framer-motion';
-import { useInView } from 'react-intersection-observer';
 import Container from '../ui/Container';
 import SectionHeading from '../ui/SectionHeading';
 
@@ -17,28 +16,31 @@ interface FAQItemWithIndexProps extends FAQItemProps {
 }
 
 const faqItemVariants: Variants = {
-  hidden: { opacity: 0, y: 40 },
-  visible: (i = 1) => ({
+  hidden: { opacity: 0, y: 30 },
+  visible: {
     opacity: 1,
     y: 0,
     transition: {
-      delay: i * 0.15,
-      duration: 0.6,
+      duration: 0.5,
       ease: 'easeOut',
     },
-  }),
+  },
 };
 
-const FAQItem: React.FC<FAQItemWithIndexProps> = ({ question, answer, index }) => {
+const staggerContainer: Variants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.12,
+    },
+  },
+};
+
+const FAQItem: React.FC<FAQItemWithIndexProps> = ({ question, answer }) => {
   const [isOpen, setIsOpen] = React.useState(false);
-  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
 
   return (
     <motion.div
-      ref={ref}
-      custom={index}
-      initial="hidden"
-      animate={inView ? 'visible' : 'hidden'}
       variants={faqItemVariants}
       className="border-b border-slate-200 last:border-0"
     >
@@ -147,11 +149,17 @@ const FAQ: React.FC = () => {
         />
 
         <div className="max-w-3xl mx-auto mt-12 bg-white rounded-3xl shadow-xl ring-1 ring-slate-100 overflow-hidden">
-          <div className="p-8">
+          <motion.div
+            className="p-8"
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.1 }}
+          >
             {faqs.map((faq, index) => (
               <FAQItem key={index} index={index} question={faq.question} answer={faq.answer} />
             ))}
-          </div>
+          </motion.div>
         </div>
 
         <motion.div

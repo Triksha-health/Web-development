@@ -174,7 +174,7 @@ const CoFoundersSection = () => {
             </h3>
             <div className="space-y-6 text-gray-700 text-base">
               <p>
-                I’m a CSE student from NIT Andhra Pradesh who dropped out to build Triksha — not for academic
+                I’m a CSE student from NIT Andhra Pradesh, to build Triksha — not for academic
                 glory, but from personal pain. My father’s jaundice wasn’t caught early and sadly led to
                 pancreatic cancer. That experience changed everything.
               </p>

@@ -289,7 +289,7 @@ function LaunchSection() {
     seconds: 0,
   });
 
-  const launchDate = new Date("2026-03-19T00:00:00");
+  const launchDate = new Date("2026-08-15T00:00:00");
 
 
 
@@ -483,7 +483,7 @@ function LaunchSection() {
                   "12-month premium subscription (App + Wearable)",
                   "Free personalized AI Coach",
                   "Lifetime priority support",
-                  "Priority shipping from Jan 1",
+                  "Priority shipping from January 2027",
                   "Limited to 200 units only",
                 ].map((feature, index) => (
                   <motion.li
