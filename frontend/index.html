@@ -1,10 +1,58 @@
 <!doctype html>
-<html lang="en" > <!-- ✅ Added "dark" here -->
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/jpg" href="./src/public/cropped_circle_image.png"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Triksha AI powered predictive health monitoring system</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#F4EEE1" />
+
+    <!--
+      The title, description, canonical and social tags below are the
+      homepage defaults. scripts/prerender.mjs rewrites them for each
+      prerendered page at build time (values live in src/seo.ts).
+    -->
+    <title>Triksha — cardiac risk, read early</title>
+    <meta
+      name="description"
+      content="Triksha is a personal digital twin for your heart health. A wristband senses your body every day, your Health Book remembers every report, and the twin warns you when something starts to drift. In development. Join the waitlist."
+    />
+    <meta name="author" content="VTY Triksha Health Tech Pvt Ltd" />
+    <link rel="canonical" href="https://trikshahealth.com/" />
+
+    <!-- Open Graph (WhatsApp, LinkedIn, Facebook) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Triksha" />
+    <meta property="og:locale" content="en_IN" />
+    <meta property="og:title" content="Triksha — cardiac risk, read early" />
+    <meta
+      property="og:description"
+      content="Triksha is a personal digital twin for your heart health. A wristband senses your body every day, your Health Book remembers every report, and the twin warns you when something starts to drift. In development. Join the waitlist."
+    />
+    <meta property="og:url" content="https://trikshahealth.com/" />
+    <meta property="og:image" content="https://trikshahealth.com/og-image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="Triksha: know your heart’s risk before symptoms do. The Triksha app dashboard on a phone."
+    />
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Triksha — cardiac risk, read early" />
+    <meta
+      name="twitter:description"
+      content="Triksha is a personal digital twin for your heart health. A wristband senses your body every day, your Health Book remembers every report, and the twin warns you when something starts to drift. In development. Join the waitlist."
+    />
+    <meta name="twitter:image" content="https://trikshahealth.com/og-image.jpg" />
+
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="preload" as="image" href="/img/phone1.webp" type="image/webp" fetchpriority="high" />
+
+    <!--
+      Plausible analytics is injected at runtime by src/lib/analytics.ts
+      when VITE_PLAUSIBLE_DOMAIN is set in the environment.
+    -->
   </head>
   <body>
     <div id="root"></div>

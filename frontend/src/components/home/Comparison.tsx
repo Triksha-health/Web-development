@@ -1,315 +1,196 @@
 import React from "react";
-import { Check, X } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { Check, Minus } from "lucide-react";
+import { motion } from "framer-motion";
 import Container from "../ui/Container";
-import SectionHeading from "../ui/SectionHeading";
+import Aurora from "../ui/Aurora";
 import trikshaLogo from "../../public/Triksha_logo.png";
 import appleLogo from "../../public/apple-logo.png";
 import whoopLogo from "../../public/whoop_logo.png";
 import ouraLogo from "../../public/ultra_human_logo.png";
 
+const fadeUp = {
+  hidden: { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] } },
+};
+
+const SOFT = { color: "rgba(22,25,29,0.62)" };
+
 const Comparison: React.FC = () => {
   const features = [
-    { name: "Predictive AI Health Alerts", triksha: true, apple: false, whoop: false, ultrahuman: false },
-    { name: "Chronic Disease Early Detection", triksha: true, apple: false, whoop: false, ultrahuman: false },
-    { name: "EHR Integration", triksha: true, apple: false, whoop: false, ultrahuman: false },
-    { name: "Health Book", triksha: true, apple: false, whoop: false, ultrahuman: false },
-    { name: "Monthly health reports", triksha: true, apple: false, whoop: false, ultrahuman: false },
-    { name: "family emergency alerts", triksha: true, apple: false, whoop: false, ultrahuman: false },
-    { name: "Real-time Health Monitoring", triksha: true, apple: true, whoop: true, ultrahuman: true },
-    { name: "AI-Powered Insights", triksha: true, apple: false, whoop: true, ultrahuman: true },
-    { name: "User Emergency Alerts", triksha: true, apple: false, whoop: false, ultrahuman: false },
-    { name: "Personalized Health Recommendations", triksha: true, apple: false, whoop: true, ultrahuman: true },
+    { name: "Predictive AI health alerts", triksha: true, apple: false, whoop: false, ultrahuman: false, unique: true },
+    { name: "Chronic disease early detection", triksha: true, apple: false, whoop: false, ultrahuman: false, unique: true },
+    { name: "EHR integration", triksha: true, apple: false, whoop: false, ultrahuman: false, unique: true },
+    { name: "Health Book", triksha: true, apple: false, whoop: false, ultrahuman: false, unique: true },
+    { name: "Monthly health reports", triksha: true, apple: false, whoop: false, ultrahuman: false, unique: true },
+    { name: "Family emergency alerts", triksha: true, apple: false, whoop: false, ultrahuman: false, unique: true },
+    { name: "Real-time monitoring", triksha: true, apple: true, whoop: true, ultrahuman: true, unique: false },
+    { name: "AI-powered insights", triksha: true, apple: false, whoop: true, ultrahuman: true, unique: false },
+    { name: "User emergency alerts", triksha: true, apple: false, whoop: false, ultrahuman: false, unique: false },
+    { name: "Personalized recommendations", triksha: true, apple: false, whoop: true, ultrahuman: true, unique: false },
   ];
 
   const brands = [
-    { name: "Triksha", logo: trikshaLogo },
+    { name: "Triksha", logo: trikshaLogo, primary: true },
     { name: "Apple Watch", logo: appleLogo },
     { name: "WHOOP", logo: whoopLogo },
     { name: "Ultrahuman", logo: ouraLogo },
   ];
 
-  // Animation variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        when: "beforeChildren",
-        staggerChildren: 0.1,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        type: "spring",
-        stiffness: 100,
-        damping: 10,
-      },
-    },
-  };
-
-  const featureRowVariants = {
-    hidden: { opacity: 0, x: -20 },
-    visible: (i: number) => ({
-      opacity: 1,
-      x: 0,
-      transition: {
-        delay: i * 0.05,
-        duration: 0.5,
-      },
-    }),
-  };
-
-  const checkMarkVariants = {
-    hidden: { scale: 0 },
-    visible: {
-      scale: 1,
-      transition: {
-        type: "spring" as const,
-        stiffness: 500,
-        damping: 15,
-      },
-    },
-  };
-
-  const brandCardVariants = {
-    hidden: { y: -20, opacity: 0 },
-    visible: (i: number) => ({
-      y: 0,
-      opacity: 1,
-      transition: {
-        delay: i * 0.1,
-        duration: 0.5,
-      },
-    }),
-  };
+  const cell = (on: boolean, primary?: boolean) =>
+    on ? (
+      <div
+        className={`w-7 h-7 rounded-full flex items-center justify-center ${
+          primary
+            ? "bg-accent-500 text-white"
+            : "bg-canvas-soft text-ink-700 ring-1 ring-[rgba(22,25,29,0.10)]"
+        }`}
+      >
+        <Check className="w-4 h-4" strokeWidth={2.5} />
+      </div>
+    ) : (
+      <div className="w-7 h-7 flex items-center justify-center" style={{ color: "rgba(22,25,29,0.25)" }}>
+        <Minus className="w-4 h-4" />
+      </div>
+    );
 
   return (
-    <motion.section
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      viewport={{ once: true, margin: "-100px" }}
-      transition={{ duration: 0.8 }}
-      id="whytriksha"
-      className="py-24 relative overflow-hidden bg-white text-gray-800"
-    >
-      <div className="absolute top-0 inset-x-0 h-40 bg-gradient-to-b from-slate-50 to-transparent"></div>
-      <motion.div
-        initial={{ scale: 0.8, opacity: 0 }}
-        animate={{ scale: 1, opacity: 0.3 }}
-        transition={{ delay: 0.5, duration: 1 }}
-        className="absolute -top-40 -right-40 w-80 h-80 bg-teal-100 rounded-full blur-3xl"
-      ></motion.div>
+    <section id="whytriksha" className="relative py-32 bg-canvas overflow-hidden">
+      <Container className="relative z-10">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          variants={fadeUp}
+          className="max-w-2xl"
+        >
+          <h2 className="text-display text-ink-900 tracking-tighter">
+            One wearable. A category of its own.
+          </h2>
+          <p className="mt-5 text-lg md:text-xl leading-relaxed" style={SOFT}>
+            How Triksha compares with the most popular health platforms in the market.
+          </p>
+        </motion.div>
 
-      <div className="relative z-10">
-        <Container>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <SectionHeading
-              title="Why Triksha is Different"
-              subtitle="See how Triksha compares to other popular health monitoring platforms in the market."
-            />
-          </motion.div>
-
-          {/* Comparison Table */}
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-50px" }}
-            variants={containerVariants}
-            className="mt-12 overflow-x-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100"
-          >
-            <div className="min-w-[640px] lg:min-w-full">
-              {/* Table Header */}
-              <motion.div className="grid grid-cols-5 gap-0 mb-4 min-w-[600px]">
-                <div></div>
-
-                {brands.map((brand, idx) => (
-                  <motion.div
-                    key={idx}
-                    custom={idx}
-                    variants={brandCardVariants}
-                    className="flex flex-col items-center pt-4"
-                  >
-                    <motion.div
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="w-16 h-16 border border-gray-300 bg-slate-100 rounded-full flex items-center justify-center mb-3 shadow-lg"
+        {/* Table */}
+        <motion.div
+          initial={{ opacity: 0, y: 32 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.9 }}
+          className="mt-16 rounded-4xl bg-canvas-paper ring-1 ring-[rgba(22,25,29,0.10)] shadow-soft-lg overflow-hidden"
+        >
+          <div className="overflow-x-auto">
+            <div className="min-w-[760px]">
+              {/* Header */}
+              <div className="grid grid-cols-5 px-4 md:px-6 pt-8 pb-6 border-b border-[rgba(22,25,29,0.10)]">
+                <div />
+                {brands.map((brand) => (
+                  <div key={brand.name} className="flex flex-col items-center gap-3">
+                    <div
+                      className={`w-14 h-14 rounded-2xl flex items-center justify-center ring-1 ${
+                        brand.primary
+                          ? "bg-accent-500 ring-accent-500 shadow-soft"
+                          : "bg-canvas-soft ring-[rgba(22,25,29,0.10)]"
+                      }`}
                     >
-                      <img src={brand.logo} alt={brand.name} className="object-contain h-10 w-10" />
-                    </motion.div>
-                    <div className="font-bold text-center text-xs md:text-sm mb-4">{brand.name}</div>
-                  </motion.div>
-                ))}
-              </motion.div>
-
-              {/* Full Table */}
-              <div className="flex flex-col">
-                {features.map((feature, index) => (
-                  <motion.div
-                    key={index}
-                    custom={index}
-                    variants={featureRowVariants}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true, margin: "-50px" }}
-                    className={`grid grid-cols-5 gap-0 items-center text-xs md:text-base ${
-                      index % 2 === 0 ? "bg-gray-50" : "bg-white"
-                    }`}
-                  >
-                    {/* Feature Name */}
-                    <motion.div className="flex items-center justify-between px-2 md:px-4 py-3 md:py-4">
-                      <span className="flex-1">{feature.name}</span>
-                      {[0, 1, 2, 3, 4, 5].includes(index) && (
-                        <motion.span
-                          initial={{ scale: 0 }}
-                          whileInView={{ scale: 1 }}
-                          viewport={{ once: true }}
-                          transition={{ delay: 0.2, type: "spring" }}
-                          className="ml-2 inline-flex items-center px-2 py-0.5 rounded-full text-[10px] md:text-xs font-medium bg-blue-100 text-blue-800 whitespace-nowrap"
-                        >
-                          Unique
-                        </motion.span>
-                      )}
-                    </motion.div>
-
-                    {/* Triksha Column */}
-                    <motion.div className="flex justify-center items-center px-2 md:px-4 py-3 md:py-4">
-                      {feature.triksha ? (
-                        <motion.div
-                          variants={checkMarkVariants}
-                          initial="hidden"
-                          whileInView="visible"
-                          viewport={{ once: true }}
-                        >
-                          <Check className="h-5 w-5 md:h-6 md:w-6 text-green-600" />
-                        </motion.div>
-                      ) : (
-                        <X className="h-5 w-5 md:h-6 md:w-6 text-red-300" />
-                      )}
-                    </motion.div>
-
-                    {/* Apple Column */}
-                    <motion.div className="flex justify-center items-center px-2 md:px-4 py-3 md:py-4">
-                      {feature.apple ? (
-                        <motion.div
-                          variants={checkMarkVariants}
-                          initial="hidden"
-                          whileInView="visible"
-                          viewport={{ once: true }}
-                        >
-                          <Check className="h-5 w-5 md:h-6 md:w-6 text-slate-500" />
-                        </motion.div>
-                      ) : (
-                        <X className="h-5 w-5 md:h-6 md:w-6 text-red-300" />
-                      )}
-                    </motion.div>
-
-                    {/* WHOOP Column */}
-                    <motion.div className="flex justify-center items-center px-2 md:px-4 py-3 md:py-4">
-                      {feature.whoop ? (
-                        <motion.div
-                          variants={checkMarkVariants}
-                          initial="hidden"
-                          whileInView="visible"
-                          viewport={{ once: true }}
-                        >
-                          <Check className="h-5 w-5 md:h-6 md:w-6 text-slate-500" />
-                        </motion.div>
-                      ) : (
-                        <X className="h-5 w-5 md:h-6 md:w-6 text-red-300" />
-                      )}
-                    </motion.div>
-
-                    {/* Ultrahuman Column */}
-                    <motion.div className="flex justify-center items-center px-2 md:px-4 py-3 md:py-4">
-                      {feature.ultrahuman ? (
-                        <motion.div
-                          variants={checkMarkVariants}
-                          initial="hidden"
-                          whileInView="visible"
-                          viewport={{ once: true }}
-                        >
-                          <Check className="h-5 w-5 md:h-6 md:w-6 text-slate-500" />
-                        </motion.div>
-                      ) : (
-                        <X className="h-5 w-5 md:h-6 md:w-6 text-red-300" />
-                      )}
-                    </motion.div>
-                  </motion.div>
+                      <img
+                        src={brand.logo}
+                        alt={brand.name}
+                        className={`h-7 w-7 object-contain ${brand.primary ? "brightness-200" : ""}`}
+                      />
+                    </div>
+                    <div className={`text-sm font-medium ${brand.primary ? "text-ink-900" : ""}`} style={brand.primary ? undefined : SOFT}>
+                      {brand.name}
+                    </div>
+                  </div>
                 ))}
               </div>
-            </div>
-          </motion.div>
 
-          {/* Triksha Difference Section */}
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="mt-16 bg-gradient-to-r from-teal-500 to-blue-600 rounded-2xl shadow-lg text-white overflow-hidden"
-          >
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.3, duration: 0.6 }}
-              className="p-6 md:p-12"
-            >
-              <h3 className="text-xl sm:text-2xl md:text-3xl font-bold mb-6 text-center md:text-left">
+              {/* Rows */}
+              {features.map((feature, i) => (
+                <motion.div
+                  key={feature.name}
+                  initial={{ opacity: 0, x: -12 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true, margin: "-50px" }}
+                  transition={{ delay: i * 0.04, duration: 0.45 }}
+                  className={`grid grid-cols-5 items-center px-4 md:px-6 py-4 border-b border-[rgba(22,25,29,0.08)] last:border-0 ${
+                    i % 2 === 0 ? "bg-canvas-paper" : "bg-canvas-soft/50"
+                  }`}
+                >
+                  <div className="flex items-center gap-3 text-sm md:text-[15px] text-ink-800 font-medium pr-2">
+                    <span>{feature.name}</span>
+                    {feature.unique && (
+                      <span className="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full bg-accent-50 text-accent-700 ring-1 ring-accent-100">
+                        Unique
+                      </span>
+                    )}
+                  </div>
+                  <div className="flex justify-center">{cell(feature.triksha, true)}</div>
+                  <div className="flex justify-center">{cell(feature.apple)}</div>
+                  <div className="flex justify-center">{cell(feature.whoop)}</div>
+                  <div className="flex justify-center">{cell(feature.ultrahuman)}</div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Triksha Difference — navy statement */}
+        <motion.div
+          initial={{ opacity: 0, y: 32 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.9 }}
+          className="mt-16 rounded-4xl bg-navy text-canvas p-10 md:p-16 relative overflow-hidden"
+        >
+          <Aurora tone="navy" />
+          <div className="relative">
+            <div className="max-w-3xl">
+              <div className="text-eyebrow uppercase font-medium mb-4" style={{ color: "#6FB6FF" }}>
+                The Triksha difference
+              </div>
+              <h3 className="text-3xl md:text-4xl font-semibold tracking-tighter leading-[1.08] text-canvas">
                 Proactive. Personalized. Predictive.
               </h3>
-              <p className="text-white/90 text-sm sm:text-base md:text-lg mb-8 max-w-5xl mx-auto md:mx-0 text-center md:text-left">
-                Triksha is an AI-powered health prediction system built to help you stay one step ahead. By analyzing
-                your real-time vitals, medical history, and detected abnormalities, Triksha predicts emerging health
-                risks before they escalate.
+              <p className="mt-6 leading-relaxed text-canvas/80">
+                Triksha analyzes real-time vitals, medical history and detected anomalies
+                to forecast emerging health risk before it escalates.
               </p>
+            </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {[
-                  {
-                    title: "Advanced AI Predictions",
-                    desc: "Our custom-built Proprietary AI doesn't just analyze what's happening now. It learns your health patterns over time, combining vitals and history to forecast potential issues early—empowering you to act before problems arise.",
-                  },
-                  {
-                    title: "Personalized Risk Insights",
-                    desc: "Every person is unique. Triksha uses your medical data , medical history, past conditions, and real-time data to deliver personalized risk scores and health alerts tailored specifically to you.",
-                  },
-                  {
-                    title: "Integrated Health Book",
-                    desc: "Forget fragmented records. Triksha's Health Book securely organizes your medical data and history in one place, making it easy to track, share with doctors, and monitor your health journey over time.",
-                  },
-                ].map((box, i) => (
-                  <motion.div
-                    key={i}
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.2 + i * 0.1, duration: 0.5 }}
-                    whileHover={{ y: -5 }}
-                    className="bg-white/20 backdrop-blur-md p-6 rounded-xl text-center lg:text-left"
-                  >
-                    <div className="font-bold text-lg sm:text-xl mb-2">{box.title}</div>
-                    <p className="text-white/90 text-sm sm:text-base">{box.desc}</p>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
-          </motion.div>
-        </Container>
-      </div>
-    </motion.section>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-10">
+              {[
+                {
+                  title: "Advanced AI predictions",
+                  desc: "Our proprietary AI learns your patterns over time, combining vitals and history to forecast potential issues — empowering you to act before they arise.",
+                },
+                {
+                  title: "Personalized risk insights",
+                  desc: "Triksha uses your medical history, past conditions and real-time data to deliver personalized risk scores and alerts tailored specifically to you.",
+                },
+                {
+                  title: "Integrated Health Book",
+                  desc: "A single, secure home for your medical data — easy to track, easy to share with your doctor.",
+                },
+              ].map((box, i) => (
+                <motion.div
+                  key={box.title}
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.1 + i * 0.1, duration: 0.55 }}
+                  className="rounded-3xl bg-white/[0.06] ring-1 ring-white/10 p-6"
+                >
+                  <div className="text-base font-semibold tracking-tight text-canvas">{box.title}</div>
+                  <p className="mt-2 text-sm leading-relaxed text-canvas/75">{box.desc}</p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </motion.div>
+      </Container>
+    </section>
   );
 };
 

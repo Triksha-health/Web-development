@@ -1,161 +1,72 @@
 import { Link } from "react-router-dom";
-import { Mail, Phone } from "lucide-react";
-import { FiFacebook } from "react-icons/fi";
-import { FiTwitter } from "react-icons/fi";
-import { FiInstagram } from "react-icons/fi";
-import { FiLinkedin } from "react-icons/fi";
-// import logo from "../../public/logo (3).png";
-import trikshawordlogo from "../../public/Trikshawordlogo.png";
-import trikshaeyelogo from "../../public/trikshaeyelogo(2).png";
-import { HashLink } from "react-router-hash-link";
+
+const linkClass =
+  "text-cream underline decoration-navy-400 underline-offset-4 transition-colors hover:text-white hover:decoration-accent-300";
 
 function Footer() {
-  const currentYear = new Date().getFullYear();
+  const year = new Date().getFullYear();
 
   return (
-    <footer className="bg-gray-900 text-white">
-      <div className="container py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-2">
-          {/* Brand */}
-          <div>
-            <Link to="/" className="flex items-center color-white w-[90px] h-10 relative">
-              <img src={trikshawordlogo} alt="" className="w-[65px] h-auto brightness-[120%]" />
-              <img src={trikshaeyelogo} alt="" className="invert w-[28px] h-[90%] absolute top-[0px] right-[0px]" />
-            </Link>
-            <p className="mt-4 text-gray-400">
-              wearable that predicts and prevents chronic health risks before they become serious.
+    <footer className="bg-navy text-navy-100">
+      <div className="site-wrap flex flex-col gap-10 pb-10 pt-16">
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="flex flex-col gap-3.5">
+            <img
+              src="/img/eye-light.webp"
+              alt=""
+              width={72}
+              height={93}
+              loading="lazy"
+              className="h-auto w-9"
+            />
+            <p className="font-display text-xl text-cream">
+              Predict cardiac risk, before symptoms.
             </p>
-            <div className="flex space-x-4 mt-6">
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                <FiFacebook size={20} />
-              </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                <FiTwitter size={20} />
-              </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                <FiInstagram size={20} />
-              </a>
-              <a
-                href="https://www.linkedin.com/company/triksha"
-                className="text-gray-400 hover:text-white transition-colors "
-              >
-                <FiLinkedin size={20} />
-              </a>
-            </div>
           </div>
 
-          {/* Quick Links */}
-          <div>
-            <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
-            <ul className="space-y-2">
-              <li>
-                <HashLink smooth to="/#about" className="text-gray-400 hover:text-white transition-colors">
-                  About
-                </HashLink>
-              </li>
-              <li>
-                <HashLink smooth to="/#usecases" className="text-gray-400 hover:text-white transition-colors">
-                  Use Cases
-                </HashLink>
-              </li>
-              <li>
-                <HashLink smooth to="/#whytriksha" className="text-gray-400 hover:text-white transition-colors">
-                  Why Triksha
-                </HashLink>
-              </li>
-              <li>
-                <HashLink smooth to="/#cofounder" className="text-gray-400 hover:text-white transition-colors">
-                  Meet Our Founder
-                </HashLink>
-              </li>
-              <li>
-                <HashLink smooth to="/#faq" className="text-gray-400 hover:text-white transition-colors">
-                  FAQ
-                </HashLink>
-              </li>
-              <li>
-                <HashLink smooth to="/admin/login" className="text-gray-400 hover:text-white transition-colors">
-                  Admin Login
-                </HashLink>
-              </li>
-            </ul>
+          <div className="flex flex-col gap-2.5 text-[15px]">
+            <span className="mono-tag text-accent-300">Contact</span>
+            <a href="mailto:yashwanth@trikshahealth.com" className={linkClass}>
+              yashwanth@trikshahealth.com
+            </a>
+            <a href="tel:+917899940382" className={linkClass}>
+              +91 78999 40382
+            </a>
           </div>
 
-          {/* Legal */}
-          <div>
-            <h3 className="text-lg font-semibold mb-4">Legal</h3>
-            <ul className="space-y-2">
-              <li>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                  Terms of Service
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                  Privacy Policy
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                  Refund Policy
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                  Cookie Policy
-                </a>
-              </li>
-            </ul>
+          <div className="flex flex-col gap-2.5 text-[15px]">
+            <span className="mono-tag text-accent-300">Company</span>
+            <Link to="/#about" className={linkClass}>
+              About
+            </Link>
+            <Link to="/#clinicians" className={linkClass}>
+              Clinical partners
+            </Link>
+            <a
+              href="mailto:yashwanth@trikshahealth.com?subject=Investor%20enquiry"
+              className={linkClass}
+            >
+              Investors
+            </a>
           </div>
 
-          {/* Contact */}
-
-          <div>
-            <h3 className="text-lg font-semibold mb-4">Contact Us</h3>
-            <ul className="space-y-4">
-              <li className="flex items-start">
-                <Mail className="w-5 h-5 text-gray-400 mr-3 mt-0.5" />
-                <span className="text-gray-400">support@trikshahealth.com</span>
-              </li>
-              <li className="flex items-start">
-                <Phone className="w-5 h-5 text-gray-400 mr-3 mt-0.5" />
-                <span className="text-gray-400">+91 (789) 994-0382</span>
-              </li>
-              <li className="flex items-start">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="w-5 h-5 text-gray-400 mr-3 mt-0.5 flex-shrink-0"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 11c1.104 0 2-.896 2-2s-.896-2-2-2-2 .896-2 2 .896 2 2 2z"
-                  />
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"
-                  />
-                </svg>
-                <div className="text-gray-400 leading-relaxed">
-                  5-5-7/29/B, Devi Nagar Road No 2,
-                  <br />
-                  Kukatpally, Hyderabad, Telangana
-                </div>
-              </li>
-            </ul>
+          <div className="flex flex-col gap-2.5 text-[15px]">
+            <span className="mono-tag text-accent-300">Legal</span>
+            <Link to="/privacy" className={linkClass}>
+              Privacy policy
+            </Link>
+            <Link to="/terms" className={linkClass}>
+              Terms of use
+            </Link>
           </div>
         </div>
 
-        <div className="border-t border-gray-800 mt-12 pt-8">
-          <p className="text-gray-400 text-center">
-            &copy; {currentYear} VTY TRIKSHA HEALTH TECH PRIVATE LIMITED. All rights reserved.
+        <div className="flex flex-col gap-2.5 border-t border-navy-500 pt-6 text-[13px]">
+          <p>
+            Triksha is in development and is not a certified medical device. It does not
+            diagnose, treat or prevent any disease. In an emergency, call 112.
           </p>
+          <p>© {year} VTY Triksha Health Tech Pvt Ltd</p>
         </div>
       </div>
     </footer>

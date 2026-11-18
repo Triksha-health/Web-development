@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /userdashboard
+
+Sitemap: https://trikshahealth.com/sitemap.xml

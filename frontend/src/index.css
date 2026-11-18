@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap');
+/* Fonts: Spectral, Libre Franklin and JetBrains Mono are self-hosted via @fontsource (imported in main.tsx). */
 
 @tailwind base;
 @tailwind components;
@@ -7,74 +7,263 @@
 @layer base {
   html {
     @apply scroll-smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
-  
+
   body {
-    @apply font-sans text-gray-800 antialiased;
+    @apply font-sans text-ink-900 bg-canvas antialiased;
+    line-height: 1.55;
   }
-  
+
   h1, h2, h3, h4, h5, h6 {
-    @apply font-display font-bold;
+    @apply font-display text-ink-900;
+    letter-spacing: -0.015em;
+  }
+
+  ::selection {
+    background: rgba(27, 107, 201, 0.20);
+    color: #17191C;
+  }
+
+  /* Deep-linking: anchored sections clear the sticky navbar */
+  section[id] {
+    scroll-margin-top: 4.5rem;
+  }
+
+  /* Accessibility: a single elegant keyboard focus ring for all interactive
+     elements (low specificity via :where, so components can still override).
+     Mouse clicks won't show it — only keyboard/assistive navigation. */
+  :where(a, button, [role="button"], input, textarea, select, summary):focus-visible {
+    outline: 2px solid #1B6BC9;
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  /* Respect reduced-motion: neutralise decorative animations + transitions */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-delay: 0s !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
   }
 }
 
 @layer components {
   .container {
-    @apply px-4 mx-auto max-w-7xl sm:px-6 lg:px-8;
+    @apply px-5 mx-auto max-w-7xl sm:px-8 lg:px-10;
   }
-  
+
+  /* Pill buttons */
   .btn {
-    @apply inline-flex items-center justify-center px-6 py-3 font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2;
+    @apply inline-flex items-center justify-center px-6 py-3 font-medium rounded-full transition-[transform,background-color,box-shadow,color] duration-200 ease-out active:scale-[0.97] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent-500;
+    letter-spacing: -0.01em;
   }
-  
+
   .btn-primary {
-    @apply btn bg-primary-500 text-white hover:bg-primary-600 focus:ring-primary-500;
+    @apply btn bg-ink-900 text-canvas-paper hover:bg-ink-700 active:scale-[0.98];
   }
-  
+
+  .btn-accent {
+    @apply btn bg-accent-500 text-white hover:bg-accent-600 active:scale-[0.98];
+  }
+
   .btn-secondary {
-    @apply btn bg-secondary-500 text-white hover:bg-secondary-600 focus:ring-secondary-500;
+    @apply btn bg-secondary-500 text-white hover:bg-secondary-600;
   }
-  
+
   .btn-outline {
-    @apply btn border-2 border-primary-500 text-primary-500 bg-transparent hover:bg-primary-50 focus:ring-primary-500;
+    @apply btn bg-transparent text-ink-900 border border-[rgba(22,25,29,0.22)] hover:border-ink-700 hover:bg-canvas-paper active:scale-[0.98];
   }
-  
+
+  .btn-ghost {
+    @apply btn bg-canvas-soft text-ink-900 hover:bg-canvas-paper active:scale-[0.98];
+  }
+
   .btn-white {
-    @apply btn bg-white text-gray-800 hover:bg-gray-100 border border-gray-200 focus:ring-gray-500;
+    @apply btn bg-canvas-paper text-ink-900 hover:bg-canvas-soft shadow-soft;
   }
-  
+
   .section {
-    @apply py-20 md:py-24;
+    @apply py-24 md:py-32;
   }
-  
+
+  .section-tight {
+    @apply py-16 md:py-20;
+  }
+
   .section-title {
-    @apply text-3xl md:text-4xl font-bold mb-4 leading-tight;
+    @apply text-4xl md:text-5xl font-semibold mb-4 leading-[1.05] tracking-tighter text-ink-900;
   }
-  
+
   .section-subtitle {
-    @apply text-lg text-gray-600 mb-10 max-w-3xl;
+    @apply text-lg md:text-xl mb-10 max-w-2xl leading-relaxed;
+    color: rgba(22, 25, 29, 0.62);
   }
-  
+
   .card {
-    @apply bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300;
+    @apply bg-canvas-paper rounded-3xl shadow-soft overflow-hidden transition-[transform,box-shadow] duration-300 ease-out;
+    box-shadow: 0 1px 2px rgba(11,38,80,0.04), 0 8px 24px rgba(11,38,80,0.06), inset 0 0 0 1px rgba(22,25,29,0.06);
   }
-  
+
+  .card-flat {
+    @apply bg-canvas-soft rounded-3xl overflow-hidden transition-all duration-300;
+  }
+
   .input {
-    @apply w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition duration-200;
+    @apply w-full px-5 py-3.5 rounded-2xl bg-canvas-paper border border-[rgba(22,25,29,0.14)] text-ink-900 placeholder-[rgba(22,25,29,0.40)] focus:ring-2 focus:ring-accent-500/30 focus:border-accent-500 outline-none transition;
   }
-  
+
   .label {
-    @apply block text-sm font-medium text-gray-700 mb-1;
+    @apply block text-sm font-medium text-ink-900 mb-1.5;
+  }
+
+  /* Eyebrow — restrained Geist-Mono micro-label (use sparingly: max ~1 per 3 sections) */
+  .eyebrow {
+    @apply inline-flex items-center gap-2 font-mono text-[11px] uppercase font-medium;
+    color: #1557A8;
+    letter-spacing: 0.18em;
+  }
+
+  /* Mono metric/number styling — instrument-grade numerals */
+  .num {
+    @apply font-mono tabular-nums;
+    letter-spacing: -0.01em;
+  }
+
+  /* Glass surface (warm cream tint) */
+  .glass {
+    background: rgba(251, 247, 236, 0.78);
+    @apply backdrop-blur-xl;
+    box-shadow:
+      0 1px 2px rgba(11,38,80,0.06),
+      0 8px 24px rgba(11,38,80,0.08),
+      inset 0 0 0 1px rgba(22,25,29,0.10);
+    border-radius: inherit;
+  }
+
+  /* Hairline border util */
+  .hairline {
+    border-color: rgba(22, 25, 29, 0.14);
+  }
+
+  /* ── 2026 glass design language ───────────────────────────── */
+
+  /* Crisp elevated card — bright surface that clearly lifts off the cream bg */
+  .glass-card {
+    background: linear-gradient(160deg, #ffffff 0%, #fdfaf3 100%);
+    @apply rounded-3xl transition-[transform,box-shadow] duration-300 ease-out;
+    box-shadow:
+      0 1px 2px rgba(11, 38, 80, 0.05),
+      0 12px 32px -10px rgba(11, 38, 80, 0.14),
+      inset 0 0 0 1px rgba(22, 25, 29, 0.05);
+  }
+  /* Interactive lift + blue glow on hover */
+  .glass-card.is-interactive {
+    cursor: default;
+  }
+  .glass-card.is-interactive:hover {
+    transform: translateY(-6px);
+    box-shadow:
+      0 4px 10px rgba(11, 38, 80, 0.07),
+      0 34px 64px -16px rgba(27, 107, 201, 0.32),
+      inset 0 0 0 1px rgba(27, 107, 201, 0.28);
+  }
+
+  /* Dark glass for navy statement blocks */
+  .glass-navy {
+    background: linear-gradient(155deg, rgba(11, 42, 82, 0.72), rgba(8, 30, 60, 0.6));
+    @apply backdrop-blur-xl;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.08),
+      inset 0 0 0 1px rgba(111, 182, 255, 0.14),
+      0 28px 64px -20px rgba(10, 42, 82, 0.55);
+  }
+
+  /* Blue gradient clip-text for headline accents */
+  .text-gradient {
+    color: #1B6BC9;
+  }
+
+  /* Hover lift utility (no glass) */
+  .lift {
+    @apply transition-transform duration-300 ease-out;
+  }
+  .lift:hover {
+    transform: translateY(-4px);
+  }
+
+  /* Button sheen sweep on hover */
+  .sheen {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .sheen::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(115deg, transparent 30%, rgba(255, 255, 255, 0.4) 50%, transparent 70%);
+    transform: translateX(-130%);
+    transition: transform 0.7s ease;
+    pointer-events: none;
+  }
+  .sheen:hover::after {
+    transform: translateX(130%);
+  }
+
+  /* Ambient aurora blobs */
+  .aurora-blob {
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(64px);
+    will-change: transform;
+    animation: auroraDrift 20s ease-in-out infinite;
   }
 }
 
-/* Custom animations */
-.fade-in {
-  animation: fadeIn 0.6s ease-in;
+/* Header transitions */
+.header-scroll {
+  background: rgba(251, 247, 236, 0.78);
+  @apply backdrop-blur-xl;
+  box-shadow: inset 0 -1px 0 rgba(22, 25, 29, 0.10);
+  transition: all 0.3s ease;
 }
 
-.slide-up {
-  animation: slideUp 0.5s ease-out;
+.header-transparent {
+  @apply bg-transparent;
+  transition: all 0.3s ease;
+}
+
+/* Custom utility: subtle grain (slightly warmer for cream) */
+.grain::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.035;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence baseFrequency='0.9' numOctaves='2' seed='3'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.8 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+}
+
+@keyframes draw {
+  to { stroke-dashoffset: 0; }
+}
+.vitals-path {
+  stroke-dasharray: 600;
+  stroke-dashoffset: 600;
+  animation: draw 3.2s ease-out 0.4s forwards;
+}
+
+.canvas-fade {
+  animation: fadeIn 1.2s ease-out both;
 }
 
 @keyframes fadeIn {
@@ -82,18 +271,288 @@
   to { opacity: 1; }
 }
 
-@keyframes slideUp {
-  from { transform: translateY(20px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+/* Lazy-load fallback spinner (used by SplineScene <Suspense> fallback) */
+.loader {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 3px solid rgba(27, 107, 201, 0.18);
+  border-top-color: #1B6BC9;
+  animation: loader-spin 0.8s linear infinite;
 }
 
-/* Header transitions */
-.header-scroll {
-  @apply bg-white shadow-md;
-  transition: all 0.3s ease;
+@keyframes loader-spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
-.header-transparent {
-  @apply bg-transparent;
-  transition: all 0.3s ease;
+/* Ambient aurora drift (behind hero / statement sections) */
+@keyframes auroraDrift {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(6%, -5%) scale(1.12); }
+  66% { transform: translate(-5%, 5%) scale(0.94); }
+}
+
+/* Subtle scroll cue (replaces bouncy animate-bounce — gentle, not elastic) */
+.scroll-cue {
+  animation: scrollCue 1.9s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+@keyframes scrollCue {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(5px); }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   Redesign (handoff) — site-wide building blocks
+   ════════════════════════════════════════════════════════════════ */
+@layer components {
+  .site-wrap {
+    width: 100%;
+    max-width: 1200px;
+    margin-inline: auto;
+    padding-inline: clamp(20px, 5vw, 48px);
+  }
+  .site-section {
+    padding-block: clamp(64px, 8vw, 112px);
+  }
+
+  /* Small uppercase mono label above headings */
+  .kicker {
+    @apply font-mono uppercase text-accent-600;
+    font-size: 13px;
+    letter-spacing: 0.22em;
+    line-height: 1.5;
+  }
+  .mono-tag {
+    @apply font-mono uppercase;
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    line-height: 1.5;
+  }
+
+  .h-display {
+    @apply font-display font-semibold text-ink-900;
+    font-size: clamp(34px, 4vw, 52px);
+    line-height: 1.08;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+  }
+  .lede {
+    @apply text-body;
+    font-size: 18px;
+    text-wrap: pretty;
+  }
+
+  /* Pill calls to action */
+  .cta {
+    @apply inline-flex items-center justify-center rounded-full font-semibold no-underline;
+    font-size: 16px;
+    padding: 16px 28px;
+    transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease,
+      transform 0.12s ease, box-shadow 0.18s ease;
+  }
+  .cta:active {
+    transform: scale(0.98);
+  }
+  .cta-blue {
+    @apply bg-accent-500 text-white;
+  }
+  .cta-blue:hover {
+    @apply bg-accent-600;
+    box-shadow: 0 8px 20px rgba(27, 107, 201, 0.28);
+  }
+  .cta-outline {
+    @apply text-ink-900;
+    padding: 14.5px 26px;
+    border: 1.5px solid #17191c;
+  }
+  .cta-outline:hover {
+    @apply bg-ink-900 text-canvas-paper;
+  }
+  .cta-navy {
+    @apply bg-navy text-white;
+  }
+  .cta-navy:hover {
+    @apply bg-navy-800;
+  }
+  .cta-cream {
+    @apply bg-cream text-navy;
+  }
+  .cta-cream:hover {
+    @apply bg-white;
+  }
+
+  .text-link {
+    @apply text-accent-600 underline underline-offset-2;
+    transition: color 0.15s ease;
+  }
+  .text-link:hover {
+    @apply text-navy;
+  }
+
+  /* Cards that respond to the pointer */
+  .card-hover {
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  }
+  @media (hover: hover) {
+    .card-hover:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 16px 34px rgba(12, 37, 71, 0.1);
+      border-color: #d8cdb6;
+    }
+  }
+}
+
+/* ── Sticky nav ─────────────────────────────────────────────── */
+.site-nav {
+  background: #f4eee1;
+  border-bottom: 1px solid #e2d9c6;
+  transition: background-color 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+.site-nav.is-scrolled {
+  background: rgba(251, 248, 241, 0.9);
+  -webkit-backdrop-filter: saturate(1.4) blur(14px);
+  backdrop-filter: saturate(1.4) blur(14px);
+  border-bottom-color: transparent;
+  box-shadow: 0 1px 0 rgba(23, 25, 28, 0.08), 0 10px 30px rgba(12, 37, 71, 0.08);
+}
+.site-nav .nav-inner {
+  padding-block: 18px;
+  transition: padding 0.25s ease;
+}
+.site-nav.is-scrolled .nav-inner {
+  padding-block: 10px;
+}
+.nav-link {
+  position: relative;
+  padding: 10px 0;
+  color: #17191c;
+  text-decoration: none;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 4px;
+  height: 1.5px;
+  background: #1b6bc9;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.22s ease;
+}
+.nav-link:hover::after,
+.nav-link[aria-current="true"]::after {
+  transform: scaleX(1);
+}
+
+/* ── Hero live signal ───────────────────────────────────────────
+   Runs calm, drifts after a few seconds, then the alert card slides
+   in. Pure CSS, so the card is in the HTML and shows immediately when
+   animation is unavailable or reduced motion is requested. */
+.sig-run {
+  animation: sigRun 7s linear infinite;
+}
+.sig-calm {
+  animation: sigOut 2.4s ease 4s both;
+}
+.sig-drift {
+  animation: sigIn 2.4s ease 4s both;
+}
+.drift-card {
+  animation: driftCardIn 0.9s cubic-bezier(0.22, 1, 0.36, 1) 6.4s both;
+}
+@keyframes sigRun {
+  to { transform: translateX(-480px); }
+}
+@keyframes sigOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+@keyframes sigIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes driftCardIn {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── How it works: pinned stage ─────────────────────────────── */
+.stage-layer {
+  opacity: 0;
+  transform: scale(0.985);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.stage-layer.is-active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ── Twin demo slider ───────────────────────────────────────── */
+.twin-range {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 28px;
+  background: transparent;
+  cursor: pointer;
+  touch-action: pan-y;
+}
+.twin-range::-webkit-slider-runnable-track {
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(to right, #1b6bc9 var(--fill, 100%), #d8cdb6 var(--fill, 100%));
+}
+.twin-range::-moz-range-track {
+  height: 6px;
+  border-radius: 999px;
+  background: #d8cdb6;
+}
+.twin-range::-moz-range-progress {
+  height: 6px;
+  border-radius: 999px;
+  background: #1b6bc9;
+}
+.twin-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 26px;
+  height: 26px;
+  margin-top: -10px;
+  border-radius: 50%;
+  background: #fbf8f1;
+  border: 2px solid #1b6bc9;
+  box-shadow: 0 4px 12px rgba(12, 37, 71, 0.22);
+  transition: transform 0.12s ease;
+}
+.twin-range::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #fbf8f1;
+  border: 2px solid #1b6bc9;
+  box-shadow: 0 4px 12px rgba(12, 37, 71, 0.22);
+}
+.twin-range:active::-webkit-slider-thumb {
+  transform: scale(1.12);
+}
+
+/* ── FAQ (native details) ───────────────────────────────────── */
+.faq summary {
+  list-style: none;
+  cursor: pointer;
+}
+.faq summary::-webkit-details-marker {
+  display: none;
+}
+.faq .faq-plus {
+  transition: transform 0.2s ease;
+}
+.faq[open] .faq-plus {
+  transform: rotate(45deg);
+}
+.faq summary:hover {
+  color: #1557a8;
 }

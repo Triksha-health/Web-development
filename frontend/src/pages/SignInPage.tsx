@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Mail, Lock, Eye, EyeOff } from "lucide-react";
 import { motion, useAnimation } from "framer-motion";
 import { useAuth } from "../context/AuthContext";
+import { API_BASE } from "../lib/api";
 
 function SignInPage() {
   const [email, setEmail] = useState("");
@@ -318,8 +319,7 @@ function SignInPage() {
               <motion.button
                 type="button"
                 onClick={() =>
-                  (window.location.href =
-                    "https://triksha-backend-f5f0cth4f9c0b8g9.southindia-01.azurewebsites.net/auth/google")
+                  (window.location.href = `${API_BASE}/auth/google`)
                 }
                 className="w-full flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
                 variants={buttonVariants}

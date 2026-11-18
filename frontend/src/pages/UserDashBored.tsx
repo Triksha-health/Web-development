@@ -5,6 +5,7 @@ import { useState } from "react";
 import { Routes, Route, Link, useLocation, useNavigate } from "react-router-dom";
 import { User, ShoppingBag, LogOut, Menu, X, ChevronRight, Home } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
+import { API_BASE } from "../lib/api";
 import ProfileTab from "../dashboard/userdashboard/ProfileTab";
 import OrdersTab from "../dashboard/userdashboard/OrderTab";
 // import NotFoundPage from './NotFoundPage';
@@ -31,15 +32,14 @@ function DashboardPage() {
     let token = new URLSearchParams(location.search).get("token");
 
     if (token) {
-      localStorage.setItem("token", token);
+      localStorage.setItem("triksha_token", token);
     } else {
-      token = localStorage.getItem("token"); // ✅ fallback for later visits
+      token = localStorage.getItem("triksha_token"); // ✅ fallback for later visits
     }
 
     if (token) {
-      const decoded: any = jwtDecode<DecodedToken>(token);
-      console.log("User ID from token:", decoded.id);
-      fetch(`https://triksha-backend-f5f0cth4f9c0b8g9.southindia-01.azurewebsites.net/api/user/profile`, {
+      jwtDecode<DecodedToken>(token);
+      fetch(`${API_BASE}/api/user/profile`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

@@ -38,11 +38,7 @@ const ToggleButtons: React.FC<ToggleButtonsProps> = ({
   }, [selected, options]);
 
   useEffect(() => {
-    // Add a small delay to ensure DOM is ready
-    const timer = setTimeout(() => {
-      updateSliderPosition();
-    }, 0);
-
+    const timer = setTimeout(() => updateSliderPosition(), 0);
     return () => clearTimeout(timer);
   }, [updateSliderPosition]);
 
@@ -53,10 +49,12 @@ const ToggleButtons: React.FC<ToggleButtonsProps> = ({
   }, [updateSliderPosition]);
 
   return (
-    <div ref={containerRef} className="relative inline-flex bg-[#e1e8f0] rounded-full p-1">
-      {/* Sliding background */}
+    <div
+      ref={containerRef}
+      className="relative inline-flex bg-canvas-soft ring-1 ring-[rgba(22,25,29,0.10)] rounded-full p-1"
+    >
       <div
-        className="absolute bg-white rounded-full shadow-sm transition-all duration-300 ease-out"
+        className="absolute bg-canvas-paper rounded-full shadow-soft transition-all duration-300 ease-out"
         style={{
           width: `${sliderStyle.width}px`,
           left: `${sliderStyle.left}px`,
@@ -65,16 +63,14 @@ const ToggleButtons: React.FC<ToggleButtonsProps> = ({
         }}
       />
 
-      {/* Buttons */}
       {options.map((option, index) => (
         <button
           key={option}
           ref={(el) => (buttonRefs.current[index] = el)}
           onClick={() => handleSelection(option)}
-          className={`
-            relative z-10 px-4 py-2 text-sm font-medium rounded-full transition-colors duration-200 ease-in-out
-            ${selected === option ? "text-blue-600" : "text-gray-600 hover:text-gray-800"}
-          `}
+          className={`relative z-10 px-5 py-2.5 text-[13.5px] font-medium rounded-full transition-colors duration-200 ease-in-out ${
+            selected === option ? "text-ink-900" : "text-ink-500 hover:text-ink-700"
+          }`}
         >
           {option}
         </button>
@@ -82,4 +78,5 @@ const ToggleButtons: React.FC<ToggleButtonsProps> = ({
     </div>
   );
 };
+
 export default ToggleButtons;

@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
-import axios from 'axios';
+import api from '../lib/api';
 
 import {jwtDecode} from 'jwt-decode';
 
@@ -21,13 +21,6 @@ interface AuthContextType {
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
-
-const API_URL = 'https://triksha-backend-f5f0cth4f9c0b8g9.southindia-01.azurewebsites.net/api/auth';
-
-const api = axios.create({
-  baseURL: API_URL,
-  headers: { 'Content-Type': 'application/json' },
-});
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
@@ -77,7 +70,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const login = async (email: string, password: string) => {
     setIsLoading(true);
     try {
-      const res = await api.post('/login', { email, password });
+      const res = await api.post('/auth/login', { email, password });
       const backendUser = res.data.user;
       const token = res.data.token;
 
@@ -101,7 +94,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const signup = async (name: string, email: string, password: string) => {
     setIsLoading(true);
     try {
-      const res = await api.post('/register', {
+      const res = await api.post('/auth/register', {
         username: name,
         email,
         password,
