@@ -1,4 +1,4 @@
-/* Fonts: Geist + Geist Mono are self-hosted via @fontsource-variable (imported in main.tsx). */
+/* Fonts: Spectral, Libre Franklin and JetBrains Mono are self-hosted via @fontsource (imported in main.tsx). */
 
 @tailwind base;
 @tailwind components;
@@ -14,30 +14,30 @@
 
   body {
     @apply font-sans text-ink-900 bg-canvas antialiased;
-    font-feature-settings: 'cv11', 'ss01', 'ss03';
+    line-height: 1.55;
   }
 
   h1, h2, h3, h4, h5, h6 {
     @apply font-display text-ink-900;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.015em;
   }
 
   ::selection {
-    background: rgba(5, 113, 211, 0.20);
-    color: #16191D;
+    background: rgba(27, 107, 201, 0.20);
+    color: #17191C;
   }
 
   /* Deep-linking: anchored sections clear the sticky navbar */
   section[id] {
-    scroll-margin-top: 5.5rem;
+    scroll-margin-top: 4.5rem;
   }
 
   /* Accessibility: a single elegant keyboard focus ring for all interactive
      elements (low specificity via :where, so components can still override).
      Mouse clicks won't show it — only keyboard/assistive navigation. */
   :where(a, button, [role="button"], input, textarea, select, summary):focus-visible {
-    outline: 2px solid #0571d3;
-    outline-offset: 2px;
+    outline: 2px solid #1B6BC9;
+    outline-offset: 3px;
     border-radius: 6px;
   }
 
@@ -47,6 +47,7 @@
     *::before,
     *::after {
       animation-duration: 0.001ms !important;
+      animation-delay: 0s !important;
       animation-iteration-count: 1 !important;
       transition-duration: 0.001ms !important;
       scroll-behavior: auto !important;
@@ -126,7 +127,7 @@
   /* Eyebrow — restrained Geist-Mono micro-label (use sparingly: max ~1 per 3 sections) */
   .eyebrow {
     @apply inline-flex items-center gap-2 font-mono text-[11px] uppercase font-medium;
-    color: #0571d3;
+    color: #1557A8;
     letter-spacing: 0.18em;
   }
 
@@ -171,8 +172,8 @@
     transform: translateY(-6px);
     box-shadow:
       0 4px 10px rgba(11, 38, 80, 0.07),
-      0 34px 64px -16px rgba(5, 113, 211, 0.32),
-      inset 0 0 0 1px rgba(5, 113, 211, 0.28);
+      0 34px 64px -16px rgba(27, 107, 201, 0.32),
+      inset 0 0 0 1px rgba(27, 107, 201, 0.28);
   }
 
   /* Dark glass for navy statement blocks */
@@ -187,10 +188,7 @@
 
   /* Blue gradient clip-text for headline accents */
   .text-gradient {
-    background-image: linear-gradient(120deg, #0b4c99, #0571d3 45%, #2e8ce6);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+    color: #1B6BC9;
   }
 
   /* Hover lift utility (no glass) */
@@ -278,8 +276,8 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  border: 3px solid rgba(5, 113, 211, 0.18);
-  border-top-color: #0571d3;
+  border: 3px solid rgba(27, 107, 201, 0.18);
+  border-top-color: #1B6BC9;
   animation: loader-spin 0.8s linear infinite;
 }
 
@@ -303,4 +301,258 @@
 @keyframes scrollCue {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(5px); }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   Redesign (handoff) — site-wide building blocks
+   ════════════════════════════════════════════════════════════════ */
+@layer components {
+  .site-wrap {
+    width: 100%;
+    max-width: 1200px;
+    margin-inline: auto;
+    padding-inline: clamp(20px, 5vw, 48px);
+  }
+  .site-section {
+    padding-block: clamp(64px, 8vw, 112px);
+  }
+
+  /* Small uppercase mono label above headings */
+  .kicker {
+    @apply font-mono uppercase text-accent-600;
+    font-size: 13px;
+    letter-spacing: 0.22em;
+    line-height: 1.5;
+  }
+  .mono-tag {
+    @apply font-mono uppercase;
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    line-height: 1.5;
+  }
+
+  .h-display {
+    @apply font-display font-semibold text-ink-900;
+    font-size: clamp(34px, 4vw, 52px);
+    line-height: 1.08;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+  }
+  .lede {
+    @apply text-body;
+    font-size: 18px;
+    text-wrap: pretty;
+  }
+
+  /* Pill calls to action */
+  .cta {
+    @apply inline-flex items-center justify-center rounded-full font-semibold no-underline;
+    font-size: 16px;
+    padding: 16px 28px;
+    transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease,
+      transform 0.12s ease, box-shadow 0.18s ease;
+  }
+  .cta:active {
+    transform: scale(0.98);
+  }
+  .cta-blue {
+    @apply bg-accent-500 text-white;
+  }
+  .cta-blue:hover {
+    @apply bg-accent-600;
+    box-shadow: 0 8px 20px rgba(27, 107, 201, 0.28);
+  }
+  .cta-outline {
+    @apply text-ink-900;
+    padding: 14.5px 26px;
+    border: 1.5px solid #17191c;
+  }
+  .cta-outline:hover {
+    @apply bg-ink-900 text-canvas-paper;
+  }
+  .cta-navy {
+    @apply bg-navy text-white;
+  }
+  .cta-navy:hover {
+    @apply bg-navy-800;
+  }
+  .cta-cream {
+    @apply bg-cream text-navy;
+  }
+  .cta-cream:hover {
+    @apply bg-white;
+  }
+
+  .text-link {
+    @apply text-accent-600 underline underline-offset-2;
+    transition: color 0.15s ease;
+  }
+  .text-link:hover {
+    @apply text-navy;
+  }
+
+  /* Cards that respond to the pointer */
+  .card-hover {
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  }
+  @media (hover: hover) {
+    .card-hover:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 16px 34px rgba(12, 37, 71, 0.1);
+      border-color: #d8cdb6;
+    }
+  }
+}
+
+/* ── Sticky nav ─────────────────────────────────────────────── */
+.site-nav {
+  background: #f4eee1;
+  border-bottom: 1px solid #e2d9c6;
+  transition: background-color 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+.site-nav.is-scrolled {
+  background: rgba(251, 248, 241, 0.9);
+  -webkit-backdrop-filter: saturate(1.4) blur(14px);
+  backdrop-filter: saturate(1.4) blur(14px);
+  border-bottom-color: transparent;
+  box-shadow: 0 1px 0 rgba(23, 25, 28, 0.08), 0 10px 30px rgba(12, 37, 71, 0.08);
+}
+.site-nav .nav-inner {
+  padding-block: 18px;
+  transition: padding 0.25s ease;
+}
+.site-nav.is-scrolled .nav-inner {
+  padding-block: 10px;
+}
+.nav-link {
+  position: relative;
+  padding: 10px 0;
+  color: #17191c;
+  text-decoration: none;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 4px;
+  height: 1.5px;
+  background: #1b6bc9;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.22s ease;
+}
+.nav-link:hover::after,
+.nav-link[aria-current="true"]::after {
+  transform: scaleX(1);
+}
+
+/* ── Hero live signal ───────────────────────────────────────────
+   Runs calm, drifts after a few seconds, then the alert card slides
+   in. Pure CSS, so the card is in the HTML and shows immediately when
+   animation is unavailable or reduced motion is requested. */
+.sig-run {
+  animation: sigRun 7s linear infinite;
+}
+.sig-calm {
+  animation: sigOut 2.4s ease 4s both;
+}
+.sig-drift {
+  animation: sigIn 2.4s ease 4s both;
+}
+.drift-card {
+  animation: driftCardIn 0.9s cubic-bezier(0.22, 1, 0.36, 1) 6.4s both;
+}
+@keyframes sigRun {
+  to { transform: translateX(-480px); }
+}
+@keyframes sigOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+@keyframes sigIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes driftCardIn {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── How it works: pinned stage ─────────────────────────────── */
+.stage-layer {
+  opacity: 0;
+  transform: scale(0.985);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.stage-layer.is-active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ── Twin demo slider ───────────────────────────────────────── */
+.twin-range {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 28px;
+  background: transparent;
+  cursor: pointer;
+  touch-action: pan-y;
+}
+.twin-range::-webkit-slider-runnable-track {
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(to right, #1b6bc9 var(--fill, 100%), #d8cdb6 var(--fill, 100%));
+}
+.twin-range::-moz-range-track {
+  height: 6px;
+  border-radius: 999px;
+  background: #d8cdb6;
+}
+.twin-range::-moz-range-progress {
+  height: 6px;
+  border-radius: 999px;
+  background: #1b6bc9;
+}
+.twin-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 26px;
+  height: 26px;
+  margin-top: -10px;
+  border-radius: 50%;
+  background: #fbf8f1;
+  border: 2px solid #1b6bc9;
+  box-shadow: 0 4px 12px rgba(12, 37, 71, 0.22);
+  transition: transform 0.12s ease;
+}
+.twin-range::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #fbf8f1;
+  border: 2px solid #1b6bc9;
+  box-shadow: 0 4px 12px rgba(12, 37, 71, 0.22);
+}
+.twin-range:active::-webkit-slider-thumb {
+  transform: scale(1.12);
+}
+
+/* ── FAQ (native details) ───────────────────────────────────── */
+.faq summary {
+  list-style: none;
+  cursor: pointer;
+}
+.faq summary::-webkit-details-marker {
+  display: none;
+}
+.faq .faq-plus {
+  transition: transform 0.2s ease;
+}
+.faq[open] .faq-plus {
+  transform: rotate(45deg);
+}
+.faq summary:hover {
+  color: #1557a8;
 }

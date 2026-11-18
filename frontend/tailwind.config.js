@@ -4,10 +4,10 @@ export default {
   theme: {
     extend: {
       colors: {
-        // ── Triksha brand palette ─────────────────────────────────────
-        // Ink (primary text — near-black)
+        // ── Triksha brand palette (redesign handoff) ──────────────────
+        // Ink (primary text)
         ink: {
-          DEFAULT: '#16191D',
+          DEFAULT: '#17191C',
           50:  '#F0F0F1',
           100: '#E1E1E3',
           200: '#C5C6C9',
@@ -17,69 +17,82 @@ export default {
           600: '#3D4045',
           700: '#2A2D31',
           800: '#1F2126',
-          900: '#16191D',
+          900: '#17191C',
           950: '#0D1014',
         },
+        body:  '#4F4B44', // paragraph text
+        muted: '#6B665C', // captions, small labels
 
-        // Canvas (cream backgrounds + paper cards)
+        // Cream ground + raised surfaces
         canvas: {
-          DEFAULT: '#F3ECDB', // warm paper — primary background
-          soft:    '#ECE2CC', // sand — alternating section
-          paper:   '#FBF7EC', // off-white paper — card surfaces
-          warm:    '#FBF7EC', // alias
+          DEFAULT: '#F4EEE1', // ground
+          soft:    '#E9E0CD', // image wells
+          paper:   '#FBF8F1', // raised surfaces
+          warm:    '#FBF8F1', // alias
+        },
+        cream: '#F3EEE3', // text on navy
+        line: {
+          DEFAULT: '#E2D9C6',
+          strong:  '#D8CDB6',
         },
 
-        // Accent (Triksha blue) — primary #0571d3 (LOCKED)
+        // Accent blue: 500 = buttons + highlighted words, 600 = small labels
         accent: {
-          50:  '#ECF4FD',
-          100: '#D3E6FB',
-          200: '#A9CFF6',
-          300: '#74B0EF',
-          400: '#2E8CE6',
-          500: '#0571D3', // ← Triksha blue (primary accent) — LOCKED
-          600: '#045CAE',
-          700: '#0B4C99', // ← deep blue / accent shadow
-          800: '#093E7E',
-          900: '#072E60',
-          sky: '#6FB6FF', // on-navy light blue
+          50:  '#EEF4FB',
+          100: '#E4ECF6',
+          200: '#C3D8F1',
+          300: '#8EBDF2',
+          400: '#4E93DE',
+          500: '#1B6BC9',
+          600: '#1557A8',
+          700: '#104586',
+          800: '#0C3566',
+          900: '#0C2547',
+          sky: '#8EBDF2', // on-navy light blue
         },
 
-        // Alias kept for any legacy `primary-*` usage
+        // Alias kept for legacy `primary-*` usage on older pages
         primary: {
-          50:  '#ECF4FD',
-          100: '#D3E6FB',
-          200: '#A9CFF6',
-          300: '#74B0EF',
-          400: '#2E8CE6',
-          500: '#0571D3',
-          600: '#045CAE',
-          700: '#0B4C99',
-          800: '#093E7E',
-          900: '#072E60',
+          50:  '#EEF4FB',
+          100: '#E4ECF6',
+          200: '#C3D8F1',
+          300: '#8EBDF2',
+          400: '#4E93DE',
+          500: '#1B6BC9',
+          600: '#1557A8',
+          700: '#104586',
+          800: '#0C3566',
+          900: '#0C2547',
         },
 
-        // Navy (statement-slide background)
+        // Navy (clinician section, footer)
         navy: {
-          DEFAULT: '#0A2A52',
+          DEFAULT: '#0C2547',
           50:  '#E6EBF2',
-          100: '#C8D1DE',
+          100: '#C6CFDC', // body text on navy
           200: '#9FAEC6',
           300: '#6B82AB',
           400: '#3F5E8C',
-          500: '#143D6D',
-          600: '#0C3160',
-          700: '#0A2A52', // ← statement bg
-          800: '#082143',
-          900: '#061833',
+          500: '#234574', // lines on navy
+          600: '#14315A', // cards on navy
+          700: '#0C2547',
+          800: '#091C37',
+          900: '#06142A',
         },
 
-        // Hairlines / soft tints derived from ink — use rgba so they
-        // blend correctly over either cream or navy.
-        hairline: 'rgba(22,25,29,0.14)',
-        'hairline-strong': 'rgba(22,25,29,0.22)',
-        'ink-soft': 'rgba(22,25,29,0.62)',
-        'ink-mute': 'rgba(22,25,29,0.40)',
-        'blue-soft': 'rgba(5,113,211,0.10)',
+        // Honest status labels
+        status: {
+          done: '#1F6B3A',
+          wip:  '#8A4B0A',
+          dot:  '#C9781E',
+        },
+
+        // Hairlines / soft tints used by older pages
+        hairline: 'rgba(23,25,28,0.14)',
+        'hairline-strong': 'rgba(23,25,28,0.22)',
+        'ink-soft': 'rgba(23,25,28,0.62)',
+        'ink-mute': 'rgba(23,25,28,0.40)',
+        'blue-soft': 'rgba(27,107,201,0.10)',
 
         // Semantic
         secondary: {
@@ -100,28 +113,14 @@ export default {
       },
 
       fontFamily: {
-        sans: [
-          'Geist Variable',
-          'Geist',
-          '-apple-system',
-          'BlinkMacSystemFont',
-          'system-ui',
-          'sans-serif',
-        ],
-        display: [
-          'Geist Variable',
-          'Geist',
-          '-apple-system',
-          'BlinkMacSystemFont',
-          'system-ui',
-          'sans-serif',
-        ],
-        mono: ['Geist Mono Variable', 'Geist Mono', 'ui-monospace', 'SF Mono', 'monospace'],
+        sans: ['Libre Franklin Variable', 'Libre Franklin', 'Helvetica Neue', 'Arial', 'sans-serif'],
+        display: ['Spectral', 'Georgia', 'serif'],
+        mono: ['JetBrains Mono Variable', 'JetBrains Mono', 'ui-monospace', 'monospace'],
       },
       fontSize: {
-        hero:     ['clamp(2.75rem, 7vw, 5.75rem)', { lineHeight: '1.04', letterSpacing: '-0.035em', fontWeight: '600' }],
-        display:  ['clamp(2rem, 4.5vw, 3.5rem)',   { lineHeight: '1.08', letterSpacing: '-0.025em', fontWeight: '600' }],
-        eyebrow:  ['0.8125rem',                    { lineHeight: '1',    letterSpacing: '0.02em',  fontWeight: '500' }],
+        hero:     ['clamp(2.75rem, 6vw, 4.75rem)', { lineHeight: '1.02', letterSpacing: '-0.02em',  fontWeight: '600' }],
+        display:  ['clamp(2.125rem, 4vw, 3.25rem)', { lineHeight: '1.08', letterSpacing: '-0.015em', fontWeight: '600' }],
+        eyebrow:  ['0.8125rem',                    { lineHeight: '1.4',  letterSpacing: '0.22em',   fontWeight: '400' }],
       },
       letterSpacing: {
         tightest: '-0.04em',
@@ -132,11 +131,12 @@ export default {
         '5xl': '2.5rem',
       },
       boxShadow: {
-        // Slightly warmer shadows for cream surfaces
-        soft:       '0 1px 2px rgba(11,38,80,0.04), 0 8px 24px rgba(11,38,80,0.06)',
-        'soft-lg':  '0 2px 4px rgba(11,38,80,0.05), 0 24px 48px -12px rgba(11,38,80,0.10)',
-        'soft-xl':  '0 4px 8px rgba(11,38,80,0.05), 0 40px 80px -16px rgba(11,38,80,0.12)',
-        'inset-line': 'inset 0 0 0 1px rgba(22,25,29,0.06)',
+        soft:       '0 1px 2px rgba(12,37,71,0.04), 0 8px 24px rgba(12,37,71,0.06)',
+        'soft-lg':  '0 2px 4px rgba(12,37,71,0.05), 0 24px 48px -12px rgba(12,37,71,0.10)',
+        'soft-xl':  '0 4px 8px rgba(12,37,71,0.05), 0 40px 80px -16px rgba(12,37,71,0.12)',
+        card:       '0 18px 40px rgba(12,37,71,0.14)',
+        photo:      '0 24px 50px rgba(12,37,71,0.18)',
+        'inset-line': 'inset 0 0 0 1px rgba(23,25,28,0.06)',
       },
       backdropBlur: { xs: '4px' },
       animation: {

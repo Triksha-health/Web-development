@@ -1,41 +1,31 @@
-import { useEffect } from "react";
-import Hero from "../components/home/Hero";
-import ProblemSection from "../components/home/ProblemSection";
-import AboutSection from "../components/home/AboutSection";
-import ProductPreviewSection from "../components/home/ProductPreviewSection";
-import InteractiveShowcase from "../components/home/InteractiveShowcase";
-import UseCaseSection from "../components/home/UseCaseSection";
-import Comparison from "../components/home/Comparison";
-import LaunchSection from "../components/home/LaunchSection";
-import CredibilityBand from "../components/home/CredibilityBand";
-import FAQSection from "../components/home/FAQSection";
-import StayUpdated from "../components/home/StayUpdated";
+import Hero from "../components/site/Hero";
+import Families from "../components/site/Families";
+import HowItWorks from "../components/site/HowItWorks";
+import AlertSection from "../components/site/AlertSection";
+import StatusSection from "../components/site/StatusSection";
+import Clinicians from "../components/site/Clinicians";
+import Pricing from "../components/site/Pricing";
+import About from "../components/site/About";
+import Faq from "../components/site/Faq";
+import Waitlist from "../components/site/Waitlist";
+import { usePageMeta } from "../seo";
 
 function HomePage() {
-  useEffect(() => {
-    document.title =
-      "Triksha — Predict cardiac risk, before symptoms.";
-    const meta = document.querySelector<HTMLMetaElement>('meta[name="description"]');
-    if (meta) {
-      meta.content =
-        "A personalized physiological model for the 300 million Indians at silent cardiac risk. Join the waitlist.";
-    }
-  }, []);
+  usePageMeta("/");
 
   return (
-    <div>
+    <>
       <Hero />
-      <ProblemSection />
-      <AboutSection />
-      <ProductPreviewSection />
-      <InteractiveShowcase />
-      <UseCaseSection />
-      <Comparison />
-      <LaunchSection />
-      <CredibilityBand />
-      <FAQSection />
-      <StayUpdated />
-    </div>
+      <Families />
+      <HowItWorks />
+      <AlertSection />
+      <StatusSection />
+      <Clinicians />
+      <Pricing />
+      <About />
+      <Faq />
+      <Waitlist />
+    </>
   );
 }
 

@@ -1,191 +1,150 @@
-import { useState, useEffect, useRef } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Menu, X, ChevronDown } from "lucide-react";
-import { useAuth } from "../../context/AuthContext";
-import logo from "../../public/logo (3).png";
-import { HashLink } from "react-router-hash-link";
-import MagneticButton from "../ui/MagneticButton";
+import { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 
 interface NavbarProps {
   scrolled: boolean;
 }
 
+const LINKS = [
+  { id: "how", label: "How it works" },
+  { id: "families", label: "For families" },
+  { id: "clinicians", label: "For cardiologists" },
+  { id: "about", label: "About" },
+];
+
 function Navbar({ scrolled }: NavbarProps) {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const { isAuthenticated, user, logout } = useAuth();
-  const location = useLocation();
-  const navigate = useNavigate();
-  const dropdownRef = useRef<HTMLDivElement>(null);
-
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-  const closeMenu = () => setIsMenuOpen(false);
-
-  const handleLogout = () => {
-    logout();
-    navigate("/");
-  };
-
-  useEffect(() => {
-    closeMenu();
-    setIsDropdownOpen(false);
-  }, [location.pathname]);
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setIsDropdownOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
-  // Active-section highlight (scrollspy) — homepage only.
+  const [open, setOpen] = useState(false);
   const [activeId, setActiveId] = useState("");
+  const location = useLocation();
+
+  // Close the mobile menu whenever the visitor goes somewhere.
+  useEffect(() => {
+    setOpen(false);
+  }, [location.pathname, location.hash, location.key]);
+
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
+
+  // Underline the section currently on screen (homepage only).
   useEffect(() => {
     if (location.pathname !== "/") {
       setActiveId("");
       return;
     }
-    const ids = ["problem", "what-it-does", "how", "whytriksha", "pre-order", "faq"];
-    const els = ids
-      .map((id) => document.getElementById(id))
-      .filter((el): el is HTMLElement => !!el);
+    const els = LINKS.map((l) => document.getElementById(l.id)).filter(
+      (el): el is HTMLElement => !!el
+    );
+    const visible = new Set<string>();
     const obs = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
-          if (e.isIntersecting) setActiveId(e.target.id);
+          if (e.isIntersecting) visible.add(e.target.id);
+          else visible.delete(e.target.id);
         });
+        setActiveId(LINKS.find((l) => visible.has(l.id))?.id ?? "");
       },
-      { rootMargin: "-45% 0px -50% 0px", threshold: 0 },
+      { rootMargin: "-40% 0px -55% 0px", threshold: 0 }
     );
     els.forEach((el) => obs.observe(el));
     return () => obs.disconnect();
   }, [location.pathname]);
 
-  const linkClass =
-    "relative text-[13.5px] font-medium text-ink-700 hover:text-ink-900 transition-colors " +
-    "after:absolute after:left-0 after:-bottom-1.5 after:h-[2px] after:w-0 after:rounded-full " +
-    "after:bg-accent-500 after:transition-all after:duration-300 hover:after:w-full";
-  const navLink = (id: string) =>
-    activeId === id ? `${linkClass} text-ink-900 after:!w-full` : linkClass;
-
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? "header-scroll" : "header-transparent"
-      }`}
-    >
-      <div className="container py-3">
-        <div className="flex items-center justify-between">
-          <Link to="/" className="flex items-center" onClick={closeMenu}>
-            <img src={logo} alt="Triksha" className="w-20 h-10 object-contain" />
+    <header className={`site-nav sticky top-0 z-50 ${scrolled || open ? "is-scrolled" : ""}`}>
+      <nav
+        aria-label="Main"
+        className="site-wrap nav-inner flex items-center justify-between gap-x-6"
+      >
+        <Link to="/" aria-label="Triksha home" className="flex flex-none items-center">
+          <img
+            src="/img/logo-full.webp"
+            alt="Triksha"
+            width={168}
+            height={76}
+            className="h-[38px] w-auto"
+          />
+        </Link>
+
+        {/* Desktop links */}
+        <div className="hidden items-center gap-x-7 text-[15px] font-medium md:flex">
+          {LINKS.map((l) => (
+            <Link
+              key={l.id}
+              to={`/#${l.id}`}
+              className="nav-link"
+              aria-current={activeId === l.id ? "true" : undefined}
+            >
+              {l.label}
+            </Link>
+          ))}
+          <Link to="/#waitlist" className="cta cta-blue !px-5 !py-3 !text-[15px]">
+            Join the waitlist
           </Link>
+        </div>
 
-          <nav className="hidden md:flex items-center gap-6">
-            <HashLink smooth to="/#problem" className={navLink("problem")}>Problem</HashLink>
-            <HashLink smooth to="/#what-it-does" className={navLink("what-it-does")}>The Twin</HashLink>
-            <HashLink smooth to="/#how" className={navLink("how")}>How it works</HashLink>
-            <HashLink smooth to="/#whytriksha" className={navLink("whytriksha")}>Why Triksha</HashLink>
-            <HashLink smooth to="/#pre-order" className={navLink("pre-order")}>Pre-order</HashLink>
-            <HashLink smooth to="/#faq" className={navLink("faq")}>FAQ</HashLink>
-            <Link to="/teams" className={linkClass}>Team</Link>
-          </nav>
-
-          <div className="hidden md:flex items-center gap-3 relative" ref={dropdownRef}>
-            {isAuthenticated ? (
-              <div className="relative">
-                <button
-                  onClick={() => setIsDropdownOpen((prev) => !prev)}
-                  className="flex items-center gap-1 text-[13.5px] font-medium text-ink-700 hover:text-ink-900"
-                >
-                  {user?.name}
-                  <ChevronDown className="w-4 h-4" />
-                </button>
-                {isDropdownOpen && (
-                  <div className="absolute right-0 mt-3 w-48 bg-canvas-paper/95 backdrop-blur-xl rounded-2xl shadow-soft-lg ring-1 ring-[rgba(22,25,29,0.10)] overflow-hidden">
-                    <Link
-                      to="/userdashboard"
-                      className="block px-4 py-3 text-sm text-ink-700 hover:bg-canvas-soft"
-                      onClick={() => setIsDropdownOpen(false)}
-                    >
-                      Dashboard
-                    </Link>
-                    <button
-                      onClick={() => {
-                        handleLogout();
-                        setIsDropdownOpen(false);
-                      }}
-                      className="block w-full text-left px-4 py-3 text-sm text-ink-700 hover:bg-canvas-soft"
-                    >
-                      Sign out
-                    </button>
-                  </div>
-                )}
-              </div>
-            ) : (
-              <>
-                <Link to="/signin" className={linkClass}>Sign in</Link>
-                <MagneticButton>
-                  <HashLink
-                    smooth
-                    to="/#waitlist"
-                    className="sheen px-4 py-2 rounded-full bg-accent-500 text-white text-[13px] font-medium hover:bg-accent-600 transition active:scale-[0.98]"
-                  >
-                    Join waitlist
-                  </HashLink>
-                </MagneticButton>
-              </>
-            )}
-          </div>
-
-          <button
-            className="md:hidden text-ink-900 p-1 rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-500"
-            onClick={toggleMenu}
-            aria-label="Toggle menu"
+        {/* Mobile: primary action stays visible, the rest sits in the menu */}
+        <div className="flex items-center gap-2 md:hidden">
+          <Link
+            to="/#waitlist"
+            className="cta cta-blue hidden !px-4 !py-2.5 !text-[14px] min-[400px]:inline-flex"
           >
-            {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            Join the waitlist
+          </Link>
+          <button
+            type="button"
+            className="flex h-11 w-11 items-center justify-center rounded-full text-ink-900 transition-colors hover:bg-canvas-soft active:bg-line"
+            aria-label={open ? "Close menu" : "Open menu"}
+            aria-expanded={open}
+            aria-controls="mobile-menu"
+            onClick={() => setOpen((v) => !v)}
+          >
+            <svg
+              aria-hidden="true"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+            >
+              {open ? (
+                <path d="M6 6l12 12M18 6L6 18" />
+              ) : (
+                <path d="M4 7h16M4 12h16M4 17h16" />
+              )}
+            </svg>
           </button>
         </div>
-      </div>
+      </nav>
 
-      {isMenuOpen && (
-        <div className="md:hidden bg-canvas-paper/95 backdrop-blur-xl border-t border-[rgba(22,25,29,0.10)]">
-          <div className="container py-4">
-            <nav className="flex flex-col">
-              <HashLink smooth to="/#problem" onClick={closeMenu} className="py-3 text-ink-900 font-medium">Problem</HashLink>
-              <HashLink smooth to="/#what-it-does" onClick={closeMenu} className="py-3 text-ink-900 font-medium">The Twin</HashLink>
-              <HashLink smooth to="/#how" onClick={closeMenu} className="py-3 text-ink-900 font-medium">How it works</HashLink>
-              <HashLink smooth to="/#whytriksha" onClick={closeMenu} className="py-3 text-ink-900 font-medium">Why Triksha</HashLink>
-              <HashLink smooth to="/#pre-order" onClick={closeMenu} className="py-3 text-ink-900 font-medium">Pre-order</HashLink>
-              <HashLink smooth to="/#faq" onClick={closeMenu} className="py-3 text-ink-900 font-medium">FAQ</HashLink>
-              <Link to="/teams" onClick={closeMenu} className="py-3 text-ink-900 font-medium">Team</Link>
-
-              <div className="pt-4 mt-2 border-t border-[rgba(22,25,29,0.10)]">
-                {isAuthenticated ? (
-                  <>
-                    <Link to="/userdashboard" onClick={closeMenu} className="block py-2 text-ink-900 font-medium">Dashboard</Link>
-                    <button onClick={() => { handleLogout(); closeMenu(); }} className="block py-2 text-ink-900 font-medium">Sign out</button>
-                  </>
-                ) : (
-                  <>
-                    <Link to="/signin" onClick={closeMenu} className="block py-2 text-ink-900 font-medium">Sign in</Link>
-                    <HashLink
-                      smooth
-                      to="/#waitlist"
-                      onClick={closeMenu}
-                      className="mt-3 inline-flex items-center justify-center w-full py-3 rounded-full bg-accent-500 text-white text-sm font-medium"
-                    >
-                      Join waitlist
-                    </HashLink>
-                  </>
-                )}
-              </div>
-            </nav>
-          </div>
+      {/* Mobile menu */}
+      <div
+        id="mobile-menu"
+        hidden={!open}
+        className="absolute inset-x-0 top-full max-h-[calc(100dvh-64px)] overflow-y-auto border-t border-line bg-canvas-paper shadow-[0_24px_40px_rgba(12,37,71,0.14)] md:hidden"
+      >
+        <div className="site-wrap flex flex-col pb-6 pt-2">
+          {LINKS.map((l) => (
+            <Link
+              key={l.id}
+              to={`/#${l.id}`}
+              className="border-b border-line py-4 font-display text-[22px] font-semibold text-ink-900 no-underline active:text-accent-600"
+            >
+              {l.label}
+            </Link>
+          ))}
+          <Link to="/#waitlist" className="cta cta-blue mt-6 w-full">
+            Join the waitlist
+          </Link>
         </div>
-      )}
+      </div>
     </header>
   );
 }

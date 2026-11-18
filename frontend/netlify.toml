@@ -8,7 +8,11 @@
   status = 200
   force = true
 
+# The homepage, /privacy and /terms are prerendered to real HTML files at
+# build time (scripts/prerender.mjs), and Netlify serves those directly.
+# Every other route falls back to the plain app shell. It must be app.html,
+# not index.html: index.html now contains the homepage's HTML.
 [[redirects]]
   from = "/*"
-  to = "/index.html"
+  to = "/app.html"
   status = 200
