@@ -24,7 +24,6 @@ exports.googleAuthCallback = async (req, res) => {
       });
     }
     const token = generateToken(user);
-    console.log('Generated user for token:', user);
 
     // Redirect to frontend with token in query param
    const redirectURL = `https://trikshahealth.com/userdashboard?token=${token}`;

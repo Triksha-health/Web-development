@@ -15,7 +15,7 @@ const TeamsPage = () => {
   }, []);
   const team = [
     {
-      name: "Vemuri Toshan Yashwanth",
+      name: "Vemuri Yashwanth",
       role: "Founder & CEO",
       image: yash,
       bio: "NIT AP student passionate about building AI-powered predictive health systems. Leading Triksha to enable early detection of chronic diseases and empower proactive healthcare.",
@@ -34,29 +34,27 @@ const TeamsPage = () => {
     },
   ];
   return (
-    <div className="min-h-screen py-12 sm:px-6 lg:px-8 bg-[#f9fafc]">
-      <div className={`mb-12 text-center mt-14`}>
-        <div className="flex gap-2 justify-center">
-          <SectionHeading
-            title="Meet our team"
-            subtitle=" We're a team of doctors, engineers, and health enthusiasts united by a single mission: using technology to
-          prevent chronic disease before it happens."
-          />
-        </div>
+    <div className="min-h-screen py-12 sm:px-6 lg:px-8 bg-canvas">
+      <div className="mb-12 mt-14 flex justify-center">
+        <SectionHeading
+          centered
+          title="Meet our team"
+          subtitle="We're a team of doctors, engineers, and health enthusiasts united by a single mission: using technology to prevent chronic disease before it happens."
+        />
       </div>
       <TeamSection team={team} />
       <Container className="relative z-10 mt-16">
-        <div className={` px-8 py-10 sm:px-6 lg:px-8 bg-primary-50  rounded-2xl`}>
+        <div className={` px-8 py-10 sm:px-6 lg:px-8 bg-canvas-soft ring-1 ring-[rgba(22,25,29,0.10)] rounded-4xl`}>
           <div className="max-w-7xl mx-auto">
             <div className="grid lg:grid-cols-2 gap-12">
               {/* Left Content */}
               <div className="space-y-8">
                 <div>
                   <div className="flex">
-                    <p className="text-primary-500 font-medium mb-2 bg-primary-100 px-2 rounded-full">Our Culture</p>
+                    <p className="text-accent-700 font-medium mb-2 bg-accent-50 px-2.5 py-0.5 rounded-full">Our Culture</p>
                   </div>
-                  <h2 className="text-4xl font-bold text-gray-900 mb-6">Driven by Purpose</h2>
-                  <p className="text-gray-600 text-lg leading-relaxed mb-8">
+                  <h2 className="text-4xl font-bold text-ink-900 tracking-tighter mb-6">Driven by Purpose</h2>
+                  <p className="text-lg leading-relaxed mb-8" style={{ color: "rgba(22,25,29,0.62)" }}>
                     Our team combines technical brilliance with deep empathy. Many of us have personal experiences with
                     the consequences of delayed medical diagnoses, fueling our passion to create technology that
                     prevents suffering.
@@ -70,8 +68,8 @@ const TeamsPage = () => {
                       <Check className="w-4 h-4 text-primary-500" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-gray-900 mb-1">Innovation-Focused</h3>
-                      <p className="text-gray-600">We embrace cutting-edge technologies and approaches</p>
+                      <h3 className="font-semibold text-ink-900 mb-1">Innovation-Focused</h3>
+                      <p style={{ color: "rgba(22,25,29,0.62)" }}>We embrace cutting-edge technologies and approaches</p>
                     </div>
                   </div>
 
@@ -80,8 +78,8 @@ const TeamsPage = () => {
                       <Check className="w-4 h-4 text-primary-500" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-gray-900 mb-1">User-Centered</h3>
-                      <p className="text-gray-600">Every decision is made with our users' wellbeing in mind</p>
+                      <h3 className="font-semibold text-ink-900 mb-1">User-Centered</h3>
+                      <p style={{ color: "rgba(22,25,29,0.62)" }}>Every decision is made with our users' wellbeing in mind</p>
                     </div>
                   </div>
 
@@ -90,31 +88,31 @@ const TeamsPage = () => {
                       <Check className="w-4 h-4 text-primary-500" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-gray-900 mb-1">Ethical AI Development</h3>
-                      <p className="text-gray-600">Committed to responsible, transparent AI practices</p>
+                      <h3 className="font-semibold text-ink-900 mb-1">Ethical AI Development</h3>
+                      <p style={{ color: "rgba(22,25,29,0.62)" }}>Committed to responsible, transparent AI practices</p>
                     </div>
                   </div>
                 </div>
               </div>
 
               {/* Right Content */}
-              <div className="bg-white rounded-2xl shadow-lg">
+              <div className="bg-canvas-paper rounded-4xl ring-1 ring-[rgba(22,25,29,0.10)] shadow-soft overflow-hidden">
                 {/* Team Image Placeholder */}
-                <div className=" rounded-t-xl overflow-hidden h-[300px]">
-                  <img src={familylaptop} alt="family" className=" object-contain" />
+                <div className="overflow-hidden h-[300px]">
+                  <img src={familylaptop} alt="family" className="w-full h-full object-cover" />
                 </div>
 
                 <div className="space-y-4 p-8">
-                  <h3 className="text-2xl font-bold text-gray-900">Join Our Mission</h3>
-                  <p className="text-gray-600 leading-relaxed">
+                  <h3 className="text-2xl font-bold text-ink-900 tracking-tight">Join Our Mission</h3>
+                  <p className="leading-relaxed" style={{ color: "rgba(22,25,29,0.62)" }}>
                     We're always looking for passionate individuals who share our vision of revolutionizing preventive
                     healthcare through technology.
                   </p>
                   <Link
-                    to="/applyjob"
-                    className="inline-flex items-center text-primary-500 font-medium hover:text-primary-700 transition-colors"
+                    to="/careers"
+                    className="inline-flex items-center text-accent-700 font-medium hover:text-accent-600 transition-colors"
                   >
-                    Join our team →
+                    See open roles →
                   </Link>
                 </div>
               </div>

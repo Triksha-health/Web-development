@@ -1,201 +1,230 @@
-
-
-import React from 'react';
-import { ChevronDown, ChevronUp } from 'lucide-react';
-import { motion, Variants } from 'framer-motion';
-import Container from '../ui/Container';
-import SectionHeading from '../ui/SectionHeading';
+import React, { useState } from "react";
+import { Plus, Minus, Mail, Phone, MessageCircle } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import Container from "../ui/Container";
 
 interface FAQItemProps {
   question: string;
   answer: React.ReactNode;
+  isOpen: boolean;
+  onToggle: () => void;
 }
 
-interface FAQItemWithIndexProps extends FAQItemProps {
-  index: number;
-}
-
-const faqItemVariants: Variants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.5,
-      ease: 'easeOut',
-    },
-  },
-};
-
-const staggerContainer: Variants = {
-  hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.12,
-    },
-  },
-};
-
-const FAQItem: React.FC<FAQItemWithIndexProps> = ({ question, answer }) => {
-  const [isOpen, setIsOpen] = React.useState(false);
-
+const FAQItem: React.FC<FAQItemProps> = ({ question, answer, isOpen, onToggle }) => {
   return (
-    <motion.div
-      variants={faqItemVariants}
-      className="border-b border-slate-200 last:border-0"
-    >
+    <div className="border-b border-[rgba(22,25,29,0.10)] last:border-0">
       <button
-        className={`flex justify-between items-center w-full py-5 text-left font-semibold text-xl tracking-wide transition-colors duration-300 ${
-          isOpen ? 'text-black' : 'text-slate-600'
-        }`}
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={onToggle}
         aria-expanded={isOpen}
+        className="w-full flex items-start justify-between gap-6 py-6 text-left"
       >
-        <span>{question}</span>
-        {isOpen ? (
-          <ChevronUp className="h-5 w-5 flex-shrink-0 transition-transform duration-300 rotate-180" />
-        ) : (
-          <ChevronDown className="h-5 w-5 text-slate-500 flex-shrink-0 transition-transform duration-300" />
-        )}
+        <span
+          className={`text-lg md:text-xl font-medium tracking-tight leading-snug transition-colors ${
+            isOpen ? "text-ink-900" : "text-ink-800"
+          }`}
+        >
+          {question}
+        </span>
+        <span
+          className={`mt-1 flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-all ${
+            isOpen
+              ? "bg-accent-500 text-white rotate-180"
+              : "bg-canvas-soft text-ink-700 ring-1 ring-[rgba(22,25,29,0.10)]"
+          }`}
+        >
+          {isOpen ? <Minus className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
+        </span>
       </button>
-
-      <div
-        className={`transition-max-height duration-500 ease-in-out overflow-hidden ${
-          isOpen ? 'max-h-screen' : 'max-h-0'
-        }`}
-      >
-        <div className="pb-5 text-slate-600 space-y-3 leading-relaxed text-base">
-          {answer}
-        </div>
-      </div>
-    </motion.div>
+      <AnimatePresence initial={false}>
+        {isOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
+            className="overflow-hidden"
+          >
+            <div className="pb-6 pr-12 leading-relaxed text-[15px]" style={{ color: "rgba(22,25,29,0.62)" }}>
+              {answer}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
   );
 };
 
 const FAQ: React.FC = () => {
-  const faqs: FAQItemProps[] = [
+  const [openIndex, setOpenIndex] = useState<number | null>(0);
+
+  const faqs = [
     {
-      question: 'How is Triksha different from other health wearables?',
-      answer: <p>
-           Triksha is not an ordinary tracking wearable device—it’s an AI-powered predictive health monitoring system. The wearable itself is designed to collect your 24/7 real-time health data accurately and comfortably. All the heavy AI analysis happens securely in our app and cloud, where advanced models analyze your data, medical history, and trends to predict potential health issues before they become serious. This ensures you get personalized, actionable health insights wherever you are.
-        </p>,
+      question: "How is Triksha different from other health wearables?",
+      answer: (
+        <p>
+          Triksha is an AI-powered predictive health monitoring system, not just a tracker. The
+          wearable captures 24/7 vitals; the heavy lifting happens securely in our app and cloud,
+          where models analyze your data, history and trends to predict potential issues before
+          they become serious.
+        </p>
+      ),
     },
     {
-      question: 'When will I receive my Triksha device?',
-      answer:  <p>
-           Shipping for pre-orders begins on January 1st. Once shipped, you will receive tracking information via email. Delivery times may vary depending on your location.
-         </p>,
+      question: "When will I receive my Triksha device?",
+      answer: (
+        <p>
+          Pre-order shipping begins January 1. You'll receive tracking via email once dispatched.
+          Delivery times vary by location.
+        </p>
+      ),
     },
     {
-      question: 'What data does Triksha collect?',
-      answer:  <p>
-           Triksha collects real-time health metrics like heart rate, stress levels, sleep quality, and other vital signs. This data is used to provide personalized health insights and predictions to help you stay proactive about your well-being.
-         </p>,
+      question: "What data does Triksha collect?",
+      answer: (
+        <p>
+          Heart rate, stress, sleep quality, and other vital signs. Data is used to deliver
+          personalized insights and predictions to help you stay proactive about your wellbeing.
+        </p>
+      ),
     },
     {
-      question: 'Is my health data secure?',
-      answer: <p>
-           Absolutely. Your data is encrypted and stored securely. We follow best practices to ensure your personal health information remains private and confidential. We will never sell your data to third parties.
-         </p>,
+      question: "Is my health data secure?",
+      answer: (
+        <p>
+          Absolutely. Your data is encrypted at rest and in transit, and we follow best practices
+          to keep it private. We will never sell your data.
+        </p>
+      ),
     },
     {
-      question: "How accurate are Triksha's health predictions?",
-      answer:  <p>
-           Triksha uses a proprietary AI model trained on large datasets to deliver highly accurate predictions. While no wearable can replace a medical diagnosis, Triksha is designed to help you catch potential issues early so you can consult a healthcare professional in time.
-         </p>,
+      question: "How accurate are Triksha's predictions?",
+      answer: (
+        <p>
+          Triksha uses a proprietary model trained on large datasets to deliver high-accuracy
+          predictions. It is not a replacement for medical diagnosis — it helps you catch potential
+          issues early so you can consult a doctor in time.
+        </p>
+      ),
     },
     {
-      question: 'Is there a subscription fee?',
+      question: "Is there a subscription fee?",
       answer: (
         <>
-         <p>Yes. Triksha is offered as a subscription service that combines both the wearable device and the app experience. We have two simple plans:</p>
+          <p>Yes. Triksha is a subscription combining the wearable and the app:</p>
           <ul className="list-disc pl-5 mt-2 space-y-1">
-            <li>6-month plan at ₹10,999</li>
-            <li>12-month plan at ₹17,999</li>
+            <li>6-month plan — ₹10,999</li>
+            <li>12-month plan — ₹17,999</li>
           </ul>
-           <p className="mt-2">
-             Your subscription covers the Triksha wearable (delivered to you) and unlimited access to our AI-powered predictive health monitoring app. There are no hidden charges—just choose your plan and get everything you need for proactive, personalized health insights.
-           </p>
+          <p className="mt-3">
+            Subscriptions include the wearable and unlimited access to the predictive monitoring
+            app. No hidden charges.
+          </p>
         </>
       ),
     },
     {
-      question: 'What if I need to return my Triksha device?',
-      answer:<p>
-           We offer a hassle-free return policy within 30 days of delivery. If you're not satisfied with your purchase, please contact our support team to initiate the return process.
-         </p>,
+      question: "What if I need to return my device?",
+      answer: (
+        <p>
+          We offer hassle-free returns within 30 days of delivery. Contact our support team to
+          start the process.
+        </p>
+      ),
     },
     {
-      question: 'Can Triksha replace doctor visits?',
-      answer: <p>
-          No, Triksha is not a medical device and is not intended to diagnose or treat conditions. It is designed to help you track your health and spot early warning signs to find unnoticed existing health issues or upcoming future health risks, so you can consult a qualified healthcare provider if needed.
-        </p>,
+      question: "Can Triksha replace doctor visits?",
+      answer: (
+        <p>
+          No. Triksha is not a medical device and does not diagnose or treat. It surfaces early
+          warning signs so you can consult a qualified provider when needed.
+        </p>
+      ),
     },
   ];
 
   return (
-    <motion.section
-      id="faq"
-      className="bg-gray-50 py-24 relative overflow-hidden w-full"
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 1 }}
-    >
+    <section id="faq" className="relative py-32 bg-canvas overflow-hidden">
       <Container className="relative z-10">
-        <SectionHeading
-          title="Frequently Asked Questions"
-          subtitle="Find answers to common questions about Triksha and our pre-order process."
-        />
-
-        <div className="max-w-3xl mx-auto mt-12 bg-white rounded-3xl shadow-xl ring-1 ring-slate-100 overflow-hidden">
-          <motion.div
-            className="p-8"
-            variants={staggerContainer}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.1 }}
-          >
-            {faqs.map((faq, index) => (
-              <FAQItem key={index} index={index} question={faq.question} answer={faq.answer} />
-            ))}
-          </motion.div>
-        </div>
-
         <motion.div
-          className="mt-16 text-center"
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.2, duration: 0.8 }}
+          transition={{ duration: 0.8 }}
+          className="max-w-2xl"
         >
-          <div className="font-semibold text-xl mb-2">Still have questions?</div>
-          <p className="text-slate-500 max-w-xl mx-auto leading-relaxed mb-6">
-            Our team is ready to help you with any questions you might have about Triksha.
+          <h2 className="text-display text-ink-900 tracking-tighter">Questions, answered.</h2>
+          <p className="mt-5 text-lg md:text-xl leading-relaxed" style={{ color: "rgba(22,25,29,0.62)" }}>
+            Everything you need to know about Triksha and the upcoming pilot.
           </p>
-          <div className="flex flex-wrap justify-center gap-4">
-            <a
-              href="mailto:support@trikshahealth.com"
-              className="flex items-center px-5 py-2.5 bg-white rounded-[10px] shadow-md text-slate-700 hover:bg-indigo-50 hover:text-[#3691ff] transition"
-            >
-              📧 support@trikshahealth.com
-            </a>
-            <a
-              href="tel:+917899940382"
-              className="flex items-center px-5 py-2.5 bg-white rounded-[10px] shadow-md text-slate-700 hover:bg-indigo-50 hover:text-[#3691ff] transition"
-            >
-              📞 +91 (789) 994-0382
-            </a>
-            <a
-              href="https://wa.me/917899940382"
-              className="flex items-center px-5 py-2.5 bg-white rounded-[10px] shadow-md text-slate-700 hover:bg-indigo-50 hover:text-[#3691ff] transition"
-            >
-              💬 WhatsApp Support
-            </a>
-          </div>
         </motion.div>
+
+        <div className="grid lg:grid-cols-12 gap-10 mt-14">
+          <div className="lg:col-span-8">
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="rounded-4xl bg-canvas-paper ring-1 ring-[rgba(22,25,29,0.10)] shadow-soft px-8 md:px-10 py-4"
+            >
+              {faqs.map((faq, i) => (
+                <FAQItem
+                  key={i}
+                  question={faq.question}
+                  answer={faq.answer}
+                  isOpen={openIndex === i}
+                  onToggle={() => setOpenIndex(openIndex === i ? null : i)}
+                />
+              ))}
+            </motion.div>
+          </div>
+
+          <aside className="lg:col-span-4">
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.15 }}
+              className="rounded-4xl bg-canvas-soft ring-1 ring-[rgba(22,25,29,0.10)] p-8 sticky top-28"
+            >
+              <div className="text-eyebrow uppercase mb-3" style={{ color: "rgba(22,25,29,0.40)" }}>
+                Still have questions
+              </div>
+              <h3 className="text-xl font-semibold text-ink-900 tracking-tight">
+                Talk to a human.
+              </h3>
+              <p className="mt-2 text-sm leading-relaxed" style={{ color: "rgba(22,25,29,0.62)" }}>
+                Our team is ready to help you with anything Triksha-related.
+              </p>
+
+              <div className="mt-6 space-y-3">
+                <a
+                  href="mailto:support@trikshahealth.com"
+                  className="flex items-center gap-3 px-4 py-3 rounded-2xl bg-canvas-paper ring-1 ring-[rgba(22,25,29,0.10)] hover:ring-accent-500/60 transition"
+                >
+                  <Mail className="w-4 h-4 text-ink-700" />
+                  <span className="text-sm text-ink-800">support@trikshahealth.com</span>
+                </a>
+                <a
+                  href="tel:+917899940382"
+                  className="flex items-center gap-3 px-4 py-3 rounded-2xl bg-canvas-paper ring-1 ring-[rgba(22,25,29,0.10)] hover:ring-accent-500/60 transition"
+                >
+                  <Phone className="w-4 h-4 text-ink-700" />
+                  <span className="text-sm text-ink-800">+91 (789) 994-0382</span>
+                </a>
+                <a
+                  href="https://wa.me/917899940382"
+                  className="flex items-center gap-3 px-4 py-3 rounded-2xl bg-canvas-paper ring-1 ring-[rgba(22,25,29,0.10)] hover:ring-accent-500/60 transition"
+                >
+                  <MessageCircle className="w-4 h-4 text-ink-700" />
+                  <span className="text-sm text-ink-800">WhatsApp support</span>
+                </a>
+              </div>
+            </motion.div>
+          </aside>
+        </div>
       </Container>
-    </motion.section>
+    </section>
   );
 };
 

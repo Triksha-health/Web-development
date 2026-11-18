@@ -3,6 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { Mail, Lock, Eye, EyeOff } from "lucide-react";
 import axios from "axios";
 import { motion, easeOut } from "framer-motion";
+import { API_BASE } from "../lib/api";
 
 function AdminLoginPage() {
   const [email, setEmail] = useState("");
@@ -27,14 +28,14 @@ function AdminLoginPage() {
 
     try {
       const res = await axios.post<AdminLoginResponse, { data: AdminLoginResponse }, AdminLoginPayload>(
-        "https://triksha-backend-f5f0cth4f9c0b8g9.southindia-01.azurewebsites.net/api/admin/login",
+        `${API_BASE}/api/admin/login`,
         {
           email,
           password,
         }
       );
 
-      localStorage.setItem("adminToken", res.data.token);
+      localStorage.setItem("triksha_admin_token", res.data.token);
       navigate("/admin/dashboard");
     } catch (err) {
       setError("Invalid admin credentials");

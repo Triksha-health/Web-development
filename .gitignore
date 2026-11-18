@@ -27,3 +27,18 @@ dist-ssr
 /frontend/.env.*
 /backend/.env
 /backend/.env.*
+# ...but keep the committed example templates
+!/frontend/.env.example
+!/backend/.env.example
+
+# Data / research artifacts — never commit (GitHub rejects >100MB files)
+*.csv
+*.pyc
+__pycache__/
+dataag*.py
+dataagversion*.py
+simulator.py
+vitals_plot*.png
+
+# Claude Code local working dir
+.claude/

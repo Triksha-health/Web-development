@@ -1,145 +1,224 @@
-
-
-import React from "react";
-import { BarChart3, Brain, Smartphone, Zap, LineChart } from "lucide-react";
-import Container from "../ui/Container";
-import SectionHeading from "../ui/SectionHeading";
-import Card from "../ui/Card";
+import { lazy, Suspense } from "react";
+import { Stethoscope, Activity, GitBranch, Bell } from "lucide-react";
 import { motion } from "framer-motion";
+import Container from "../ui/Container";
+import StatusBadge from "../ui/StatusBadge";
+import Aurora from "../ui/Aurora";
 
-const fadeInUp = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+const BaselineScene = lazy(() => import("../three/BaselineScene"));
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] } },
 };
 
-const staggerContainer = {
-  hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.2,
-    },
+const SOFT = { color: "rgba(22,25,29,0.62)" };
+const MUTE = { color: "rgba(22,25,29,0.40)" };
+
+const inputs = [
+  {
+    icon: Activity,
+    title: "Continuous sensing",
+    desc: "Heart rate, HRV, SpO₂, ECG segments, respiration, sleep — sampled around the clock from the wearable.",
   },
-};
+  {
+    icon: Stethoscope,
+    title: "Medical history",
+    desc: "Past diagnoses, lab reports, family history and medication. The model knows your baseline, not the average.",
+  },
+];
 
-const AboutSection: React.FC = () => {
-  const steps = [
-    {
-      icon: <Smartphone className="h-8 w-8 text-teal-600" />,
-      title: "Wear Device",
-      description: "Comfortable, 24/7 wearable with medical-grade sensors tracks vital health metrics.",
-    },
-    {
-      icon: <BarChart3 className="h-8 w-8 text-blue-600" />,
-      title: "Stream Data",
-      description: "Seamlessly transmits real-time health data to our secure cloud platform.",
-    },
-    {
-      icon: <Brain className="h-8 w-8 text-purple-600" />,
-      title: "AI Analysis",
-      description: "Our proprietary AI analyzes patterns and detects anomalies before symptoms appear.",
-    },
-    {
-      icon: <LineChart className="h-8 w-8 text-red-600" />,
-      title: "Real-Time Dashboard",
-      description: " Monitor live health metrics and trends through an intuitive interface with personalized insights",
-    },
-    {
-      icon: <Zap className="h-8 w-8 text-amber-600" />,
-      title: "Get Alerts",
-      description: "Receive timely notifications about potential health issues and preventive recommendations.",
-    },
-  ];
+const outputs = [
+  {
+    icon: GitBranch,
+    title: "Drift detection",
+    desc: "We watch for deviations from your personal baseline — not population averages. Subtle drift, weeks before symptoms.",
+  },
+  {
+    icon: Bell,
+    title: "Clinician hand-off",
+    desc: "An alert isn't a beep on your phone. It's a structured note your cardiologist can act on — vitals, trend, suggested next step.",
+  },
+];
 
+function AboutSection() {
   return (
-    <section id="about" className="py-24 relative overflow-hidden bg-white text-black">
-      <div className="absolute top-0 inset-x-0 h-40 bg-gradient-to-b from-slate-50 to-transparent"></div>
-      <div className="absolute -top-40 -right-40 w-80 h-80 bg-teal-100 rounded-full opacity-30 blur-3xl"></div>
+    <section id="what-it-does" className="relative bg-canvas py-32 overflow-hidden">
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-canvas-soft/50 to-transparent" />
 
       <Container className="relative z-10">
-        <SectionHeading
-          title="What is Triksha?"
-          subtitle="Triksha is an AI-powered predictive health system for early detection of chronic diseases like diabetes, heart issues, and respiratory problems."
-        />
-
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-          className="relative mt-16"
+          viewport={{ once: true, amount: 0.3 }}
+          variants={fadeUp}
+          className="max-w-3xl"
         >
-          <motion.div
-            initial={{ scaleX: 0 }}
-            animate={{ scaleX: 1 }}
-            variants={{ hidden: { scaleX: 0 }, visible: { scaleX: 1 } }}
-            transition={{ duration: 1.2, ease: "easeInOut" }}
-            style={{ originX: 0 }}
-            className="absolute hidden md:block top-24 left-0 right-0 h-1 bg-gradient-to-r from-teal-500 via-blue-500 to-purple-500 z-0"
-          />
-
-          <motion.div
-            variants={staggerContainer}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 relative z-10"
-          >
-            {steps.map((step, index) => (
-              <motion.div
-                key={index}
-                variants={fadeInUp}
-                className="relative"
-              >
-                <Card hoverable className="h-full p-6 flex flex-col items-center text-center">
-                  <div className="relative mb-6">
-                    <div className="absolute -top-3 -right-3 w-6 h-6 bg-[#3691ff] text-white rounded-full flex items-center justify-center text-xs font-bold">
-                      {index + 1}
-                    </div>
-
-                    <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mb-4">
-                      {step.icon}
-                    </div>
-                  </div>
-
-                  <h3 className="text-xl font-bold mb-3">{step.title}</h3>
-                  <p className="text-slate-600">{step.description}</p>
-                </Card>
-              </motion.div>
-            ))}
-          </motion.div>
+          <div className="flex flex-wrap items-center gap-2 mb-4">
+            <StatusBadge variant="inDev" label="Twin engine — in development" />
+          </div>
+          <h2 className="text-display text-ink-900 tracking-tighter">
+            A living model of you.<br />
+            <span style={{ color: "rgba(22,25,29,0.55)" }}>Watching for drift.</span>
+          </h2>
+          <p className="mt-6 text-lg md:text-xl leading-relaxed" style={SOFT}>
+            Triksha is, before anything else, an intelligence. A personalized
+            physiological twin that learns your baseline and tells your cardiologist
+            when you're moving away from it. The wearable is just one input.
+          </p>
         </motion.div>
 
+        {/* Live signal panel */}
         <motion.div
-          variants={fadeInUp}
-          initial="hidden"
-          whileInView="visible"
+          initial={{ opacity: 0, y: 32 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
-          className="mt-20"
+          transition={{ duration: 1 }}
+          className="relative mt-16 rounded-4xl glass-card overflow-hidden"
         >
-          <div className="bg-gradient-to-r from-teal-50 to-blue-50 rounded-2xl p-8 md:p-12">
-            <div className="flex flex-col md:flex-row gap-8 md:gap-12 items-center">
-              <div className="md:w-1/2">
-                <h3 className="text-2xl md:text-3xl font-bold mb-4">Pioneering Preventive Healthcare</h3>
-                <p className="text-slate-600 mb-6">
-                  Traditional healthcare is reactive—it treats problems after they arise. Triksha revolutionizes this
-                  approach by predicting potential health issues days, weeks, or even months before symptoms appear.
-                </p>
-                <p className="text-slate-600">
-                  By combining cutting-edge wearable technology with our proprietary AI algorithms, we enable you to
-                  take preventive action early, potentially avoiding serious health complications altogether.
-                </p>
+          <div className="h-[280px] md:h-[360px] bg-gradient-to-b from-canvas-paper to-canvas-soft/40">
+            <Suspense
+              fallback={
+                <div className="w-full h-full bg-gradient-to-br from-canvas-soft to-canvas-paper animate-pulse" />
+              }
+            >
+              <BaselineScene className="w-full h-full" />
+            </Suspense>
+          </div>
+          <div className="px-8 md:px-12 py-8 border-t border-[rgba(22,25,29,0.10)] flex flex-wrap items-center justify-between gap-6">
+            <div>
+              <div className="text-eyebrow uppercase" style={MUTE}>
+                Personal baseline
               </div>
+              <div className="mt-1 text-xl font-semibold text-ink-900">
+                A signal that knows you, not the average.
+              </div>
+            </div>
+            <div className="flex items-center gap-8 text-sm">
+              <div>
+                <span style={MUTE}>Resting HR</span>{" "}
+                <span className="font-semibold text-ink-900">72 BPM</span>
+              </div>
+              <div>
+                <span style={MUTE}>HRV</span>{" "}
+                <span className="font-semibold text-ink-900">62 ms</span>
+              </div>
+              <div>
+                <span style={MUTE}>SpO₂</span>{" "}
+                <span className="font-semibold text-ink-900">98%</span>
+              </div>
+            </div>
+          </div>
+        </motion.div>
 
-              <div className="md:w-1/2">
-                <div className="relative rounded-xl overflow-hidden">
-                  <img
-                    src="https://images.pexels.com/photos/7089401/pexels-photo-7089401.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-                    alt="Doctor analyzing health data"
-                    className="w-full h-auto rounded-xl"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
-                    <div className="p-6 text-white">
-                      <div className="text-sm font-medium mb-1">AI-Driven Insights</div>
-                      <div className="text-xs opacity-80">Transforming healthcare through predictive analytics</div>
-                    </div>
+        {/* Inputs → outputs flow */}
+        <div className="mt-24 grid lg:grid-cols-2 gap-10">
+          <motion.div
+            initial={{ opacity: 0, x: -16 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            <div className="text-eyebrow uppercase mb-3" style={MUTE}>
+              Inputs
+            </div>
+            <h3 className="text-2xl md:text-3xl font-semibold text-ink-900 tracking-tight leading-snug">
+              We fuse two streams of truth.
+            </h3>
+            <div className="mt-8 space-y-4">
+              {inputs.map((it) => (
+                <div
+                  key={it.title}
+                  className="flex items-start gap-4 p-5 rounded-2xl glass-card is-interactive"
+                >
+                  <div className="w-10 h-10 rounded-xl bg-canvas-soft ring-1 ring-[rgba(22,25,29,0.08)] flex items-center justify-center flex-shrink-0">
+                    <it.icon className="w-5 h-5 text-ink-900" />
+                  </div>
+                  <div>
+                    <div className="font-semibold text-ink-900">{it.title}</div>
+                    <p className="mt-1 text-sm leading-relaxed" style={SOFT}>
+                      {it.desc}
+                    </p>
                   </div>
                 </div>
+              ))}
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, x: 16 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.1 }}
+          >
+            <div className="text-eyebrow uppercase mb-3" style={MUTE}>
+              Outputs
+            </div>
+            <h3 className="text-2xl md:text-3xl font-semibold text-ink-900 tracking-tight leading-snug">
+              Two things actually leave the model.
+            </h3>
+            <div className="mt-8 space-y-4">
+              {outputs.map((it) => (
+                <div
+                  key={it.title}
+                  className="flex items-start gap-4 p-5 rounded-2xl glass-card is-interactive"
+                >
+                  <div className="w-10 h-10 rounded-xl bg-accent-50 ring-1 ring-accent-100 flex items-center justify-center flex-shrink-0">
+                    <it.icon className="w-5 h-5 text-accent-700" />
+                  </div>
+                  <div>
+                    <div className="font-semibold text-ink-900">{it.title}</div>
+                    <p className="mt-1 text-sm leading-relaxed" style={SOFT}>
+                      {it.desc}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Statement */}
+        <motion.div
+          initial={{ opacity: 0, y: 32 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.9 }}
+          className="mt-24 rounded-4xl bg-navy text-canvas p-10 md:p-16 relative overflow-hidden"
+        >
+          <Aurora tone="navy" />
+          <div className="relative grid md:grid-cols-12 gap-10 items-center">
+            <div className="md:col-span-7">
+              <div
+                className="text-eyebrow uppercase font-medium mb-4"
+                style={{ color: "#6FB6FF" }}
+              >
+                Why this is different
+              </div>
+              <h3 className="text-3xl md:text-4xl font-semibold tracking-tighter leading-[1.08] text-canvas">
+                Other wearables tell you what's happening.<br />
+                <span className="text-canvas/55">The twin tells you what's changing.</span>
+              </h3>
+              <p className="mt-6 leading-relaxed max-w-xl text-canvas/80">
+                Most monitors compare your heart rate to a population. Triksha compares
+                you to <em>yesterday's you</em>. That's where the signal is.
+              </p>
+            </div>
+            <div className="md:col-span-5">
+              <div className="grid grid-cols-1 gap-4">
+                {[
+                  { k: "Pop. averages", v: "Most wearables" },
+                  { k: "Personal baseline", v: "Triksha twin" },
+                  { k: "Clinician-ready output", v: "Triksha" },
+                ].map((stat) => (
+                  <div
+                    key={stat.k}
+                    className="rounded-2xl bg-white/[0.06] ring-1 ring-white/10 p-5 flex items-center justify-between"
+                  >
+                    <div className="text-sm text-canvas/70">{stat.k}</div>
+                    <div className="text-sm font-semibold text-canvas">{stat.v}</div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
@@ -147,6 +226,6 @@ const AboutSection: React.FC = () => {
       </Container>
     </section>
   );
-};
+}
 
 export default AboutSection;

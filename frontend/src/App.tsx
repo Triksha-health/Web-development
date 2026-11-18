@@ -11,14 +11,20 @@ import TeamsPage from "./pages/TeamsPage";
 import UserDashBored from "./pages/UserDashBored";
 import ForgotPassword from "./pages/ForgotPassword";
 import ApplyPage from "./pages/ApplyPage";
+import AboutPage from "./pages/AboutPage";
+import CareersPage from "./pages/CareersPage";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
 
 import AdminLoginPage from "./pages/AdminLoginPage";
 import AdminDashboard from "./pages/AdminDashboard";
 import PrivateAdminRoute from "./pages/PrivateAdminRoute";
 
+import { initAnalytics } from "./lib/analytics";
+
 function App() {
   useEffect(() => {
-    document.title = "Triksha - AI powered predictive health monitoring system";
+    document.title = "Triksha — Predict cardiac risk, before symptoms.";
+    initAnalytics();
   }, []);
 
   return (
@@ -32,13 +38,15 @@ function App() {
         <Route path="teams" element={<TeamsPage />} />
         <Route path="applyjob" element={<ApplyPage />} />
         <Route path="forgot-password" element={<ForgotPassword />} />
+        <Route path="about" element={<AboutPage />} />
+        <Route path="careers" element={<CareersPage />} />
+        <Route path="privacy" element={<PrivacyPolicy />} />
         <Route path="userdashboard/*" element={<UserDashBored />} />
       </Route>
 
       {/* Admin Routes */}
       <Route path="/admin/login" element={<AdminLoginPage />} />
 
-      {/* Protected Admin Dashboard */}
       <Route
         path="/admin/dashboard"
         element={
@@ -48,10 +56,9 @@ function App() {
         }
       />
 
-      {/* Optional: redirect /admin to /admin/dashboard */}
       <Route path="/admin" element={<Navigate to="/admin/dashboard" replace />} />
 
-      {/* Catch all unknown routes */}
+      {/* Catch all */}
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );

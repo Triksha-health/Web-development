@@ -1,10 +1,6 @@
 import { Link } from "react-router-dom";
-import { Mail, Phone } from "lucide-react";
-import { FiFacebook } from "react-icons/fi";
-import { FiTwitter } from "react-icons/fi";
-import { FiInstagram } from "react-icons/fi";
-import { FiLinkedin } from "react-icons/fi";
-// import logo from "../../public/logo (3).png";
+import { Mail, Phone, MapPin, AlertCircle } from "lucide-react";
+import { FiFacebook, FiTwitter, FiInstagram, FiLinkedin } from "react-icons/fi";
 import trikshawordlogo from "../../public/Trikshawordlogo.png";
 import trikshaeyelogo from "../../public/trikshaeyelogo(2).png";
 import { HashLink } from "react-router-hash-link";
@@ -13,148 +9,158 @@ function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-gray-900 text-white">
-      <div className="container py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-2">
+    <footer className="bg-canvas-soft border-t border-[rgba(22,25,29,0.10)]">
+      {/* Medical disclaimer band */}
+      <div className="border-b border-[rgba(22,25,29,0.10)]">
+        <div className="container py-5 flex items-start gap-3">
+          <AlertCircle
+            className="w-4 h-4 mt-0.5 flex-shrink-0"
+            style={{ color: "rgba(22,25,29,0.62)" }}
+          />
+          <p className="text-xs md:text-sm leading-relaxed" style={{ color: "rgba(22,25,29,0.62)" }}>
+            <span className="font-medium text-ink-900">
+              Triksha is currently in development.
+            </span>{" "}
+            It is <span className="font-medium text-ink-900">not a medical device</span> and is not
+            intended to diagnose, treat, cure or prevent any disease. The information presented
+            is for educational and informational purposes only and is not a substitute for
+            professional medical advice. Always consult a qualified healthcare provider.
+          </p>
+        </div>
+      </div>
+
+      <div className="container py-16">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
           {/* Brand */}
-          <div>
-            <Link to="/" className="flex items-center color-white w-[90px] h-10 relative">
-              <img src={trikshawordlogo} alt="" className="w-[65px] h-auto brightness-[120%]" />
-              <img src={trikshaeyelogo} alt="" className="invert w-[28px] h-[90%] absolute top-[0px] right-[0px]" />
+          <div className="md:col-span-1">
+            <Link to="/" className="flex items-center w-[90px] h-10 relative">
+              <img src={trikshawordlogo} alt="Triksha" className="w-[65px] h-auto" />
+              <img src={trikshaeyelogo} alt="" className="w-[28px] h-[90%] absolute top-0 right-0" />
             </Link>
-            <p className="mt-4 text-gray-400">
-              wearable that predicts and prevents chronic health risks before they become serious.
+            <p
+              className="mt-5 text-sm leading-relaxed max-w-xs"
+              style={{ color: "rgba(22,25,29,0.62)" }}
+            >
+              Predicting cardiac risk for the 300M Indians at silent risk — before symptoms.
             </p>
-            <div className="flex space-x-4 mt-6">
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                <FiFacebook size={20} />
-              </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                <FiTwitter size={20} />
-              </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                <FiInstagram size={20} />
-              </a>
-              <a
-                href="https://www.linkedin.com/company/triksha"
-                className="text-gray-400 hover:text-white transition-colors "
-              >
-                <FiLinkedin size={20} />
-              </a>
+            <div className="flex gap-3 mt-6">
+              {[
+                { Icon: FiFacebook, href: "#", label: "Facebook" },
+                { Icon: FiTwitter, href: "#", label: "Twitter" },
+                { Icon: FiInstagram, href: "#", label: "Instagram" },
+                { Icon: FiLinkedin, href: "https://www.linkedin.com/company/triksha", label: "LinkedIn" },
+              ].map(({ Icon, href, label }) => (
+                <a
+                  key={label}
+                  href={href}
+                  aria-label={label}
+                  className="w-9 h-9 rounded-full flex items-center justify-center text-ink-500 bg-canvas-paper ring-1 ring-[rgba(22,25,29,0.12)] hover:text-accent-600 hover:ring-accent-500/60 transition"
+                >
+                  <Icon size={16} />
+                </a>
+              ))}
             </div>
           </div>
 
-          {/* Quick Links */}
+          {/* Explore */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
-            <ul className="space-y-2">
+            <h3
+              className="text-eyebrow uppercase mb-4"
+              style={{ color: "rgba(22,25,29,0.40)", letterSpacing: "0.04em" }}
+            >
+              Explore
+            </h3>
+            <ul className="space-y-3">
               <li>
-                <HashLink smooth to="/#about" className="text-gray-400 hover:text-white transition-colors">
-                  About
+                <HashLink smooth to="/#problem" className="text-sm text-ink-700 hover:text-accent-600 transition-colors">
+                  The problem
                 </HashLink>
               </li>
               <li>
-                <HashLink smooth to="/#usecases" className="text-gray-400 hover:text-white transition-colors">
-                  Use Cases
+                <HashLink smooth to="/#what-it-does" className="text-sm text-ink-700 hover:text-accent-600 transition-colors">
+                  The Twin
                 </HashLink>
               </li>
               <li>
-                <HashLink smooth to="/#whytriksha" className="text-gray-400 hover:text-white transition-colors">
+                <HashLink smooth to="/#how" className="text-sm text-ink-700 hover:text-accent-600 transition-colors">
+                  How it works
+                </HashLink>
+              </li>
+              <li>
+                <HashLink smooth to="/#whytriksha" className="text-sm text-ink-700 hover:text-accent-600 transition-colors">
                   Why Triksha
                 </HashLink>
               </li>
               <li>
-                <HashLink smooth to="/#cofounder" className="text-gray-400 hover:text-white transition-colors">
-                  Meet Our Founder
+                <HashLink smooth to="/#pre-order" className="text-sm text-ink-700 hover:text-accent-600 transition-colors">
+                  Pre-order
                 </HashLink>
               </li>
               <li>
-                <HashLink smooth to="/#faq" className="text-gray-400 hover:text-white transition-colors">
+                <HashLink smooth to="/#faq" className="text-sm text-ink-700 hover:text-accent-600 transition-colors">
                   FAQ
                 </HashLink>
               </li>
               <li>
-                <HashLink smooth to="/admin/login" className="text-gray-400 hover:text-white transition-colors">
-                  Admin Login
+                <HashLink smooth to="/#waitlist" className="text-sm text-ink-700 hover:text-accent-600 transition-colors">
+                  Join the waitlist
                 </HashLink>
               </li>
             </ul>
           </div>
 
-          {/* Legal */}
+          {/* Company */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">Legal</h3>
-            <ul className="space-y-2">
-              <li>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                  Terms of Service
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                  Privacy Policy
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                  Refund Policy
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                  Cookie Policy
-                </a>
-              </li>
+            <h3
+              className="text-eyebrow uppercase mb-4"
+              style={{ color: "rgba(22,25,29,0.40)", letterSpacing: "0.04em" }}
+            >
+              Company
+            </h3>
+            <ul className="space-y-3">
+              <li><Link to="/about" className="text-sm text-ink-700 hover:text-accent-600 transition-colors">About</Link></li>
+              <li><Link to="/teams" className="text-sm text-ink-700 hover:text-accent-600 transition-colors">Team</Link></li>
+              <li><Link to="/careers" className="text-sm text-ink-700 hover:text-accent-600 transition-colors">Careers</Link></li>
+              <li><Link to="/privacy" className="text-sm text-ink-700 hover:text-accent-600 transition-colors">Privacy policy</Link></li>
+              <li><Link to="/admin/login" className="text-sm text-ink-700 hover:text-accent-600 transition-colors">Admin</Link></li>
             </ul>
           </div>
 
           {/* Contact */}
-
           <div>
-            <h3 className="text-lg font-semibold mb-4">Contact Us</h3>
+            <h3
+              className="text-eyebrow uppercase mb-4"
+              style={{ color: "rgba(22,25,29,0.40)", letterSpacing: "0.04em" }}
+            >
+              Contact
+            </h3>
             <ul className="space-y-4">
-              <li className="flex items-start">
-                <Mail className="w-5 h-5 text-gray-400 mr-3 mt-0.5" />
-                <span className="text-gray-400">support@trikshahealth.com</span>
+              <li className="flex items-start gap-3">
+                <Mail className="w-4 h-4 mt-1 flex-shrink-0" style={{ color: "rgba(22,25,29,0.40)" }} />
+                <span className="text-sm text-ink-700">yashwanth@trikshahealth.com</span>
               </li>
-              <li className="flex items-start">
-                <Phone className="w-5 h-5 text-gray-400 mr-3 mt-0.5" />
-                <span className="text-gray-400">+91 (789) 994-0382</span>
+              <li className="flex items-start gap-3">
+                <Phone className="w-4 h-4 mt-1 flex-shrink-0" style={{ color: "rgba(22,25,29,0.40)" }} />
+                <span className="text-sm text-ink-700">+91 (789) 994-0382</span>
               </li>
-              <li className="flex items-start">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="w-5 h-5 text-gray-400 mr-3 mt-0.5 flex-shrink-0"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 11c1.104 0 2-.896 2-2s-.896-2-2-2-2 .896-2 2 .896 2 2 2z"
-                  />
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"
-                  />
-                </svg>
-                <div className="text-gray-400 leading-relaxed">
+              <li className="flex items-start gap-3">
+                <MapPin className="w-4 h-4 mt-1 flex-shrink-0" style={{ color: "rgba(22,25,29,0.40)" }} />
+                <span className="text-sm text-ink-700 leading-relaxed">
                   5-5-7/29/B, Devi Nagar Road No 2,
                   <br />
                   Kukatpally, Hyderabad, Telangana
-                </div>
+                </span>
               </li>
             </ul>
           </div>
         </div>
 
-        <div className="border-t border-gray-800 mt-12 pt-8">
-          <p className="text-gray-400 text-center">
-            &copy; {currentYear} VTY TRIKSHA HEALTH TECH PRIVATE LIMITED. All rights reserved.
+        <div className="border-t border-[rgba(22,25,29,0.10)] mt-14 pt-8 flex flex-col md:flex-row justify-between items-center gap-3">
+          <p className="text-xs" style={{ color: "rgba(22,25,29,0.40)" }}>
+            &copy; {currentYear} VTY TRIKSHA HEALTH TECH PRIVATE LIMITED. All rights reserved.
+          </p>
+          <p className="text-xs" style={{ color: "rgba(22,25,29,0.40)" }}>
+            Designed in Hyderabad. Built with care.
           </p>
         </div>
       </div>

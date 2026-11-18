@@ -44,7 +44,7 @@ const ApplyPage = () => {
       }
 
       // Optional: if you're using auth token
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("triksha_token");
 
       const res = await axios.post(
         `${import.meta.env.VITE_API_URL}/api/jobs`,

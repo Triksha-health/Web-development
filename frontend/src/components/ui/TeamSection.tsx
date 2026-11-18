@@ -57,11 +57,11 @@ const TeamSection: React.FC<teamsectionprops> = ({ team = [] }) => {
   };
 
   return (
-    <section id="team" className="-mt-[60px]">
+    <section id="team">
       <div className="container">
         {/* Team grid */}
         <motion.div
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-16"
+          className="grid sm:grid-cols-2 gap-8 max-w-3xl mx-auto"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"

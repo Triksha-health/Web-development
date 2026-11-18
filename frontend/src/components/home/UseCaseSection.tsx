@@ -1,121 +1,153 @@
-
-
-import  { useState, useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { useRef, useState } from "react";
+import { motion, useScroll, useMotionValueEvent } from "framer-motion";
+import { Radio, Layers, Brain, BellRing, UserCog } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import Container from "../ui/Container";
-import SectionHeading from "../ui/SectionHeading";
-import ToggleButtons from "../ui/ToggleButtons";
-import FeatureCards from "../ui/FeatureCards";
-import { Heart, AlertTriangle, Shield, Activity, Clock, BarChart3 } from "lucide-react";
-import doctorImage from "../../public/doctorimage.jpg";
-import realtime from "../../public/realtime.jpg";
-import headache from "../../public/headache.jpg";
-import smartwatch from "../../public/smartwatch.jpg";
-import EmergencyImage from "../../public/emergency.jpg";
-import LongTermImage from "../../public/Longterm.jpg";
+import { fadeUp, viewportOnce, prefersReducedMotion } from "../../lib/motion";
 
-const UseCaseSection = () => {
-  const [currentSelection, setCurrentSelection] = useState("Health Risk Monitoring");
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+const SOFT = { color: "rgba(22,25,29,0.62)" };
+const MUTE = { color: "rgba(22,25,29,0.40)" };
 
-  const items = [
-    {
-      id: "cardiac",
-      icon: <Heart className="w-7 h-7 text-blue-500" />,
-      title: "Cardiac Issue Detection",
-      description: "Early identification of irregular heartbeats and potential cardiovascular concerns.",
-      image: doctorImage,
-    },
-    {
-      id: "emergency",
-      icon: <AlertTriangle className="w-7 h-7 text-blue-500" />,
-      title: "Emergency Alerts to Family",
-      description: "Automatic notifications to loved ones during critical health events.",
-      image: EmergencyImage,
-    },
-    {
-      id: "insights",
-      icon: <Shield className="w-7 h-7 text-blue-500" />,
-      title: "Long-term Health Insights",
-      description: "Preventive analysis to detect patterns indicating potential chronic disease risk.",
-      image: LongTermImage,
-    },
-  ];
+interface Step {
+  icon: LucideIcon;
+  title: string;
+  desc: string;
+}
 
-  const fitnessitems = [
-    {
-      id: "real-time-monitoring",
-      icon: <Activity className="w-7 h-7 text-blue-500" />,
-      title: "Real-time Health Monitoring",
-      description: "Track vitals 24/7 with actionable insights to optimize your fitness and recovery.",
-      image: realtime,
-    },
-    {
-      id: "recovery-optimization",
-      icon: <Clock className="w-7 h-7 text-blue-500" />,
-      title: "Recovery Optimization",
-      description: "Personalized recommendations for sleep, nutrition, and rest based on your body's needs.",
-      image: headache,
-    },
-    {
-      id: "performance-tracking",
-      icon: <BarChart3 className="w-7 h-7 text-blue-500" />,
-      title: "Performance Tracking",
-      description: "Measure improvements over time with detailed analytics and trend analysis.",
-      image: smartwatch,
-    },
-  ];
+const steps: Step[] = [
+  { icon: Radio, title: "Sense", desc: "A medical-grade wearable continuously captures cardiac and respiratory signals." },
+  { icon: Layers, title: "Fuse", desc: "Sensor streams merge with your medical history, labs and family signals." },
+  { icon: Brain, title: "Twin", desc: "A personalized model builds — and continually updates — your physiological baseline." },
+  { icon: BellRing, title: "Warn", desc: "Drift from your baseline triggers early, ranked alerts — not noise." },
+  { icon: UserCog, title: "Hand off", desc: "Findings reach your cardiologist as a clinician-ready note." },
+];
 
-  const handleLearnMore = (cardId: string) => {
-    console.log(`Learn more clicked for: ${cardId}`);
-  };
+function Header() {
+  return (
+    <motion.div
+      variants={fadeUp}
+      initial="hidden"
+      whileInView="visible"
+      viewport={viewportOnce}
+      className="max-w-2xl"
+    >
+      <div className="eyebrow mb-4">How it works</div>
+      <h2 className="text-display text-ink-900 tracking-tighter">
+        From a heartbeat to a hand-off.
+      </h2>
+      <p className="mt-5 text-lg md:text-xl leading-relaxed" style={SOFT}>
+        The full path a signal takes from your wrist to your doctor — five quiet steps.
+      </p>
+    </motion.div>
+  );
+}
+
+/* Static fallback — reduced-motion and small screens get a clean grid. */
+function StaticSteps() {
+  return (
+    <section id="how" className="relative bg-canvas py-24 md:py-32">
+      <Container>
+        <Header />
+        <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+          {steps.map((s, i) => (
+            <div key={s.title} className="glass-card p-6">
+              <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-accent-500 to-accent-700 grid place-items-center shadow-soft">
+                <s.icon className="w-5 h-5 text-white" />
+              </div>
+              <div className="mt-4 font-mono text-[11px] tracking-wider" style={MUTE}>
+                STEP 0{i + 1}
+              </div>
+              <h3 className="mt-1 text-lg font-semibold text-ink-900 tracking-tight">{s.title}</h3>
+              <p className="mt-2 text-[14px] leading-relaxed" style={SOFT}>{s.desc}</p>
+            </div>
+          ))}
+        </div>
+      </Container>
+    </section>
+  );
+}
+
+export default function UseCaseSection() {
+  const reduce = prefersReducedMotion();
+  const [compact] = useState(() => typeof window !== "undefined" && window.innerWidth < 768);
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
+  const [active, setActive] = useState(0);
+
+  useMotionValueEvent(scrollYProgress, "change", (v) => {
+    const i = Math.max(0, Math.min(steps.length - 1, Math.floor(v * steps.length)));
+    setActive(i);
+  });
+
+  if (reduce || compact) return <StaticSteps />;
+
+  const ActiveIcon = steps[active].icon;
 
   return (
-    <motion.section
-      ref={ref}
-      id="usecases"
-      className="py-24 relative overflow-hidden bg-white text-black"
-      initial={{ opacity: 0 }}
-      animate={isInView ? { opacity: 1 } : { opacity: 0 }}
-      transition={{ duration: 1.2 }}
-    >
-      <div className="absolute top-0 inset-x-0 h-40 bg-gradient-to-b from-slate-50 to-transparent"></div>
-      <div className="absolute -top-40 -right-40 w-80 h-80 bg-teal-100 rounded-full opacity-30 blur-3xl"></div>
-      <Container className="relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          transition={{ duration: 1.2, delay: 0.2 }}
-        >
-          <SectionHeading
-            title="Use Cases"
-            subtitle="Triksha adapts to your specific health needs, whether you're focusing on health risk monitoring or fitness optimization."
-          />
-        </motion.div>
+    <section id="how" ref={ref} className="relative bg-canvas" style={{ height: `${steps.length * 62}vh` }}>
+      <div className="sticky top-0 min-h-screen flex flex-col justify-center py-20 overflow-hidden">
+        <Container>
+          <Header />
 
-        <motion.div
-          className="flex justify-center w-full mb-12"
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 1.2, delay: 0.4 }}
-        >
-          <ToggleButtons onSelectionChange={setCurrentSelection} />
-        </motion.div>
+          <div className="mt-12 grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+            {/* Left — step rail */}
+            <ol className="relative pl-6">
+              {/* progress rail */}
+              <span className="absolute left-0 top-1 bottom-1 w-px bg-[rgba(22,25,29,0.12)]" />
+              <motion.span
+                className="absolute left-0 top-1 w-px bg-accent-500 origin-top"
+                style={{ height: "calc(100% - 0.5rem)", scaleY: scrollYProgress }}
+              />
+              {steps.map((s, i) => (
+                <li
+                  key={s.title}
+                  className="flex items-center gap-4 py-3.5 transition-all duration-300"
+                  style={{ opacity: i === active ? 1 : 0.4 }}
+                >
+                  <span
+                    className="font-mono text-sm tabular-nums w-7"
+                    style={{ color: i === active ? "#0571d3" : "rgba(22,25,29,0.40)" }}
+                  >
+                    0{i + 1}
+                  </span>
+                  <span
+                    className={`text-xl md:text-2xl font-semibold tracking-tight ${
+                      i === active ? "text-ink-900" : "text-ink-500"
+                    }`}
+                  >
+                    {s.title}
+                  </span>
+                </li>
+              ))}
+            </ol>
 
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
-          transition={{ duration: 1.2, delay: 0.6 }}
-        >
-          <FeatureCards
-            cards={currentSelection === "Health Risk Monitoring" ? items : fitnessitems}
-            onLearnMore={handleLearnMore}
-          />
-        </motion.div>
-      </Container>
-    </motion.section>
+            {/* Right — active step panel */}
+            <div className="glass-card p-8 md:p-10 min-h-[300px] flex flex-col justify-center">
+              <motion.div
+                key={active}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+              >
+                <div className="flex items-center justify-between">
+                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-accent-500 to-accent-700 grid place-items-center shadow-soft">
+                    <ActiveIcon className="w-6 h-6 text-white" />
+                  </div>
+                  <div className="font-mono text-sm tabular-nums" style={MUTE}>
+                    0{active + 1} / 0{steps.length}
+                  </div>
+                </div>
+                <h3 className="mt-6 text-3xl font-semibold text-ink-900 tracking-tight">
+                  {steps[active].title}
+                </h3>
+                <p className="mt-3 text-lg leading-relaxed max-w-md" style={SOFT}>
+                  {steps[active].desc}
+                </p>
+              </motion.div>
+            </div>
+          </div>
+        </Container>
+      </div>
+    </section>
   );
-};
-
-export default UseCaseSection;
+}
