@@ -47,7 +47,7 @@ const STEPS: Step[] = [
     alt: "Triksha app Twin Alerts screen listing detected drifts in order of risk",
     kind: "phone",
     width: 560,
-    height: 1177,
+    height: 1172,
   },
 ];
 
