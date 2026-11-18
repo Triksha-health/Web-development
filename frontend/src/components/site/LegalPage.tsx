@@ -19,12 +19,10 @@ export default function LegalPage({ kicker, title, intro, updated, sections }: L
   return (
     <div className="site-wrap pb-[clamp(64px,8vw,112px)] pt-[clamp(40px,6vw,80px)]">
       <div className="flex max-w-[760px] flex-col gap-[18px]">
-        <p className="kicker">{kicker}</p>
+        <p className="section-label">{kicker}</p>
         <h1 className="h-display">{title}</h1>
         <p className="lede">{intro}</p>
-        <p className="font-mono text-xs uppercase tracking-[0.14em] text-muted">
-          Last updated · {updated}
-        </p>
+        <p className="section-label">Last updated: {updated}</p>
       </div>
 
       <div
@@ -38,7 +36,7 @@ export default function LegalPage({ kicker, title, intro, updated, sections }: L
 
       <div className="mt-12 grid gap-10 lg:grid-cols-[260px_1fr] lg:gap-16">
         <nav aria-label="On this page" className="lg:sticky lg:top-24 lg:self-start">
-          <p className="mono-tag mb-3 text-muted">On this page</p>
+          <p className="section-label mb-3">On this page</p>
           <ol className="flex flex-col gap-2 text-[15px]">
             {sections.map((s) => (
               <li key={s.id}>

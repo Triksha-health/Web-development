@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 
 /**
- * "What an alert looks like" — an interactive illustration.
+ * "What an alert looks like": an interactive illustration.
  * Dragging the slider walks through 30 example days: the signals sit
  * inside the person's normal, start to drift, and the alert appears on
  * the day Triksha would warn. Day 30 matches the approved static design,
@@ -16,13 +16,15 @@ const ALERT_DAY = 24; // day the twin would warn
 
 const drift = (day: number) => Math.min(1, Math.max(0, (day - DRIFT_START) / (DAYS - DRIFT_START)));
 
-// Chart geometry
+// Chart geometry (SVG units; the chart is drawn 170px tall)
 const CW = 320;
-const CH = 96;
+const CH = 170;
+const BASE_Y = 126; // centre of the "your normal" band
+const BAND_HALF = 20;
 const xOf = (day: number) => ((day - 1) / (DAYS - 1)) * CW;
 // A little day-to-day movement so the line reads as a signal, not a ruler.
-const jitter = (day: number) => Math.sin(day * 2.3) * 2.2 + Math.cos(day * 1.1) * 1.4;
-const yOf = (day: number) => 70 - drift(day) * 52 + jitter(day);
+const jitter = (day: number) => Math.sin(day * 2.3) * 3.4 + Math.cos(day * 1.1) * 2.2;
+const yOf = (day: number) => BASE_Y - drift(day) * 92 + jitter(day);
 const linePath = (from: number, to: number) => {
   let d = "";
   for (let day = from; day <= to; day++) {
@@ -115,19 +117,15 @@ export default function TwinDemo() {
     { label: "Resting heart rate", value: rhrText, moved: rhr > 0 },
   ];
 
-  const lineColor = alerted ? "#8A4B0A" : watching ? "#C9781E" : "#1B6BC9";
-
   return (
     <div
       ref={cardRef}
       className="flex flex-col gap-5 rounded-[26px] border border-line bg-canvas p-[clamp(24px,3vw,40px)]"
     >
-      <span className="font-mono text-xs uppercase tracking-[0.16em] text-muted">
-        Illustrative alert · Engine in development
-      </span>
+      <p className="text-sm text-muted">Illustrative alert. The engine is in development.</p>
 
       <div className="flex flex-col gap-1.5" aria-live="polite">
-        <span className="text-[15px] text-body">You, 38 · day {day} of 30</span>
+        <span className="text-[15px] text-body">You, 38. Day {day} of 30.</span>
         <p className="min-h-[2.3em] font-display text-[clamp(26px,2.6vw,32px)] font-semibold leading-[1.15]">
           {headline}
         </p>
@@ -137,18 +135,31 @@ export default function TwinDemo() {
       <div>
         <svg
           viewBox={`0 0 ${CW} ${CH}`}
-          className="block h-24 w-full overflow-visible"
+          className="block h-[170px] w-full overflow-visible"
           preserveAspectRatio="none"
           role="img"
           aria-label="Chart of an example signal staying inside a normal band for 16 days, then drifting above it."
         >
-          {/* the person's normal band */}
-          <rect x="0" y="58" width={CW} height="24" rx="4" fill="#E4ECF6" />
+          {/* the person's normal band, with an edge top and bottom so it reads clearly */}
+          <rect x="0" y={BASE_Y - BAND_HALF} width={CW} height={BAND_HALF * 2} fill="#2B4E8C" />
+          <line x1="0" x2={CW} y1={BASE_Y - BAND_HALF} y2={BASE_Y - BAND_HALF} stroke="#6E9BDC" strokeWidth="1" vectorEffect="non-scaling-stroke" />
+          <line x1="0" x2={CW} y1={BASE_Y + BAND_HALF} y2={BASE_Y + BAND_HALF} stroke="#6E9BDC" strokeWidth="1" vectorEffect="non-scaling-stroke" />
+          {/* the day the twin would warn */}
+          <line
+            x1={xOf(ALERT_DAY)}
+            x2={xOf(ALERT_DAY)}
+            y1="6"
+            y2={CH}
+            stroke={alerted ? "#F0A94E" : "#7C93B8"}
+            strokeWidth="1.5"
+            strokeDasharray="2 3"
+            vectorEffect="non-scaling-stroke"
+          />
           {/* days not reached yet */}
           <path
             d={linePath(1, DAYS)}
             fill="none"
-            stroke="#D8CDB6"
+            stroke="#5B76A6"
             strokeWidth="1.5"
             strokeDasharray="3 4"
             vectorEffect="non-scaling-stroke"
@@ -157,25 +168,14 @@ export default function TwinDemo() {
           <path
             d={linePath(1, day)}
             fill="none"
-            stroke={lineColor}
-            strokeWidth="2.5"
+            stroke="#F3EEE3"
+            strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
             vectorEffect="non-scaling-stroke"
           />
-          {/* the day the twin would warn */}
-          <line
-            x1={xOf(ALERT_DAY)}
-            x2={xOf(ALERT_DAY)}
-            y1="6"
-            y2={CH}
-            stroke={alerted ? "#8A4B0A" : "#B9AE97"}
-            strokeWidth="1.5"
-            strokeDasharray="2 3"
-            vectorEffect="non-scaling-stroke"
-          />
         </svg>
-        <div className="mt-1 flex justify-between font-mono text-[11px] uppercase tracking-[0.1em] text-muted">
+        <div className="mt-2 flex justify-between gap-4 text-[13px] text-muted">
           <span>Shaded band: your normal</span>
           <span className={alerted ? "text-status-wip" : ""}>Day {ALERT_DAY}: twin warns</span>
         </div>
@@ -201,7 +201,7 @@ export default function TwinDemo() {
             (chip) => (
               <span
                 key={chip}
-                className="rounded-full bg-accent-100 px-3 py-[7px] text-[13px] font-semibold text-navy"
+                className="rounded-full bg-accent-100 px-3 py-[7px] text-[13px] font-semibold text-accent-700"
               >
                 {chip}
               </span>
@@ -209,7 +209,7 @@ export default function TwinDemo() {
           )
         ) : (
           <span className="rounded-full border border-line px-3 py-[6px] text-[13px] font-semibold text-muted">
-            {watching ? "No alert yet · still watching" : "No alert · nothing to share"}
+            {watching ? "No alert yet. Still watching." : "No alert. Nothing to share."}
           </span>
         )}
       </div>
@@ -243,7 +243,7 @@ export default function TwinDemo() {
           }}
           aria-valuetext={`Day ${day} of 30. ${headline}`}
         />
-        <div className="flex justify-between font-mono text-[11px] uppercase tracking-[0.1em] text-muted">
+        <div className="flex justify-between text-[13px] text-muted">
           <span>Day 1</span>
           <span>Day 30</span>
         </div>

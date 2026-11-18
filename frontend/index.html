@@ -3,14 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <meta name="theme-color" content="#F4EEE1" />
+    <meta name="theme-color" content="#050E1E" />
 
     <!--
       The title, description, canonical and social tags below are the
       homepage defaults. scripts/prerender.mjs rewrites them for each
       prerendered page at build time (values live in src/seo.ts).
     -->
-    <title>Triksha — cardiac risk, read early</title>
+    <title>Triksha: cardiac risk, read early</title>
     <meta
       name="description"
       content="Triksha is a personal digital twin for your heart health. A wristband senses your body every day, your Health Book remembers every report, and the twin warns you when something starts to drift. In development. Join the waitlist."
@@ -22,7 +22,7 @@
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Triksha" />
     <meta property="og:locale" content="en_IN" />
-    <meta property="og:title" content="Triksha — cardiac risk, read early" />
+    <meta property="og:title" content="Triksha: cardiac risk, read early" />
     <meta
       property="og:description"
       content="Triksha is a personal digital twin for your heart health. A wristband senses your body every day, your Health Book remembers every report, and the twin warns you when something starts to drift. In development. Join the waitlist."
@@ -38,16 +38,27 @@
 
     <!-- Twitter / X -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Triksha — cardiac risk, read early" />
+    <meta name="twitter:title" content="Triksha: cardiac risk, read early" />
     <meta
       name="twitter:description"
       content="Triksha is a personal digital twin for your heart health. A wristband senses your body every day, your Health Book remembers every report, and the twin warns you when something starts to drift. In development. Join the waitlist."
     />
     <meta name="twitter:image" content="https://trikshahealth.com/og-image.jpg" />
 
+    <!--
+      Turns motion on. Every animated element is fully visible by default;
+      the hidden "before" states in src/motion.css only apply once this class
+      is set, and it is not set when the visitor prefers reduced motion.
+    -->
+    <script>
+      if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        document.documentElement.classList.add("js-motion");
+      }
+    </script>
+
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <link rel="preload" as="image" href="/img/phone1.webp" type="image/webp" fetchpriority="high" />
+    <link rel="preload" as="image" href="/img/twin-poster.webp" type="image/webp" fetchpriority="high" />
 
     <!--
       Plausible analytics is injected at runtime by src/lib/analytics.ts

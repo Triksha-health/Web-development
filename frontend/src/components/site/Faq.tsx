@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import { Link } from "react-router-dom";
 
 const FAQS: { q: string; a: ReactNode }[] = [
@@ -12,7 +12,7 @@ const FAQS: { q: string; a: ReactNode }[] = [
   },
   {
     q: "How is this different from a smartwatch?",
-    a: "Smartwatches compare you with averages and describe the present. Triksha builds a model of you — your daily signals plus your medical history — and watches for drift away from your own normal.",
+    a: "Smartwatches compare you with averages and describe the present. Triksha builds a model of you from your daily signals and your medical history, and watches for drift away from your own normal.",
   },
   {
     q: "Who can see my health data?",
@@ -34,13 +34,18 @@ const FAQS: { q: string; a: ReactNode }[] = [
 export default function Faq() {
   return (
     <section id="faq" className="site-section mx-auto flex w-full max-w-[900px] flex-col gap-8 px-[clamp(20px,5vw,48px)]">
-      <h2 className="font-display text-[clamp(34px,4vw,48px)] font-semibold leading-[1.1] tracking-[-0.015em]">
+      <h2 className="h-display" data-reveal>
         Honest answers
       </h2>
       <div className="flex flex-col border-t border-line-strong">
-        {FAQS.map((f) => (
-          <details key={f.q} className="faq border-b border-line-strong">
-            <summary className="flex items-center justify-between gap-5 py-[22px] font-display text-[21px] font-semibold transition-colors">
+        {FAQS.map((f, i) => (
+          <details
+            key={f.q}
+            data-reveal
+            style={{ "--i": i } as CSSProperties}
+            className="faq border-b border-line-strong"
+          >
+            <summary className="flex items-center justify-between gap-5 py-[22px] font-display text-[clamp(20px,2vw,24px)] font-semibold transition-colors">
               {f.q}
               <span
                 aria-hidden="true"

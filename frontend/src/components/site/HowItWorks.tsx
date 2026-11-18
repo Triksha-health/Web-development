@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 
 interface Step {
   tag: string;
@@ -14,35 +14,35 @@ interface Step {
 
 const STEPS: Step[] = [
   {
-    tag: "01 · Senses you",
+    tag: "1. Senses you",
     title: "A wristband reads you every day",
-    body: "Heart rate, heart-rate variability, breathing, temperature and movement — measured quietly, all day. The band is only the data layer; the intelligence is in the twin.",
-    img: "/img/phone2.webp",
-    alt: "Heart rate screen comparing each signal to its normal range",
+    body: "Heart rate, heart-rate variability, breathing, temperature and movement, measured quietly, all day. The band is only the data layer; the intelligence is in the twin.",
+    img: "/img/app-heart-rate.webp",
+    alt: "Triksha app heart rate screen showing the current reading against the last 14 days",
     kind: "phone",
     well: "bg-canvas-soft",
     width: 560,
-    height: 1177,
+    height: 1172,
   },
   {
-    tag: "02 · Remembers you",
+    tag: "2. Remembers you",
     title: "Your Health Book keeps every report",
     body: "Upload lab reports and records once. Triksha reads them, organises them, and gives you one health history you can hand any doctor in a tap.",
     img: "/img/healthbook.webp",
-    alt: "Health Book web app reading a lab report into structured results",
+    alt: "Health Book web app showing a lab analysis snapshot with results and a summary",
     kind: "wide",
-    well: "bg-accent-100",
-    width: 1000,
-    height: 516,
+    well: "bg-canvas-soft",
+    width: 1200,
+    height: 542,
   },
   {
-    tag: "03 · Simulates you",
+    tag: "3. Simulates you",
     title: "The twin warns you, with the evidence",
-    body: "When something drifts, your twin looks for the cause and where it could lead, then tells you in plain language — and why.",
-    img: "/img/phone3.webp",
-    alt: "Twin Alerts screen listing detected drifts as a ranked risk feed",
+    body: "When something drifts, your twin looks for the cause and where it could lead, then tells you in plain language, and why.",
+    img: "/img/app-alerts.webp",
+    alt: "Triksha app Twin Alerts screen listing detected drifts in order of risk",
     kind: "phone",
-    well: "bg-navy",
+    well: "bg-canvas-soft",
     width: 560,
     height: 1177,
   },
@@ -57,7 +57,10 @@ const LOOP = [
 ];
 
 export default function HowItWorks() {
-  const [active, setActive] = useState(0);
+  // `prev` is the screen being replaced; it stays visible under the new one.
+  const [{ active, prev }, setStage] = useState({ active: 0, prev: 0 });
+  const setActive = (next: number) =>
+    setStage((s) => (s.active === next ? s : { active: next, prev: s.active }));
   const stepRefs = useRef<(HTMLElement | null)[]>([]);
 
   // Desktop: the step crossing the middle of the screen drives the pinned stage.
@@ -77,12 +80,8 @@ export default function HowItWorks() {
 
   return (
     <section id="how" className="site-wrap site-section flex flex-col gap-14">
-      <div className="flex max-w-[760px] flex-col gap-[18px]">
-        <p className="kicker">How it works</p>
-        <h2 className="h-display">
-          A living twin of your health that{" "}
-          <span className="text-accent-500">sees the drift coming.</span>
-        </h2>
+      <div className="flex max-w-[860px] flex-col gap-[18px]" data-reveal>
+        <h2 className="h-display">How Triksha works</h2>
         <p className="lede">
           Fitness wearables count steps and beats. Triksha learns what normal looks like for
           you, then notices when you start moving away from it.
@@ -91,12 +90,15 @@ export default function HowItWorks() {
 
       <div className="lg:grid lg:grid-cols-2 lg:gap-16">
         {/* Steps. Stacked cards on phones and tablets, a scrolling column on desktop. */}
-        <div className="grid gap-5 md:grid-cols-2 lg:block">
+        <div className="relative grid gap-5 md:grid-cols-2 lg:block">
+          {/* fills as the three steps scroll past (desktop, where supported) */}
+          <span className="steps-rail" aria-hidden="true" />
           {STEPS.map((s, i) => (
             <article
               key={s.tag}
               ref={(el) => (stepRefs.current[i] = el)}
               data-step={i}
+              data-reveal
               className="flex flex-col overflow-hidden rounded-[26px] border border-line bg-canvas-paper lg:min-h-[68vh] lg:justify-center lg:overflow-visible lg:rounded-none lg:border-0 lg:bg-transparent"
             >
               <div
@@ -122,7 +124,7 @@ export default function HowItWorks() {
                   active === i ? "lg:border-accent-500" : "lg:border-line"
                 }`}
               >
-                <p className="mono-tag !tracking-[0.18em] text-accent-600">{s.tag}</p>
+                <p className="section-label">{s.tag}</p>
                 <h3 className="font-display text-[26px] font-semibold leading-[1.2] lg:text-[34px] lg:leading-[1.15]">
                   {s.title}
                 </h3>
@@ -138,9 +140,11 @@ export default function HowItWorks() {
             {STEPS.map((s, i) => (
               <div
                 key={s.tag}
+                // each screen settles at a slightly different angle
+                style={{ "--ry": `${(i - 1) * 6}deg` } as CSSProperties}
                 className={`stage-layer absolute inset-0 flex justify-center px-10 ${s.well} ${
                   s.kind === "phone" ? "items-start pt-12" : "items-center"
-                } ${active === i ? "is-active" : ""}`}
+                } ${active === i ? "is-active" : prev === i ? "is-prev" : ""}`}
               >
                 <img
                   src={s.img}
@@ -156,7 +160,7 @@ export default function HowItWorks() {
                 />
               </div>
             ))}
-            <div className="absolute bottom-5 left-1/2 flex -translate-x-1/2 gap-2">
+            <div className="absolute bottom-5 left-1/2 z-10 flex -translate-x-1/2 gap-2">
               {STEPS.map((s, i) => (
                 <span
                   key={s.tag}
@@ -171,17 +175,19 @@ export default function HowItWorks() {
       </div>
 
       {/* The loop */}
-      <ol className="grid gap-6 rounded-[26px] border border-line bg-canvas-paper p-[clamp(24px,3vw,40px)] sm:grid-cols-2 lg:grid-cols-5">
-        {LOOP.map((l) => (
-          <li key={l.tag} className="flex flex-col gap-1.5">
-            <span className="font-mono text-xs uppercase tracking-[0.14em] text-accent-600">
-              {l.tag}
-            </span>
-            <strong className="font-display text-xl font-semibold">{l.title}</strong>
-            <span className="text-[15px] text-body">{l.body}</span>
-          </li>
-        ))}
-      </ol>
+      <div className="rounded-[26px] border border-line bg-canvas-paper p-[clamp(24px,3vw,40px)]">
+        {/* one line through all five steps, with a pulse travelling along it */}
+        <div className="loop-line mb-7 hidden lg:block" data-reveal aria-hidden="true" />
+        <ol className="grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
+          {LOOP.map((l) => (
+            <li key={l.tag} className="flex flex-col gap-1.5">
+              <span className="section-label">{l.tag}</span>
+              <strong className="font-display text-xl font-semibold">{l.title}</strong>
+              <span className="text-[15px] text-body">{l.body}</span>
+            </li>
+          ))}
+        </ol>
+      </div>
     </section>
   );
 }

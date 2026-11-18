@@ -17,6 +17,19 @@ import * as THREE from "three";
 
 interface Props {
   className?: string;
+  /** "dark" tunes the colours for a dark background (the homepage hero). */
+  variant?: "light" | "dark";
+  /**
+   * 0 = the heart glows calm blue at a resting pace; 1 = it has drifted:
+   * amber, and beating faster. The scene eases between the two.
+   */
+  drift?: number;
+  /** Turn and recede as the container scrolls up out of view. */
+  scrollLinked?: boolean;
+  /** Draw the orbiting rings around the figure (off in the homepage hero). */
+  showRings?: boolean;
+  /** Called once, after the first frame has been drawn. */
+  onReady?: () => void;
 }
 
 const SETTINGS = {
@@ -26,8 +39,21 @@ const SETTINGS = {
   twinTone: "#2f4fa8",
 };
 
-export default function DigitalTwinScene({ className }: Props) {
+export default function DigitalTwinScene({
+  className,
+  variant = "light",
+  drift = 0,
+  scrollLinked = false,
+  showRings = true,
+  onReady,
+}: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
+  // Read inside the animation loop, so changing these never rebuilds the scene.
+  const driftRef = useRef(drift);
+  driftRef.current = drift;
+  const onReadyRef = useRef(onReady);
+  onReadyRef.current = onReady;
+  const dark = variant === "dark";
 
   useEffect(() => {
     const container = containerRef.current;
@@ -278,7 +304,7 @@ export default function DigitalTwinScene({ className }: Props) {
         bodyColors[i * 3 + 2] = c.b;
       }
       colorAttr.needsUpdate = true;
-    })(SETTINGS.twinTone);
+    })(dark ? "#5c9df2" : SETTINGS.twinTone);
 
     const bodyPoints = new THREE.Points(bodyGeo, bodyMat);
 
@@ -370,9 +396,11 @@ export default function DigitalTwinScene({ className }: Props) {
     }
     // Gently-tilted, nested orbital rings that clearly encircle the figure
     // (their arcs stay well off the body axis, so they never cut through it).
-    addRing(1.04, 18, 0.06, "#3f7fd6", 0.62, 0.09, FIGURE_Y);
-    addRing(1.18, 22, -0.1, "#5a8fd8", 0.44, -0.06, FIGURE_Y);
-    if (!compact) addRing(1.32, 26, 0.03, "#82a9de", 0.3, 0.045, FIGURE_Y);
+    if (showRings) {
+      addRing(1.04, 18, 0.06, "#3f7fd6", 0.62, 0.09, FIGURE_Y);
+      addRing(1.18, 22, -0.1, "#5a8fd8", 0.44, -0.06, FIGURE_Y);
+      if (!compact) addRing(1.32, 26, 0.03, "#82a9de", 0.3, 0.045, FIGURE_Y);
+    }
 
     /* ── Soft platform glow (replaces the flat disc/ring) ── */
     function platformGlow(radius: number, opacity: number, inner: string, mid: string) {
@@ -460,14 +488,20 @@ export default function DigitalTwinScene({ className }: Props) {
     /* ── Animate ── */
     const clock = new THREE.Clock();
     let elapsed = 0;
-    function heartbeat(t: number) {
-      const T = 60 / 72;
-      const ph = (t % T) / T;
+    function heartbeat(ph: number) {
       const p =
         Math.exp(-Math.pow((ph - 0.07) * 10.5, 2)) + 0.45 * Math.exp(-Math.pow((ph - 0.3) * 9.0, 2));
       return Math.min(p, 1);
     }
     const SCAN_LO = 0.05, SCAN_HI = 1.78, SCAN_PERIOD = 8;
+    let beatPhase = 0;
+    let driftNow = driftRef.current;
+    let scrollNow = 0;
+    let announced = false;
+    const CALM = new THREE.Color("#9fd4ff");
+    const DRIFTED = new THREE.Color("#ffab4d");
+    const WHITE = new THREE.Color("#ffffff");
+    const SPRITE_DRIFTED = new THREE.Color("#ffc27a");
     let rafId = 0;
     let running = false;
 
@@ -509,15 +543,31 @@ export default function DigitalTwinScene({ className }: Props) {
       yaw += (targetYaw - yaw) * k;
       pitch += (targetPitch - pitch) * k;
 
-      figure.rotation.y = (reduceMotion ? 0 : t * SETTINGS.rotationSpeed) + yaw;
+      // ease toward the requested drift state (~1.5s)
+      driftNow += (driftRef.current - driftNow) * (1 - Math.exp(-dt * 1.6));
+
+      // how far the container has scrolled up out of view, 0..1
+      if (scrollLinked && !reduceMotion) {
+        const r = container!.getBoundingClientRect();
+        const target = r.height ? THREE.MathUtils.clamp(-r.top / r.height, 0, 1) : 0;
+        scrollNow += (target - scrollNow) * (1 - Math.exp(-dt * 8));
+      }
+
+      figure.rotation.y = (reduceMotion ? 0 : t * SETTINGS.rotationSpeed) + yaw + scrollNow * 1.5;
       figure.rotation.x = pitch;
       figure.position.y = reduceMotion ? 0 : Math.sin(t * 0.6) * 0.012;
 
-      // slight opposing camera sway for parallax depth
+      // slight opposing camera sway for parallax depth; pull back on scroll
       camera.position.x = -yaw * 0.22;
+      camera.position.z = 4.35 + scrollNow * 1.4;
       camera.lookAt(0, 1.05, 0);
 
-      const pulse = SETTINGS.heartbeat && !reduceMotion ? heartbeat(t) : 0.25;
+      // 72 bpm at rest, rising to ~98 when drifted
+      beatPhase = (beatPhase + (dt * (72 + 26 * driftNow)) / 60) % 1;
+      const pulse = SETTINGS.heartbeat && !reduceMotion ? heartbeat(beatPhase) : 0.25;
+      (bodyMat.uniforms.uHeartColor.value as THREE.Color).copy(CALM).lerp(DRIFTED, driftNow);
+      (heartCore.material as THREE.SpriteMaterial).color.copy(WHITE).lerp(SPRITE_DRIFTED, driftNow);
+      (heartHalo.material as THREE.SpriteMaterial).color.copy(WHITE).lerp(DRIFTED, driftNow);
       bodyMat.uniforms.uTime.value = t;
       bodyMat.uniforms.uPulse.value = pulse;
       if (bodyMat.uniforms.uScanOn.value > 0) {
@@ -545,6 +595,10 @@ export default function DigitalTwinScene({ className }: Props) {
       }
 
       renderer.render(scene, camera);
+      if (!announced) {
+        announced = true;
+        onReadyRef.current?.();
+      }
       if (running) rafId = requestAnimationFrame(frame);
     }
     function start() {
@@ -595,16 +649,17 @@ export default function DigitalTwinScene({ className }: Props) {
         container.removeChild(renderer.domElement);
       }
     };
-  }, []);
+  }, [dark, scrollLinked, showRings]);
 
   return (
-    <div className={`relative w-full h-full canvas-fade ${className ?? ""}`}>
+    <div className={`relative w-full h-full ${dark ? "" : "canvas-fade"} ${className ?? ""}`}>
       {/* soft seating glow behind the twin */}
       <div
         className="pointer-events-none absolute inset-0"
         style={{
-          background:
-            "radial-gradient(44% 42% at 50% 44%, rgba(176,202,243,0.30), rgba(176,202,243,0.10) 55%, rgba(176,202,243,0) 76%)",
+          background: dark
+            ? "radial-gradient(40% 42% at 50% 46%, rgba(64,140,236,0.26), rgba(64,140,236,0.08) 55%, rgba(64,140,236,0) 76%)"
+            : "radial-gradient(44% 42% at 50% 44%, rgba(176,202,243,0.30), rgba(176,202,243,0.10) 55%, rgba(176,202,243,0) 76%)",
         }}
       />
       <div ref={containerRef} className="absolute inset-0" />

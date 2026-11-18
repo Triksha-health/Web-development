@@ -1,4 +1,4 @@
-/* Fonts: Spectral, Libre Franklin and JetBrains Mono are self-hosted via @fontsource (imported in main.tsx). */
+/* Fonts: Inter Tight (headlines), Libre Franklin (body) and JetBrains Mono (labels) are self-hosted via @fontsource (imported in main.tsx). */
 
 @tailwind base;
 @tailwind components;
@@ -19,12 +19,12 @@
 
   h1, h2, h3, h4, h5, h6 {
     @apply font-display text-ink-900;
-    letter-spacing: -0.015em;
+    letter-spacing: -0.01em;
   }
 
   ::selection {
     background: rgba(27, 107, 201, 0.20);
-    color: #17191C;
+    color: #FFFFFF;
   }
 
   /* Deep-linking: anchored sections clear the sticky navbar */
@@ -36,7 +36,7 @@
      elements (low specificity via :where, so components can still override).
      Mouse clicks won't show it — only keyboard/assistive navigation. */
   :where(a, button, [role="button"], input, textarea, select, summary):focus-visible {
-    outline: 2px solid #1B6BC9;
+    outline: 2px solid #8EBDF2;
     outline-offset: 3px;
     border-radius: 6px;
   }
@@ -314,7 +314,7 @@
     padding-inline: clamp(20px, 5vw, 48px);
   }
   .site-section {
-    padding-block: clamp(64px, 8vw, 112px);
+    padding-block: clamp(72px, 10vw, 148px);
   }
 
   /* Small uppercase mono label above headings */
@@ -332,15 +332,26 @@
   }
 
   .h-display {
-    @apply font-display font-semibold text-ink-900;
-    font-size: clamp(34px, 4vw, 52px);
-    line-height: 1.08;
-    letter-spacing: -0.015em;
+    @apply font-display text-ink-900;
+    font-weight: 650;
+    font-size: clamp(36px, 4.6vw, 64px);
+    line-height: 1.06;
+    letter-spacing: -0.01em;
     text-wrap: balance;
+  }
+  /* Plain sentence-case label above a heading or beside a value */
+  .section-label {
+    @apply font-sans text-muted;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.5;
+    letter-spacing: 0;
+    text-transform: none;
   }
   .lede {
     @apply text-body;
-    font-size: 18px;
+    font-size: clamp(17px, 1.35vw, 20px);
+    max-width: 36em;
     text-wrap: pretty;
   }
 
@@ -359,13 +370,13 @@
     @apply bg-accent-500 text-white;
   }
   .cta-blue:hover {
-    @apply bg-accent-600;
+    background-color: #2c7ee0;
     box-shadow: 0 8px 20px rgba(27, 107, 201, 0.28);
   }
   .cta-outline {
     @apply text-ink-900;
     padding: 14.5px 26px;
-    border: 1.5px solid #17191c;
+    border: 1.5px solid #f3eee3;
   }
   .cta-outline:hover {
     @apply bg-ink-900 text-canvas-paper;
@@ -388,7 +399,7 @@
     transition: color 0.15s ease;
   }
   .text-link:hover {
-    @apply text-navy;
+    @apply text-cream;
   }
 
   /* Cards that respond to the pointer */
@@ -398,24 +409,24 @@
   @media (hover: hover) {
     .card-hover:hover {
       transform: translateY(-3px);
-      box-shadow: 0 16px 34px rgba(12, 37, 71, 0.1);
-      border-color: #d8cdb6;
+      box-shadow: 0 16px 34px rgba(0, 0, 0, 0.35);
+      border-color: #3a5c96;
     }
   }
 }
 
 /* ── Sticky nav ─────────────────────────────────────────────── */
 .site-nav {
-  background: #f4eee1;
-  border-bottom: 1px solid #e2d9c6;
+  background: #071630;
+  border-bottom: 1px solid #16294a;
   transition: background-color 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
 }
 .site-nav.is-scrolled {
-  background: rgba(251, 248, 241, 0.9);
+  background: rgba(5, 14, 30, 0.82);
   -webkit-backdrop-filter: saturate(1.4) blur(14px);
   backdrop-filter: saturate(1.4) blur(14px);
   border-bottom-color: transparent;
-  box-shadow: 0 1px 0 rgba(23, 25, 28, 0.08), 0 10px 30px rgba(12, 37, 71, 0.08);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.07);
 }
 .site-nav .nav-inner {
   padding-block: 18px;
@@ -427,7 +438,7 @@
 .nav-link {
   position: relative;
   padding: 10px 0;
-  color: #17191c;
+  color: #f3eee3;
   text-decoration: none;
 }
 .nav-link::after {
@@ -480,14 +491,22 @@
 }
 
 /* ── How it works: pinned stage ─────────────────────────────── */
+/* A 250ms cross-fade. All three panels share one background, and the
+   outgoing screen stays solid underneath until the new one has faded in,
+   so there is never a hard edge or an empty panel mid-transition. */
 .stage-layer {
   opacity: 0;
-  transform: scale(0.985);
-  transition: opacity 0.5s ease, transform 0.5s ease;
+  z-index: 0;
+  transition: opacity 0.25s ease;
+}
+.stage-layer.is-prev {
+  opacity: 1;
+  z-index: 1;
+  transition: none;
 }
 .stage-layer.is-active {
   opacity: 1;
-  transform: scale(1);
+  z-index: 2;
 }
 
 /* ── Twin demo slider ───────────────────────────────────────── */
@@ -503,12 +522,12 @@
 .twin-range::-webkit-slider-runnable-track {
   height: 6px;
   border-radius: 999px;
-  background: linear-gradient(to right, #1b6bc9 var(--fill, 100%), #d8cdb6 var(--fill, 100%));
+  background: linear-gradient(to right, #1b6bc9 var(--fill, 100%), #28467a var(--fill, 100%));
 }
 .twin-range::-moz-range-track {
   height: 6px;
   border-radius: 999px;
-  background: #d8cdb6;
+  background: #28467a;
 }
 .twin-range::-moz-range-progress {
   height: 6px;
@@ -554,5 +573,10 @@
   transform: rotate(45deg);
 }
 .faq summary:hover {
-  color: #1557a8;
+  color: #8ebdf2;
+}
+
+/* Slide-in starting positions must not widen the page. */
+#main {
+  overflow-x: clip;
 }

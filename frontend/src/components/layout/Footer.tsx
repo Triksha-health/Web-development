@@ -25,7 +25,7 @@ function Footer() {
           </div>
 
           <div className="flex flex-col gap-2.5 text-[15px]">
-            <span className="mono-tag text-accent-300">Contact</span>
+            <span className="text-sm font-semibold text-navy-200">Contact</span>
             <a href="mailto:yashwanth@trikshahealth.com" className={linkClass}>
               yashwanth@trikshahealth.com
             </a>
@@ -35,7 +35,7 @@ function Footer() {
           </div>
 
           <div className="flex flex-col gap-2.5 text-[15px]">
-            <span className="mono-tag text-accent-300">Company</span>
+            <span className="text-sm font-semibold text-navy-200">Company</span>
             <Link to="/#about" className={linkClass}>
               About
             </Link>
@@ -51,7 +51,7 @@ function Footer() {
           </div>
 
           <div className="flex flex-col gap-2.5 text-[15px]">
-            <span className="mono-tag text-accent-300">Legal</span>
+            <span className="text-sm font-semibold text-navy-200">Legal</span>
             <Link to="/privacy" className={linkClass}>
               Privacy policy
             </Link>

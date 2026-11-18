@@ -2,7 +2,7 @@ import LegalPage, { type LegalSection } from "../components/site/LegalPage";
 import { usePageMeta } from "../seo";
 
 /**
- * Privacy policy — DPDP Act 2023 aware working draft, clearly marked on
+ * Privacy policy: DPDP Act 2023 aware working draft, clearly marked on
  * the page as pending legal review. Suitable for a pre-launch waitlist
  * site; must be reviewed by legal counsel before any health data (beyond
  * the waitlist email) is collected.
@@ -35,14 +35,14 @@ const sections: LegalSection[] = [
         <p>At this pre-launch stage we collect, at minimum:</p>
         <ul>
           <li>
-            <strong>Email address</strong> — when you join our waitlist or contact us, along
+            <strong>Email address:</strong> collected when you join our waitlist or contact us, along
             with whether you are joining for yourself, a family member or your patients.
           </li>
           <li>
-            <strong>Communication content</strong> — emails or messages you send us.
+            <strong>Communication content:</strong> emails or messages you send us.
           </li>
           <li>
-            <strong>Basic technical data</strong> — privacy-friendly analytics (page views,
+            <strong>Basic technical data:</strong> privacy-friendly analytics (page views,
             referrer) via{" "}
             <a href="https://plausible.io/data-policy" rel="noopener">
               Plausible Analytics
@@ -79,23 +79,23 @@ const sections: LegalSection[] = [
         <p>You have the right to:</p>
         <ul>
           <li>
-            <strong>Access</strong> — request a summary of your personal data.
+            <strong>Access:</strong> request a summary of your personal data.
           </li>
           <li>
-            <strong>Correct or update</strong> — fix inaccuracies in your data.
+            <strong>Correct or update:</strong> fix inaccuracies in your data.
           </li>
           <li>
-            <strong>Erase</strong> — request deletion when our processing is no longer needed.
+            <strong>Erase:</strong> request deletion when our processing is no longer needed.
           </li>
           <li>
-            <strong>Withdraw consent</strong> — at any time, with the same ease you gave it.
+            <strong>Withdraw consent:</strong> at any time, with the same ease you gave it.
           </li>
           <li>
-            <strong>Nominate</strong> — designate another individual to exercise your rights in
+            <strong>Nominate:</strong> designate another individual to exercise your rights in
             case of death or incapacity.
           </li>
           <li>
-            <strong>Grievance redressal</strong> — raise a complaint with our Grievance Officer
+            <strong>Grievance redressal:</strong> raise a complaint with our Grievance Officer
             (below) or with the Data Protection Board of India.
           </li>
         </ul>
@@ -160,7 +160,7 @@ const sections: LegalSection[] = [
     title: "8. Changes to this policy",
     body: (
       <p>
-        We will update this policy as the product evolves — especially before collecting any
+        We will update this policy as the product evolves, especially before collecting any
         sensitive health data. Material changes will be communicated by email to waitlist
         members and by a notice on this page.
       </p>

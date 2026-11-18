@@ -1,14 +1,12 @@
 import { StrictMode } from "react";
 import { createRoot, hydrateRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
-import "@fontsource/spectral/400.css";
-import "@fontsource/spectral/500.css";
-import "@fontsource/spectral/600.css";
-import "@fontsource/spectral/500-italic.css";
+import "@fontsource-variable/inter-tight";
 import "@fontsource-variable/libre-franklin";
 import "@fontsource-variable/jetbrains-mono";
 import App from "./App";
 import "./index.css";
+import "./motion.css";
 import { AuthProvider } from "./context/AuthContext";
 import StoreProvider from "./store/StoreProvider";
 

@@ -39,7 +39,7 @@ const roles = [
 
 function CareersPage() {
   useEffect(() => {
-    document.title = "Careers — Triksha";
+    document.title = "Careers | Triksha";
   }, []);
 
   return (
@@ -57,7 +57,7 @@ function CareersPage() {
             <p className="mt-6 text-lg md:text-xl leading-relaxed" style={SOFT}>
               We're small, technical, and driven by a personal story. If you've felt
               the cost of late detection in your own family, you'll understand the
-              urgency. If you haven't — bring the rigor and humility.
+              urgency. If you haven't, bring the rigor and humility.
             </p>
           </div>
 
@@ -105,7 +105,7 @@ function CareersPage() {
                   </div>
                   <div className="md:col-span-4 flex md:justify-end">
                     <a
-                      href={`mailto:yashwanth@trikshahealth.com?subject=Triksha Careers — ${encodeURIComponent(role.title)}`}
+                      href={`mailto:yashwanth@trikshahealth.com?subject=Triksha Careers: ${encodeURIComponent(role.title)}`}
                       className={`inline-flex items-center gap-2 px-5 py-3 rounded-full font-medium transition ${
                         role.priority
                           ? "bg-canvas text-ink-900 hover:bg-canvas-paper"
@@ -127,10 +127,10 @@ function CareersPage() {
                 Don't see your role?
               </div>
               <h3 className="text-2xl font-semibold text-ink-900 tracking-tight">
-                If you've felt the gap — write to us anyway.
+                If you've felt the gap, write to us anyway.
               </h3>
               <p className="mt-2 text-sm" style={SOFT}>
-                Designers, clinicians, regulatory folks, signal-processing geeks — we want to hear from you.
+                Designers, clinicians, regulatory folks, signal-processing geeks: we want to hear from you.
               </p>
             </div>
             <Link
