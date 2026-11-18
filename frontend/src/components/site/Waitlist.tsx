@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { API_BASE } from "../../lib/api";
 import { track } from "../../lib/analytics";
-import { CALM_TRACE } from "../../lib/trace";
 
 const AUDIENCES = [
   { value: "self", label: "Myself" },
@@ -13,7 +12,7 @@ const AUDIENCES = [
 type Status = { kind: "idle" } | { kind: "ok"; msg: string } | { kind: "err"; msg: string };
 
 const fieldClass =
-  "w-full rounded-[14px] border-0 bg-white px-[18px] py-4 text-[17px] text-[#17191C] placeholder:text-[#9AA0A8] focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white";
+  "w-full rounded-lg border border-[rgb(var(--field-border))] bg-white px-[18px] py-4 text-[17px] text-[#14202E] placeholder:text-[#6B7480] focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-600";
 
 export default function Waitlist() {
   const [email, setEmail] = useState("");
@@ -61,37 +60,22 @@ export default function Waitlist() {
   };
 
   return (
-    <section id="waitlist" className="px-[clamp(20px,5vw,48px)] pb-[clamp(64px,8vw,112px)]">
-      <div
-        data-reveal="scale"
-        className="relative mx-auto grid max-w-[1104px] items-center gap-10 overflow-hidden rounded-[32px] bg-accent-500 p-[clamp(28px,5vw,72px)] text-white lg:grid-cols-2"
-      >
-        {/* slow heartbeat line running across the band */}
-        <svg
-          aria-hidden="true"
-          viewBox="0 0 480 56"
-          preserveAspectRatio="none"
-          className="bg-trace bottom-6 h-24 w-full opacity-25"
-          fill="none"
-          stroke="#FFFFFF"
-          strokeWidth="1.5"
-          strokeLinejoin="round"
-        >
-          <g>
-            <path d={CALM_TRACE} vectorEffect="non-scaling-stroke" />
-          </g>
-        </svg>
-        <div className="relative flex flex-col gap-4">
-          <h2 className="font-display text-[clamp(34px,4vw,50px)] font-semibold leading-[1.05] tracking-[-0.01em] !text-white">
-            Let’s hear the whisper.
-          </h2>
-          <p className="text-lg text-accent-50">
+    <section id="waitlist" className="sec theme-light">
+      <div className="site-wrap grid items-start gap-x-16 gap-y-10 lg:grid-cols-2">
+        <div className="flex flex-col gap-[18px]" data-reveal>
+          <h2 className="h-display">Let’s hear the whisper.</h2>
+          <p className="lede">
             Join the waitlist for family plans. No spam, just one email when Triksha is ready for
             you.
           </p>
         </div>
 
-        <form onSubmit={onSubmit} noValidate className="relative flex flex-col gap-3.5">
+        <form
+          onSubmit={onSubmit}
+          noValidate
+          className="flex w-full max-w-[560px] flex-col gap-3.5"
+          data-reveal
+        >
           <label htmlFor="wl-email" className="text-sm font-semibold">
             Email address
           </label>
@@ -127,7 +111,7 @@ export default function Waitlist() {
           <button
             type="submit"
             disabled={loading}
-            className="cta cta-navy mt-1 !py-4 !text-[17px] disabled:cursor-wait disabled:opacity-70"
+            className="cta cta-blue mt-1 !py-4 !text-[17px] disabled:cursor-wait disabled:opacity-70"
           >
             {loading ? "Joining…" : "Join the waitlist"}
             {!loading && (
@@ -141,8 +125,8 @@ export default function Waitlist() {
               <span
                 className={
                   status.kind === "ok"
-                    ? "inline-flex items-start gap-2 text-white"
-                    : "rounded-md bg-white px-2 py-1 text-[#9B1C1C]"
+                    ? "inline-flex items-start gap-2 text-status-done"
+                    : "text-[#9B1C1C]"
                 }
               >
                 {status.kind === "ok" && (
@@ -165,9 +149,9 @@ export default function Waitlist() {
               </span>
             )}
           </p>
-          <p className="text-[13px] text-accent-50">
+          <p className="text-[13px] text-muted">
             We use your email only for this waitlist. See our{" "}
-            <Link to="/privacy" className="font-semibold text-white underline underline-offset-2">
+            <Link to="/privacy" className="text-link font-semibold">
               privacy policy
             </Link>
             .

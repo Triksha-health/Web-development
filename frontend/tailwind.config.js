@@ -4,50 +4,52 @@ export default {
   theme: {
     extend: {
       colors: {
-        // ── Triksha palette: one dark theme for every page ────────────
+        // ── Triksha palette ────────────────────────────────────────────
+        // The colours that differ between dark and light sections are CSS
+        // variables (see :root and .theme-light in index.css).
         // The names are kept from the earlier light theme so existing classes
         // keep working: `canvas` is the ground, `ink` is the text on it.
         // Ink (primary text)
         ink: {
-          DEFAULT: '#F3EEE3',
+          DEFAULT: 'rgb(var(--ink) / <alpha-value>)',
           50:  '#0F1B30',
           100: '#16263F',
           200: '#22365A',
-          300: '#5F769C',
+          300: 'rgb(var(--ink-300) / <alpha-value>)',
           400: '#8496B5',
           500: '#9FAEC6',
           600: '#B5C1D4',
           700: '#C6CFDC',
           800: '#E1E5EC',
-          900: '#F3EEE3', // main text
+          900: 'rgb(var(--ink) / <alpha-value>)', // main text
           950: '#FFFFFF',
         },
-        body:  '#C6CFDC', // paragraph text
-        muted: '#9FAEC6', // captions, small labels
+        body:  'rgb(var(--body) / <alpha-value>)', // paragraph text
+        muted: 'rgb(var(--muted) / <alpha-value>)', // captions, small labels
 
         // Cream ground + raised surfaces
         canvas: {
-          DEFAULT: '#071630', // ground
-          soft:    '#0E2444', // image wells
-          paper:   '#0B1D3A', // alternate sections and raised surfaces
-          warm:    '#0B1D3A', // alias
+          DEFAULT: 'rgb(var(--canvas) / <alpha-value>)', // ground
+          soft:    'rgb(var(--canvas-soft) / <alpha-value>)', // image wells
+          paper:   'rgb(var(--canvas-paper) / <alpha-value>)', // alternate sections and raised surfaces
+          warm:    'rgb(var(--canvas-paper) / <alpha-value>)', // alias
         },
         cream: '#F3EEE3', // text on navy
         line: {
-          DEFAULT: '#1B3358',
-          strong:  '#28467A',
+          DEFAULT: 'rgb(var(--line) / <alpha-value>)',
+          strong:  'rgb(var(--line-strong) / <alpha-value>)',
         },
 
         // Accent blue: 500 = buttons + highlighted words, 600 = small labels
         accent: {
           50:  '#EEF4FB', // text on the blue waitlist band
-          100: '#17335C', // chip background
+          100: 'rgb(var(--accent-100) / <alpha-value>)', // chip background
           200: '#1F4477',
-          300: '#8EBDF2', // highlighted words
+          300: 'rgb(var(--accent-300) / <alpha-value>)', // highlighted words
           400: '#4E93DE',
           500: '#1B6BC9', // buttons
-          600: '#8EBDF2', // small labels and links
-          700: '#A9CDF6', // chip text
+          600: 'rgb(var(--accent-600) / <alpha-value>)', // small labels and links
+          700: 'rgb(var(--accent-700) / <alpha-value>)', // chip text
           800: '#C9E0FA',
           900: '#0C2547',
           sky: '#8EBDF2',
@@ -84,9 +86,9 @@ export default {
 
         // Honest status labels
         status: {
-          done: '#5FD08A',
-          wip:  '#F0A94E',
-          dot:  '#C9781E',
+          done: 'rgb(var(--status-done) / <alpha-value>)',
+          wip:  'rgb(var(--status-wip) / <alpha-value>)',
+          dot:  'rgb(var(--status-dot) / <alpha-value>)',
         },
 
         // Hairlines / soft tints used by older pages
@@ -120,8 +122,8 @@ export default {
         mono: ['JetBrains Mono Variable', 'JetBrains Mono', 'ui-monospace', 'monospace'],
       },
       fontSize: {
-        hero:     ['clamp(2.75rem, 5.9vw, 5.5rem)', { lineHeight: '0.98', letterSpacing: '-0.04em',  fontWeight: '650' }],
-        display:  ['clamp(2.25rem, 4.6vw, 4rem)', { lineHeight: '1.06', letterSpacing: '-0.01em', fontWeight: '650' }],
+        hero:     ['clamp(2.75rem, 5.9vw, 5.5rem)', { lineHeight: '0.98', letterSpacing: '-0.02em',  fontWeight: '500' }],
+        display:  ['clamp(2rem, calc(1.375rem + 2.2vw), 3.5rem)', { lineHeight: '1.08', letterSpacing: '-0.01em', fontWeight: '500' }],
         eyebrow:  ['0.8125rem',                    { lineHeight: '1.4',  letterSpacing: '0.22em',   fontWeight: '400' }],
       },
       letterSpacing: {

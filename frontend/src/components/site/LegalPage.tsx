@@ -27,7 +27,7 @@ export default function LegalPage({ kicker, title, intro, updated, sections }: L
 
       <div
         role="note"
-        className="mt-8 max-w-[760px] rounded-[18px] border border-status-dot/50 bg-canvas-paper px-5 py-4 text-[15px] text-body"
+        className="mt-8 max-w-[760px] rounded-2xl border border-status-dot/50 bg-canvas-paper px-5 py-4 text-[15px] text-body"
       >
         <strong className="font-semibold text-status-wip">Draft, pending legal review.</strong>{" "}
         This page is placeholder text while Triksha is in development. It will be replaced by
@@ -51,7 +51,7 @@ export default function LegalPage({ kicker, title, intro, updated, sections }: L
         <article className="flex max-w-[720px] flex-col gap-10">
           {sections.map((s) => (
             <section key={s.id} id={s.id}>
-              <h2 className="mb-3 font-display text-[26px] font-semibold leading-[1.2]">
+              <h2 className="mb-3 font-display text-[26px] font-medium leading-[1.2]">
                 {s.title}
               </h2>
               <div className="flex flex-col gap-3 text-[17px] text-body [&_a]:text-accent-600 [&_a]:underline [&_a]:underline-offset-2 [&_strong]:font-semibold [&_strong]:text-ink-900 [&_ul]:flex [&_ul]:list-disc [&_ul]:flex-col [&_ul]:gap-1.5 [&_ul]:pl-5">

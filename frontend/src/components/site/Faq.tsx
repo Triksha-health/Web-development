@@ -33,7 +33,8 @@ const FAQS: { q: string; a: ReactNode }[] = [
 
 export default function Faq() {
   return (
-    <section id="faq" className="site-section mx-auto flex w-full max-w-[900px] flex-col gap-8 px-[clamp(20px,5vw,48px)]">
+    <section id="faq" className="sec theme-light">
+      <div className="mx-auto flex w-full max-w-[900px] flex-col gap-8 px-[var(--page-pad)]">
       <h2 className="h-display" data-reveal>
         Honest answers
       </h2>
@@ -45,7 +46,7 @@ export default function Faq() {
             style={{ "--i": i } as CSSProperties}
             className="faq border-b border-line-strong"
           >
-            <summary className="flex items-center justify-between gap-5 py-[22px] font-display text-[clamp(20px,2vw,24px)] font-semibold transition-colors">
+            <summary className="flex items-center justify-between gap-5 py-[22px] font-display text-[clamp(20px,2vw,24px)] font-medium transition-colors">
               {f.q}
               <span
                 aria-hidden="true"
@@ -57,6 +58,7 @@ export default function Faq() {
             <p className="mb-[22px] text-[17px] text-body">{f.a}</p>
           </details>
         ))}
+      </div>
       </div>
     </section>
   );

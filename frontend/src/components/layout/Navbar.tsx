@@ -67,7 +67,7 @@ function Navbar({ scrolled, onDark = false }: NavbarProps) {
       <span className="scroll-progress" aria-hidden="true" />
       <nav
         aria-label="Main"
-        className="site-wrap nav-inner flex items-center justify-between gap-x-6"
+        className="nav-inner flex items-center justify-between gap-x-6"
       >
         <Link to="/" aria-label="Triksha home" className="flex flex-none items-center">
           <img
@@ -118,7 +118,7 @@ function Navbar({ scrolled, onDark = false }: NavbarProps) {
           </Link>
           <button
             type="button"
-            className="nav-burger flex h-11 w-11 items-center justify-center rounded-full text-ink-900 transition-colors hover:bg-canvas-soft"
+            className="nav-burger flex h-11 w-11 items-center justify-center rounded-lg text-ink-900 transition-colors hover:bg-canvas-soft"
             aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
             aria-controls="mobile-menu"
@@ -150,12 +150,12 @@ function Navbar({ scrolled, onDark = false }: NavbarProps) {
         hidden={!open}
         className="absolute inset-x-0 top-full max-h-[calc(100dvh-64px)] overflow-y-auto border-t border-line bg-canvas-paper shadow-[0_24px_40px_rgba(12,37,71,0.14)] lg:hidden"
       >
-        <div className="site-wrap flex flex-col pb-6 pt-2">
+        <div className="flex flex-col px-[var(--page-pad)] pb-6 pt-2">
           {LINKS.map((l) => (
             <Link
               key={l.id}
               to={`/#${l.id}`}
-              className="border-b border-line py-4 font-display text-[22px] font-semibold text-ink-900 no-underline active:text-accent-600"
+              className="border-b border-line py-4 font-display text-[22px] font-medium text-ink-900 no-underline active:text-accent-600"
             >
               {l.label}
             </Link>

@@ -120,13 +120,13 @@ export default function TwinDemo() {
   return (
     <div
       ref={cardRef}
-      className="flex flex-col gap-5 rounded-[26px] border border-line bg-canvas p-[clamp(24px,3vw,40px)]"
+      className="flex flex-col gap-5 rounded-2xl border border-line bg-canvas-paper p-[clamp(24px,3vw,40px)]"
     >
       <p className="text-sm text-muted">Illustrative alert. The engine is in development.</p>
 
       <div className="flex flex-col gap-1.5" aria-live="polite">
         <span className="text-[15px] text-body">You, 38. Day {day} of 30.</span>
-        <p className="min-h-[2.3em] font-display text-[clamp(26px,2.6vw,32px)] font-semibold leading-[1.15]">
+        <p className="min-h-[2.3em] font-display text-[clamp(26px,2.6vw,32px)] font-medium leading-[1.15]">
           {headline}
         </p>
       </div>
@@ -141,16 +141,16 @@ export default function TwinDemo() {
           aria-label="Chart of an example signal staying inside a normal band for 16 days, then drifting above it."
         >
           {/* the person's normal band, with an edge top and bottom so it reads clearly */}
-          <rect x="0" y={BASE_Y - BAND_HALF} width={CW} height={BAND_HALF * 2} fill="#2B4E8C" />
-          <line x1="0" x2={CW} y1={BASE_Y - BAND_HALF} y2={BASE_Y - BAND_HALF} stroke="#6E9BDC" strokeWidth="1" vectorEffect="non-scaling-stroke" />
-          <line x1="0" x2={CW} y1={BASE_Y + BAND_HALF} y2={BASE_Y + BAND_HALF} stroke="#6E9BDC" strokeWidth="1" vectorEffect="non-scaling-stroke" />
+          <rect x="0" y={BASE_Y - BAND_HALF} width={CW} height={BAND_HALF * 2} fill="var(--chart-band)" />
+          <line x1="0" x2={CW} y1={BASE_Y - BAND_HALF} y2={BASE_Y - BAND_HALF} stroke="var(--chart-edge)" strokeWidth="1" vectorEffect="non-scaling-stroke" />
+          <line x1="0" x2={CW} y1={BASE_Y + BAND_HALF} y2={BASE_Y + BAND_HALF} stroke="var(--chart-edge)" strokeWidth="1" vectorEffect="non-scaling-stroke" />
           {/* the day the twin would warn */}
           <line
             x1={xOf(ALERT_DAY)}
             x2={xOf(ALERT_DAY)}
             y1="6"
             y2={CH}
-            stroke={alerted ? "#F0A94E" : "#7C93B8"}
+            stroke={alerted ? "var(--chart-alert)" : "var(--chart-mark)"}
             strokeWidth="1.5"
             strokeDasharray="2 3"
             vectorEffect="non-scaling-stroke"
@@ -159,7 +159,7 @@ export default function TwinDemo() {
           <path
             d={linePath(1, DAYS)}
             fill="none"
-            stroke="#5B76A6"
+            stroke="var(--chart-future)"
             strokeWidth="1.5"
             strokeDasharray="3 4"
             vectorEffect="non-scaling-stroke"
@@ -168,7 +168,7 @@ export default function TwinDemo() {
           <path
             d={linePath(1, day)}
             fill="none"
-            stroke="#F3EEE3"
+            stroke="var(--chart-line)"
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -223,7 +223,7 @@ export default function TwinDemo() {
           <button
             type="button"
             onClick={playing ? stop : play}
-            className="rounded-full border border-ink-900 px-3.5 py-1.5 text-[13px] font-semibold transition-colors hover:bg-ink-900 hover:text-canvas-paper active:scale-[0.97]"
+            className="rounded-lg border border-ink-900 px-3.5 py-1.5 text-[13px] font-semibold transition-colors hover:bg-ink-900 hover:text-canvas-paper active:scale-[0.97]"
           >
             {playing ? "Pause" : "Replay"}
           </button>

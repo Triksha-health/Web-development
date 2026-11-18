@@ -5,6 +5,66 @@
 @tailwind utilities;
 
 @layer base {
+  /* Colours that change between dark and light sections, as RGB triplets.
+     The page is dark navy by default; a section opts into the warm white
+     ground with the class theme-light. */
+  :root {
+    --ink: 243 238 227;
+    --ink-300: 95 118 156;
+    --body: 198 207 220;
+    --muted: 159 174 198;
+    --canvas: 7 22 48;
+    --canvas-soft: 14 36 68;
+    --canvas-paper: 11 29 58;
+    --line: 27 51 88;
+    --line-strong: 40 70 122;
+    --accent-100: 23 51 92;
+    --accent-300: 142 189 242;
+    --accent-600: 142 189 242;
+    --accent-700: 169 205 246;
+    --status-done: 95 208 138;
+    --status-wip: 240 169 78;
+    --status-dot: 201 120 30;
+    --field-border: 74 104 153;
+    /* the example chart in the alert card */
+    --chart-band: #2b4e8c;
+    --chart-edge: #6e9bdc;
+    --chart-future: #5b76a6;
+    --chart-line: #f3eee3;
+    --chart-mark: #7c93b8;
+    --chart-alert: #f0a94e;
+
+    --nav-h: 79px;
+    --page-pad: clamp(20px, 3vw, 48px);
+  }
+  .theme-light {
+    --ink: 20 32 46; /* #14202E */
+    --ink-300: 169 175 184;
+    --body: 74 85 99; /* #4A5563 */
+    --muted: 84 95 109; /* #545F6D */
+    --canvas: 247 245 241; /* #F7F5F1 */
+    --canvas-soft: 238 235 228;
+    --canvas-paper: 255 255 255;
+    --line: 221 216 207;
+    --line-strong: 201 196 184;
+    --accent-100: 228 236 246;
+    --accent-300: 21 87 168;
+    --accent-600: 21 87 168; /* #1557A8 */
+    --accent-700: 16 69 134;
+    --status-done: 24 110 60;
+    --status-wip: 143 80 8;
+    --status-dot: 201 120 30;
+    --field-border: 124 132 143;
+    --chart-band: #d3e2f5;
+    --chart-edge: #6f9bd4;
+    --chart-future: #8d98a7;
+    --chart-line: #14202e;
+    --chart-mark: #7c8795;
+    --chart-alert: #8f5008;
+    background-color: rgb(var(--canvas));
+    color: rgb(var(--ink));
+  }
+
   html {
     @apply scroll-smooth;
     -webkit-font-smoothing: antialiased;
@@ -36,9 +96,9 @@
      elements (low specificity via :where, so components can still override).
      Mouse clicks won't show it — only keyboard/assistive navigation. */
   :where(a, button, [role="button"], input, textarea, select, summary):focus-visible {
-    outline: 2px solid #8EBDF2;
+    outline: 2px solid rgb(var(--accent-600));
     outline-offset: 3px;
-    border-radius: 6px;
+    border-radius: 8px;
   }
 
   /* Respect reduced-motion: neutralise decorative animations + transitions */
@@ -309,12 +369,30 @@
 @layer components {
   .site-wrap {
     width: 100%;
-    max-width: 1200px;
+    max-width: 1440px;
     margin-inline: auto;
-    padding-inline: clamp(20px, 5vw, 48px);
+    padding-inline: var(--page-pad);
+  }
+  /* Vertical rhythm: 96px between sections on phones and tablets, 140 to
+     180px on desktop. Two light sections in a row share one gap. */
+  .sec {
+    padding-block: 96px;
+  }
+  @media (min-width: 1024px) {
+    .sec {
+      padding-block: clamp(140px, 9.4vw, 180px);
+    }
+  }
+  .theme-light + .theme-light {
+    padding-top: 0;
   }
   .site-section {
-    padding-block: clamp(72px, 10vw, 148px);
+    padding-block: 96px;
+  }
+
+  /* Image placement waiting for a real photo */
+  .photo-slot {
+    @apply border border-line bg-canvas-soft text-muted;
   }
 
   /* Small uppercase mono label above headings */
@@ -333,9 +411,9 @@
 
   .h-display {
     @apply font-display text-ink-900;
-    font-weight: 650;
-    font-size: clamp(36px, 4.6vw, 64px);
-    line-height: 1.06;
+    font-weight: 500;
+    font-size: clamp(32px, calc(22px + 2.2vw), 56px);
+    line-height: 1.08;
     letter-spacing: -0.01em;
     text-wrap: balance;
   }
@@ -357,7 +435,7 @@
 
   /* Pill calls to action */
   .cta {
-    @apply inline-flex items-center justify-center rounded-full font-semibold no-underline;
+    @apply inline-flex items-center justify-center rounded-lg font-semibold no-underline;
     font-size: 16px;
     padding: 16px 28px;
     transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease,
@@ -376,7 +454,7 @@
   .cta-outline {
     @apply text-ink-900;
     padding: 14.5px 26px;
-    border: 1.5px solid #f3eee3;
+    border: 1.5px solid rgb(var(--ink));
   }
   .cta-outline:hover {
     @apply bg-ink-900 text-canvas-paper;
@@ -399,41 +477,33 @@
     transition: color 0.15s ease;
   }
   .text-link:hover {
-    @apply text-cream;
+    color: rgb(var(--ink));
   }
 
   /* Cards that respond to the pointer */
   .card-hover {
-    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    transition: border-color 0.25s ease;
   }
   @media (hover: hover) {
     .card-hover:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 16px 34px rgba(0, 0, 0, 0.35);
-      border-color: #3a5c96;
+      border-color: rgb(var(--accent-600));
     }
   }
 }
 
 /* ── Sticky nav ─────────────────────────────────────────────── */
+/* Full width. Solid navy with a thin bottom border everywhere except over
+   the homepage hero, where it is transparent (see .on-dark in motion.css). */
 .site-nav {
   background: #071630;
-  border-bottom: 1px solid #16294a;
-  transition: background-color 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
-}
-.site-nav.is-scrolled {
-  background: rgba(5, 14, 30, 0.82);
-  -webkit-backdrop-filter: saturate(1.4) blur(14px);
-  backdrop-filter: saturate(1.4) blur(14px);
-  border-bottom-color: transparent;
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.07);
+  border-bottom: 1px solid #1b3358;
+  transition: background-color 0.25s ease, border-color 0.25s ease;
 }
 .site-nav .nav-inner {
-  padding-block: 18px;
-  transition: padding 0.25s ease;
-}
-.site-nav.is-scrolled .nav-inner {
-  padding-block: 10px;
+  width: 100%;
+  /* fixed, so the hero can tuck exactly under it (see --nav-h) */
+  height: 78px;
+  padding: 0 var(--page-pad);
 }
 .nav-link {
   position: relative;
@@ -522,12 +592,12 @@
 .twin-range::-webkit-slider-runnable-track {
   height: 6px;
   border-radius: 999px;
-  background: linear-gradient(to right, #1b6bc9 var(--fill, 100%), #28467a var(--fill, 100%));
+  background: linear-gradient(to right, #1b6bc9 var(--fill, 100%), rgb(var(--line-strong)) var(--fill, 100%));
 }
 .twin-range::-moz-range-track {
   height: 6px;
   border-radius: 999px;
-  background: #28467a;
+  background: rgb(var(--line-strong));
 }
 .twin-range::-moz-range-progress {
   height: 6px;
@@ -573,7 +643,7 @@
   transform: rotate(45deg);
 }
 .faq summary:hover {
-  color: #8ebdf2;
+  color: rgb(var(--accent-600));
 }
 
 /* Slide-in starting positions must not widen the page. */

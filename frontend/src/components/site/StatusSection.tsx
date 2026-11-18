@@ -12,7 +12,8 @@ const step = (i: number) => ({ "--i": i }) as CSSProperties;
 
 export default function StatusSection() {
   return (
-    <section id="status" className="site-wrap site-section grid items-center gap-14 lg:grid-cols-2">
+    <section id="status" className="sec theme-light">
+      <div className="site-wrap grid items-center gap-x-16 gap-y-12 lg:grid-cols-2">
       <div className="flex flex-col gap-[22px]">
         <p className="section-label" data-reveal>
           Where we are today
@@ -45,7 +46,7 @@ export default function StatusSection() {
       <figure className="flex flex-col gap-3" data-reveal="right">
         {/* The photo sits slightly oversized in its frame and drifts as the page
             scrolls, where the browser supports it. */}
-        <div className="parallax-frame rounded-[26px] shadow-photo">
+        <div className="parallax-frame rounded-2xl">
           <img
             src="/img/sensor-worn-800.webp"
             srcSet="/img/sensor-worn-800.webp 800w, /img/sensor-worn-1400.webp 1400w"
@@ -61,6 +62,7 @@ export default function StatusSection() {
           Sensor v1. Designed, fabricated and assembled in-house.
         </figcaption>
       </figure>
+      </div>
     </section>
   );
 }

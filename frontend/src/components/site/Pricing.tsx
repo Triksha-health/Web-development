@@ -4,7 +4,7 @@ import CountUpNumber from "./CountUpNumber";
 const step = (i: number) => ({ "--i": i }) as CSSProperties;
 
 const priceClass =
-  "font-display text-[clamp(56px,6.4vw,92px)] font-semibold leading-none tracking-[-0.01em]";
+  "font-display text-[clamp(56px,6.4vw,92px)] font-medium leading-none tracking-[-0.01em]";
 
 const PLANS = [
   { term: "6 months, prepaid", value: 9000, highlight: false },
@@ -13,7 +13,8 @@ const PLANS = [
 
 export default function Pricing() {
   return (
-    <section id="pricing" className="site-wrap site-section flex flex-col gap-11">
+    <section id="pricing" className="sec theme-light">
+      <div className="site-wrap flex flex-col gap-11">
       <div className="flex max-w-[860px] flex-col gap-[18px]" data-reveal>
         <p className="section-label">Planned pricing</p>
         <h2 className="h-display">You subscribe to the insight. The sensor comes free.</h2>
@@ -28,10 +29,8 @@ export default function Pricing() {
           <div
             key={plan.term}
             data-reveal
-            data-tilt
-            data-spot
             style={step(i)}
-            className={`card-hover flex flex-col gap-3.5 rounded-[26px] bg-canvas-paper p-9 ${
+            className={`card-hover flex flex-col gap-3.5 rounded-2xl bg-canvas-paper p-9 ${
               plan.highlight ? "border-2 border-accent-500" : "border border-line"
             }`}
           >
@@ -44,6 +43,7 @@ export default function Pricing() {
             </p>
           </div>
         ))}
+      </div>
       </div>
     </section>
   );
