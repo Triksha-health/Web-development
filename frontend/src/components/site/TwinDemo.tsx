@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 
 /**
  * "What an alert looks like": an interactive illustration.
@@ -14,7 +14,11 @@ const DAYS = 30;
 const DRIFT_START = 16; // last day inside normal
 const ALERT_DAY = 24; // day the twin would warn
 
-const drift = (day: number) => Math.min(1, Math.max(0, (day - DRIFT_START) / (DAYS - DRIFT_START)));
+export const DRIFT_START_DAY = DRIFT_START;
+export const ALERT_ON_DAY = ALERT_DAY;
+/** How far the example signals have drifted on a given day, 0 to 1. */
+export const driftOnDay = (day: number) => Math.min(1, Math.max(0, (day - DRIFT_START) / (DAYS - DRIFT_START)));
+const drift = driftOnDay;
 
 // Chart geometry (SVG units; the chart is drawn 170px tall)
 const CW = 320;
@@ -40,7 +44,14 @@ function prefersReducedMotion() {
   );
 }
 
-export default function TwinDemo() {
+interface TwinDemoProps {
+  /** Called whenever the day shown changes (slider, replay or autoplay). */
+  onDayChange?: (day: number) => void;
+  /** Shown just above the slider on phones and tablets, so both are on screen together. */
+  twinSlot?: ReactNode;
+}
+
+export default function TwinDemo({ onDayChange, twinSlot }: TwinDemoProps) {
   const [day, setDay] = useState(DAYS);
   const [playing, setPlaying] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
@@ -92,6 +103,10 @@ export default function TwinDemo() {
       window.clearInterval(timer.current);
     };
   }, []);
+
+  useEffect(() => {
+    onDayChange?.(day);
+  }, [day, onDayChange]);
 
   const p = drift(day);
   const driftDays = Math.max(0, day - DRIFT_START);
@@ -213,6 +228,8 @@ export default function TwinDemo() {
           </span>
         )}
       </div>
+
+      {twinSlot && <div className="lg:hidden">{twinSlot}</div>}
 
       {/* Slider */}
       <div className="flex flex-col gap-1 border-t border-line pt-5">

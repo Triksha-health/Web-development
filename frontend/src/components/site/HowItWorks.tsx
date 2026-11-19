@@ -53,10 +53,10 @@ const STEPS: Step[] = [
 ];
 
 /** What the twin beside the steps does for each step, and the line shown with it. */
-const TWIN_STORY: { focus: TwinFocus; caption: string }[] = [
-  { focus: "wrist", caption: "Reading the wrist" },
-  { focus: "body", caption: "One history, kept with you" },
-  { focus: "future", caption: "A possible future, seen early" },
+const TWIN_STORY: { focus: TwinFocus; caption: string; poster: string }[] = [
+  { focus: "wrist", caption: "Reading the wrist", poster: "/img/twin-step-1.webp" },
+  { focus: "records", caption: "One history, kept with you", poster: "/img/twin-step-2.webp" },
+  { focus: "future", caption: "A possible future, seen early", poster: "/img/twin-step-3.webp" },
 ];
 
 interface StepMediaProps {
@@ -141,10 +141,7 @@ function StepMedia({ step, className, decorative = false, active = true }: StepM
 }
 
 export default function HowItWorks() {
-  // `prev` is the screen being replaced; it stays visible under the new one.
-  const [{ active, prev }, setStage] = useState({ active: 0, prev: 0 });
-  const setActive = (next: number) =>
-    setStage((s) => (s.active === next ? s : { active: next, prev: s.active }));
+  const [active, setActive] = useState(0);
   const stepRefs = useRef<(HTMLElement | null)[]>([]);
 
   // Desktop: the step crossing the middle of the screen drives the pinned stage.
@@ -186,20 +183,18 @@ export default function HowItWorks() {
                 data-reveal
                 className="flex flex-col overflow-hidden rounded-2xl border border-line bg-canvas-paper lg:min-h-[78vh] lg:justify-center lg:overflow-visible lg:rounded-none lg:border-0 lg:bg-transparent lg:py-10"
               >
-                <div
-                  className={`flex h-[300px] justify-center overflow-hidden bg-canvas-soft px-6 lg:order-2 lg:ml-8 lg:mt-7 lg:h-[400px] lg:rounded-2xl lg:border lg:border-line ${
-                    s.kind === "phone" ? "pt-8" : "items-start pt-9"
-                  }`}
-                >
-                  <StepMedia
-                    step={s}
-                    className={
-                      s.kind === "phone"
-                        ? "h-auto w-[230px] self-start lg:w-[300px]"
-                        : "h-auto w-full max-w-[420px] rounded-2xl lg:max-w-none"
-                    }
-                  />
+                {/* Phones and tablets: this step's twin panel, above its text.
+                    (On desktop one pinned panel serves all three steps.) */}
+                <div className="relative h-[380px] overflow-hidden bg-[#050e1e] lg:hidden">
+                  <JourneyTwin focus={TWIN_STORY[i].focus} poster={TWIN_STORY[i].poster} />
+                  <p className="absolute left-5 top-5 z-10 font-display text-lg font-medium text-cream">
+                    {TWIN_STORY[i].caption}
+                  </p>
+                  <p className="absolute bottom-4 left-5 z-10 text-[13px] text-navy-200">
+                    Digital twin, illustration
+                  </p>
                 </div>
+
                 <div
                   className={`flex flex-col gap-2.5 px-[30px] pb-8 pt-7 transition-colors duration-300 lg:border-l-2 lg:py-2 lg:pl-8 lg:pr-0 ${
                     active === i ? "lg:border-accent-500" : "lg:border-line"
@@ -211,17 +206,33 @@ export default function HowItWorks() {
                   </h3>
                   <p className="text-body lg:max-w-[30em] lg:text-lg">{s.body}</p>
                 </div>
+
+                {/* The app screenshot, kept small so the twin stays the main visual. */}
+                <div
+                  className={`mx-[30px] mb-8 flex h-[170px] justify-center overflow-hidden rounded-2xl border border-line bg-canvas-soft px-5 lg:mb-0 lg:ml-8 lg:mr-0 lg:mt-7 lg:h-[220px] lg:max-w-[440px] ${
+                    s.kind === "phone" ? "pt-5" : "items-center"
+                  }`}
+                >
+                  <StepMedia
+                    step={s}
+                    className={
+                      s.kind === "phone"
+                        ? "h-auto w-[130px] self-start lg:w-[170px]"
+                        : "h-auto w-full max-w-[280px] rounded-lg lg:max-w-[360px]"
+                    }
+                  />
+                </div>
               </article>
             ))}
           </div>
 
           {/* Pinned stage (desktop): the twin stays beside the steps and changes with
-              each one. Step 1 moves in to the wrist, step 2 shows the whole figure,
+              each one. Step 1 moves in to the wrist, step 2 shows reports drifting in,
               step 3 shows a second twin whose heart has drifted. */}
-          <div className="hidden lg:block" aria-hidden="true">
+          <div className="hidden lg:block">
             <div className="sticky top-24 h-[min(680px,calc(100vh-8rem))] overflow-hidden rounded-2xl border border-line bg-[#050e1e]">
-              <JourneyTwin focus={TWIN_STORY[active].focus} />
-              <div className="absolute left-6 top-6 z-10">
+              <JourneyTwin focus={TWIN_STORY[active].focus} poster={TWIN_STORY[active].poster} />
+              <div className="absolute left-6 top-6 z-10" aria-hidden="true">
                 {TWIN_STORY.map((t, i) => (
                   <p
                     key={t.caption}
@@ -236,7 +247,10 @@ export default function HowItWorks() {
               <p className="absolute bottom-5 left-6 z-10 text-[13px] text-navy-200">
                 Digital twin, illustration
               </p>
-              <div className="absolute bottom-6 right-6 z-10 flex gap-2">
+              <div
+                className="absolute bottom-6 right-6 z-10 flex gap-2"
+                aria-hidden="true"
+              >
                 {STEPS.map((s, i) => (
                   <span
                     key={s.tag}

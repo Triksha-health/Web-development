@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { API_BASE } from "../../lib/api";
 import { track } from "../../lib/analytics";
+import EndingMark from "./EndingMark";
 
 const AUDIENCES = [
   { value: "self", label: "Myself" },
@@ -68,6 +69,8 @@ export default function Waitlist() {
             Join the waitlist for family plans. No spam, just one email when Triksha is ready for
             you.
           </p>
+          {/* A cloud of dots gathers into the eye of the logo as this scrolls into view. */}
+          <EndingMark className="mt-2 h-[240px] w-full max-w-[460px] lg:h-[300px]" />
         </div>
 
         <form

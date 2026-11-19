@@ -150,6 +150,12 @@ html.js-motion .hero-in {
 .twin-stage.is-live .twin-poster {
   opacity: 0;
 }
+/* Once the live scene is on its way, the still steps aside quickly so the
+   figure can be seen forming out of dots. */
+.twin-stage.is-loading .twin-poster {
+  opacity: 0;
+  transition-duration: 0.35s;
+}
 html.js-motion .twin-poster img {
   animation: twinBreathe 6s ease-in-out infinite;
 }

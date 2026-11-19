@@ -525,20 +525,20 @@
 }
 
 /* ── Hero live signal ───────────────────────────────────────────
-   Runs calm, drifts after a few seconds, then the alert card slides
+   (Timed to follow the figure forming.) Runs calm, drifts after a few seconds, then the alert card slides
    in. Pure CSS, so the card is in the HTML and shows immediately when
    animation is unavailable or reduced motion is requested. */
 .sig-run {
   animation: sigRun 7s linear infinite;
 }
 .sig-calm {
-  animation: sigOut 2.4s ease 4s both;
+  animation: sigOut 2.4s ease 5.5s both;
 }
 .sig-drift {
-  animation: sigIn 2.4s ease 4s both;
+  animation: sigIn 2.4s ease 5.5s both;
 }
 .drift-card {
-  animation: driftCardIn 0.9s cubic-bezier(0.22, 1, 0.36, 1) 6.4s both;
+  animation: driftCardIn 0.9s cubic-bezier(0.22, 1, 0.36, 1) 7.9s both;
 }
 @keyframes sigRun {
   to { transform: translateX(-480px); }

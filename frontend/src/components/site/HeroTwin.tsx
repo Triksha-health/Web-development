@@ -5,7 +5,7 @@ import { lazy, Suspense, useEffect, useState } from "react";
 const DigitalTwinScene = lazy(() => import("../three/DigitalTwinScene"));
 
 /** Seconds of calm before the twin starts to drift (the alert card follows in CSS). */
-const DRIFT_AFTER_MS = 4000;
+const DRIFT_AFTER_MS = 5500;
 
 /**
  * Should this visitor get the live 3D scene, or just the still poster?
@@ -53,7 +53,10 @@ export default function HeroTwin() {
   }, []);
 
   return (
-    <div className={`twin-stage absolute inset-0 ${live ? "is-live" : ""}`} aria-hidden="true">
+    <div
+      className={`twin-stage absolute inset-0 ${load ? "is-loading" : ""} ${live ? "is-live" : ""}`}
+      aria-hidden="true"
+    >
       <div className="twin-poster flex justify-center overflow-hidden">
         <img
           src="/img/twin-poster.webp"

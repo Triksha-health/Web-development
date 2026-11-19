@@ -53,13 +53,14 @@
     <script>
       if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
         document.documentElement.classList.add("js-motion");
-        // First visit to the homepage: play the short logo intro once.
+        // Arriving on the homepage: play the short logo intro, once per visit
+        // (a browser session), so the name comes first and the twin forms after it.
         // (Add ?intro=1 to the address to see it again.)
         try {
           var force = /[?&]intro=1/.test(location.search);
-          if (location.pathname === "/" && (force || !localStorage.getItem("triksha-intro"))) {
+          if (location.pathname === "/" && (force || !sessionStorage.getItem("triksha-intro"))) {
             document.documentElement.classList.add("intro-on");
-            localStorage.setItem("triksha-intro", "1");
+            sessionStorage.setItem("triksha-intro", "1");
           }
         } catch (e) {}
       }
