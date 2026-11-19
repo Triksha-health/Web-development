@@ -390,10 +390,6 @@
     padding-block: 96px;
   }
 
-  /* Image placement waiting for a real photo */
-  .photo-slot {
-    @apply border border-line bg-canvas-soft text-muted;
-  }
 
   /* Small uppercase mono label above headings */
   .kicker {

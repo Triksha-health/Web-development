@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface Step {
   tag: string;
@@ -26,8 +26,8 @@ const STEPS: Step[] = [
     // video: "/video/app-heart-rate.mp4",
     alt: "Triksha app heart rate screen showing the current reading against the last 14 days",
     kind: "phone",
-    width: 560,
-    height: 1172,
+    width: 786,
+    height: 1648,
   },
   {
     tag: "2. Remembers you",
@@ -36,8 +36,8 @@ const STEPS: Step[] = [
     img: "/img/healthbook.webp",
     alt: "Health Book web app showing a lab analysis snapshot with results and a summary",
     kind: "wide",
-    width: 1200,
-    height: 542,
+    width: 1305,
+    height: 640,
   },
   {
     tag: "3. Simulates you",
@@ -46,8 +46,8 @@ const STEPS: Step[] = [
     img: "/img/app-alerts.webp",
     alt: "Triksha app Twin Alerts screen listing detected drifts in order of risk",
     kind: "phone",
-    width: 560,
-    height: 1172,
+    width: 786,
+    height: 1648,
   },
 ];
 
@@ -187,7 +187,7 @@ export default function HowItWorks() {
                     step={s}
                     className={
                       s.kind === "phone"
-                        ? "h-auto w-[200px] self-start"
+                        ? "h-auto w-[230px] self-start"
                         : "h-auto w-full max-w-[420px] rounded-2xl"
                     }
                   />
@@ -213,9 +213,9 @@ export default function HowItWorks() {
               {STEPS.map((s, i) => (
                 <div
                   key={s.tag}
-                  // each screen settles at a slightly different angle
-                  style={{ "--ry": `${(i - 1) * 6}deg` } as CSSProperties}
-                  className={`stage-layer absolute inset-0 flex justify-center bg-canvas-soft px-10 ${
+                  // Screens sit flat. A 3D tilt or a filter makes the browser resample
+                  // the image, which softens the small text in the screenshots.
+                  className={`stage-layer absolute inset-0 flex justify-center bg-canvas-soft px-8 ${
                     s.kind === "phone" ? "items-start pt-12" : "items-center"
                   } ${active === i ? "is-active" : prev === i ? "is-prev" : ""}`}
                 >
@@ -225,8 +225,8 @@ export default function HowItWorks() {
                     active={active === i}
                     className={
                       s.kind === "phone"
-                        ? "h-auto w-[300px] drop-shadow-[0_30px_40px_rgba(12,37,71,0.25)]"
-                        : "h-auto w-full max-w-[520px] rounded-2xl shadow-[0_24px_44px_rgba(12,37,71,0.18)]"
+                        ? "h-auto w-[340px]"
+                        : "h-auto w-full rounded-2xl"
                     }
                   />
                 </div>

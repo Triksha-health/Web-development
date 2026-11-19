@@ -45,12 +45,12 @@ export default function StatusSection() {
             scrolls, where the browser supports it. */}
         <div className="parallax-frame rounded-2xl">
           <img
-            src="/img/sensor-worn-800.webp"
-            srcSet="/img/sensor-worn-800.webp 800w, /img/sensor-worn-1400.webp 1400w"
-            sizes="(min-width: 1024px) 560px, 92vw"
-            alt="Triksha’s first sensor circuit board worn on a wrist"
-            width={1400}
-            height={689}
+            src="/img/sensor-v1-800.webp"
+            srcSet="/img/sensor-v1-800.webp 800w, /img/sensor-v1-1340.webp 1340w"
+            sizes="(min-width: 1024px) 660px, 92vw"
+            alt="Triksha’s first sensor: two green circuit boards, component side up, on a blue work mat"
+            width={1340}
+            height={760}
             loading="lazy"
             className="h-auto w-full"
           />

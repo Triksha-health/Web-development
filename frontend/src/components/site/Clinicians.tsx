@@ -1,5 +1,3 @@
-import PhotoSlot from "./PhotoSlot";
-
 const POINTS = [
   {
     title: "One-page summary",
@@ -62,11 +60,22 @@ export default function Clinicians() {
           </div>
         </div>
 
-        <PhotoSlot
-          description="a cardiologist reviewing a patient summary"
-          alt="A cardiologist in a clinic reading a one-page Triksha summary with a patient."
-          className="aspect-[4/3] !border-navy-500 !bg-navy-600 !text-navy-100 lg:sticky lg:top-28 lg:aspect-[4/5]"
-        />
+        <figure className="flex flex-col gap-3 lg:sticky lg:top-28">
+          {/* The flat page, not a tilted mock-up: its text stays sharp. */}
+          <img
+            src="/img/summary-sample-900.webp"
+            srcSet="/img/summary-sample-900.webp 900w, /img/summary-sample-1800.webp 1800w"
+            sizes="(min-width: 1536px) 656px, (min-width: 1024px) 46vw, 94vw"
+            alt="Sample one-page Triksha cardiac drift summary, with three signal charts, a table of signals and a timeline"
+            width={1800}
+            height={2547}
+            loading="lazy"
+            className="h-auto w-full rounded-2xl"
+          />
+          <figcaption className="text-sm text-navy-200">
+            Sample summary. Not real patient data and not a diagnosis.
+          </figcaption>
+        </figure>
       </div>
     </section>
   );

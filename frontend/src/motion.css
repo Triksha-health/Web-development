@@ -265,11 +265,6 @@ html.js-motion .twin-poster img {
 }
 
 /* ── How it works ────────────────────────────────────────────── */
-/* phone screens sit in a slight, fixed perspective */
-.stage-layer img,
-.stage-layer video {
-  transform: perspective(1200px) rotateY(var(--ry, -6deg)) rotateX(2deg);
-}
 
 /* rail that fills as the three steps scroll past (desktop) */
 .steps-rail {

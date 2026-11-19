@@ -12,10 +12,10 @@ function Footer() {
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           <div className="flex flex-col gap-3.5">
             <img
-              src="/img/eye-light.webp"
+              src="/img/eye-mark-light.webp"
               alt=""
-              width={72}
-              height={93}
+              width={187}
+              height={240}
               loading="lazy"
               className="h-auto w-9"
             />

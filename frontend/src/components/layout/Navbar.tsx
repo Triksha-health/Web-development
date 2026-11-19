@@ -69,18 +69,16 @@ function Navbar({ scrolled, onDark = false }: NavbarProps) {
         aria-label="Main"
         className="nav-inner flex items-center justify-between gap-x-6"
       >
-        <Link to="/" aria-label="Triksha home" className="flex flex-none items-center gap-2.5 no-underline">
+        <Link to="/" aria-label="Triksha home" className="flex flex-none items-center">
+          {/* The full logo, name then symbol, exactly as supplied. Only the symbol
+              is recoloured (black to cream) so it shows on the navy bar. */}
           <img
-            src="/img/eye-light.webp"
-            alt=""
-            aria-hidden="true"
-            width={72}
-            height={93}
-            className="h-[38px] w-auto"
+            src="/img/logo-triksha-on-dark.webp"
+            alt="Triksha"
+            width={472}
+            height={219}
+            className="h-[52px] w-auto"
           />
-          <span className="font-display text-[23px] font-medium leading-none tracking-[0.01em] text-cream">
-            Triksha
-          </span>
         </Link>
 
         {/* Desktop links (1024px and up; below that they wrap, so the menu takes over) */}

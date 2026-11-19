@@ -1,5 +1,4 @@
 import type { CSSProperties } from "react";
-import PhotoSlot from "./PhotoSlot";
 
 const ROWS = [
   {
@@ -30,11 +29,22 @@ export default function Families() {
           </p>
         </div>
 
-        <PhotoSlot
-          description="a family at home, three generations together"
-          alt="Three generations of a family sitting together at home, relaxed and talking."
-          className="aspect-[4/3] sm:aspect-[21/9]"
-        />
+        {/* One wide photo; phones get a tighter crop of the same picture. */}
+        <picture>
+          <source
+            media="(min-width: 640px)"
+            srcSet="/img/family-wide-1400.webp 1400w, /img/family-wide-2400.webp 2400w"
+            sizes="(min-width: 1536px) 1344px, 94vw"
+          />
+          <img
+            src="/img/family-portrait-900.webp"
+            alt="Three generations of a family sitting together on a sofa at home, smiling"
+            width={900}
+            height={675}
+            loading="lazy"
+            className="aspect-[4/3] w-full rounded-2xl object-cover sm:aspect-[21/9]"
+          />
+        </picture>
 
         <ul className="flex flex-col border-t border-line">
           {ROWS.map((r) => (
