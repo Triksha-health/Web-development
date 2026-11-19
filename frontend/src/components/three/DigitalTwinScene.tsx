@@ -825,10 +825,7 @@ export default function DigitalTwinScene({
       bodyMat.uniforms.uTime.value = t;
       bodyMat.uniforms.uPulse.value = pulse;
       if (!reduceMotion) {
-        // On a first visit the logo intro covers the page for a moment (see
-        // index.html). The figure waits for it, so the name comes first and
-        // the dots gather afterwards.
-        if (!document.documentElement.classList.contains("intro-on")) formT += dt;
+        formT += dt;
         bodyMat.uniforms.uForm.value = Math.min(1, formT / FORM_SECONDS);
         // the ripple starts at the heart on the beat and runs outward
         bodyMat.uniforms.uWaveR.value = beatPhase * 1.5;
