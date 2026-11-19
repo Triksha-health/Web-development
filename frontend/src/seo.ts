@@ -16,17 +16,17 @@ export interface PageMeta {
 
 export const PAGE_META: Record<string, PageMeta> = {
   "/": {
-    title: "Triksha — cardiac risk, read early",
+    title: "Triksha: cardiac risk, read early",
     description:
       "Triksha is a personal digital twin for your heart health. A wristband senses your body every day, your Health Book remembers every report, and the twin warns you when something starts to drift. In development. Join the waitlist.",
   },
   "/privacy": {
-    title: "Privacy policy — Triksha",
+    title: "Privacy policy | Triksha",
     description:
       "How Triksha collects, uses and protects personal data. Draft policy, pending legal review.",
   },
   "/terms": {
-    title: "Terms of use — Triksha",
+    title: "Terms of use | Triksha",
     description:
       "The terms that apply to using the Triksha website and waitlist. Draft terms, pending legal review.",
   },

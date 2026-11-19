@@ -7,7 +7,7 @@ import StatusBadge from "../components/ui/StatusBadge";
 
 function AboutPage() {
   useEffect(() => {
-    document.title = "About — Triksha";
+    document.title = "About | Triksha";
   }, []);
 
   const SOFT = { color: "rgba(22,25,29,0.62)" };
@@ -25,7 +25,7 @@ function AboutPage() {
               Predict cardiac risk, before symptoms.
             </h1>
             <p className="mt-6 text-lg md:text-xl leading-relaxed" style={SOFT}>
-              Triksha is a personalized physiological twin — an AI model that learns
+              Triksha is a personalized physiological twin, an AI model that learns
               your cardiac baseline from a medical-grade wearable and your medical
               history, watches for drift, and hands findings to your cardiologist
               before symptoms surface.
@@ -47,7 +47,7 @@ function AboutPage() {
                 India has the largest pre-symptomatic cardiac population on earth: about
                 300 million people with hypertension, diabetes, lifestyle and genetic
                 risk that hasn't yet become a diagnosis. Each year roughly 2 million of
-                them suffer an acute event — and most had no obvious warning.
+                them suffer an acute event, and most had no obvious warning.
               </p>
               <p>
                 Existing wearables compare your heart rate to population averages.
@@ -96,7 +96,7 @@ function AboutPage() {
               Backing
             </div>
             <h2 className="text-2xl md:text-3xl font-semibold text-ink-900 tracking-tighter leading-snug">
-              Building from Hyderabad — with serious support.
+              Building from Hyderabad, with serious support.
             </h2>
             <ul className="mt-6 grid md:grid-cols-3 gap-4 text-[15px]">
               <li className="rounded-2xl bg-canvas-paper ring-1 ring-[rgba(22,25,29,0.10)] p-5">

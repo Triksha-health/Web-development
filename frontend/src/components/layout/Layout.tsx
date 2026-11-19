@@ -2,19 +2,38 @@ import { Suspense, useEffect, useRef, useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import { useReveal } from "../../lib/useReveal";
+import { usePointerEffects } from "../../lib/usePointerVars";
 
 function Layout() {
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
+  const isHome = location.pathname === "/";
+  // The homepage opens on a dark hero, so the nav starts light-on-dark there.
+  // Starting from the route (not from a measurement) keeps the prerendered
+  // HTML and the first client render identical.
+  const [overHero, setOverHero] = useState(isHome);
+
+  useReveal(location.pathname);
+  usePointerEffects();
   const lastPath = useRef(location.pathname);
 
   // Nav changes style once the page has moved.
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 12);
+    const onScroll = () => {
+      setScrolled(window.scrollY > 12);
+      const hero = isHome ? document.getElementById("top") : null;
+      // Still over the hero while its bottom edge is below the nav.
+      setOverHero(!!hero && hero.getBoundingClientRect().bottom > 64);
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+    window.addEventListener("resize", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, [isHome]);
 
   // Section links (/#how) scroll to their section; a new page starts at the top.
   useEffect(() => {
@@ -44,7 +63,7 @@ function Layout() {
       >
         Skip to content
       </a>
-      <Navbar scrolled={scrolled} />
+      <Navbar scrolled={scrolled} onDark={isHome && overHero} />
       <main id="main" className="flex-grow">
         <Suspense fallback={<div className="min-h-[60vh]" />}>
           <Outlet />

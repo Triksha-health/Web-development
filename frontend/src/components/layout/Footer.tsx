@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 const linkClass =
-  "text-cream underline decoration-navy-400 underline-offset-4 transition-colors hover:text-white hover:decoration-accent-300";
+  "text-cream underline decoration-navy-400 underline-offset-4 transition-colors hover:text-white hover:decoration-cream";
 
 function Footer() {
   const year = new Date().getFullYear();
@@ -12,12 +12,12 @@ function Footer() {
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           <div className="flex flex-col gap-3.5">
             <img
-              src="/img/eye-light.webp"
-              alt=""
-              width={72}
-              height={93}
+              src="/img/logo-triksha-on-dark.webp"
+              alt="Triksha"
+              width={472}
+              height={219}
               loading="lazy"
-              className="h-auto w-9"
+              className="h-12 w-auto self-start"
             />
             <p className="font-display text-xl text-cream">
               Predict cardiac risk, before symptoms.
@@ -25,7 +25,7 @@ function Footer() {
           </div>
 
           <div className="flex flex-col gap-2.5 text-[15px]">
-            <span className="mono-tag text-accent-300">Contact</span>
+            <span className="text-sm font-semibold text-navy-200">Contact</span>
             <a href="mailto:yashwanth@trikshahealth.com" className={linkClass}>
               yashwanth@trikshahealth.com
             </a>
@@ -35,7 +35,7 @@ function Footer() {
           </div>
 
           <div className="flex flex-col gap-2.5 text-[15px]">
-            <span className="mono-tag text-accent-300">Company</span>
+            <span className="text-sm font-semibold text-navy-200">Company</span>
             <Link to="/#about" className={linkClass}>
               About
             </Link>
@@ -51,7 +51,7 @@ function Footer() {
           </div>
 
           <div className="flex flex-col gap-2.5 text-[15px]">
-            <span className="mono-tag text-accent-300">Legal</span>
+            <span className="text-sm font-semibold text-navy-200">Legal</span>
             <Link to="/privacy" className={linkClass}>
               Privacy policy
             </Link>

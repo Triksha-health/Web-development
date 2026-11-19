@@ -1,7 +1,7 @@
 const POINTS = [
   {
     title: "One-page summary",
-    body: "A PDF with the drift, its timeline and the supporting signals — readable in a minute, ready for the file.",
+    body: "A PDF with the drift, its timeline and the supporting signals. Readable in a minute, ready for the file.",
   },
   {
     title: "Evidence, not a black box",
@@ -19,45 +19,60 @@ const POINTS = [
 
 export default function Clinicians() {
   return (
-    <section id="clinicians" className="bg-navy text-cream">
-      <div className="site-wrap site-section flex flex-col gap-12">
-        <div className="grid items-end gap-x-14 gap-y-6 lg:grid-cols-2">
-          <div className="flex flex-col gap-[18px]">
-            <p className="kicker !text-accent-300">For cardiologists &amp; clinical partners</p>
-            <h2 className="h-display !text-cream">
-              Something to prescribe for the months between visits.
-            </h2>
+    <section id="clinicians" className="sec bg-navy text-cream">
+      <div className="site-wrap grid items-start gap-x-16 gap-y-12 lg:grid-cols-2">
+        <div className="flex flex-col gap-10">
+          <div className="flex flex-col gap-[18px]" data-reveal>
+            <h2 className="h-display !text-cream">For cardiologists and clinical partners</h2>
+            <p className="lede !text-navy-100">
+              After a cardiac event, your patient’s family is frightened and motivated. Triksha
+              gives them a daily, personal signal, and gives you a clean summary instead of a
+              pile of screenshots.
+            </p>
           </div>
-          <p className="lede !text-navy-100">
-            After a cardiac event, your patient’s family is frightened and motivated. Triksha
-            gives them a daily, personal signal — and gives you a clean summary instead of a
-            pile of screenshots.
-          </p>
-        </div>
 
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {POINTS.map((p) => (
-            <div
-              key={p.title}
-              className="flex flex-col gap-2.5 rounded-[22px] border border-navy-500 bg-navy-600 p-7 transition-colors duration-200 hover:border-accent-300"
+          <dl className="flex flex-col border-t border-navy-500">
+            {POINTS.map((p) => (
+              <div
+                key={p.title}
+                className="grid gap-x-8 gap-y-1.5 border-b border-navy-500 py-6 sm:grid-cols-[minmax(0,220px)_1fr]"
+              >
+                <dt className="font-display text-xl font-medium text-cream">{p.title}</dt>
+                <dd className="text-navy-100">{p.body}</dd>
+              </div>
+            ))}
+          </dl>
+
+          <div className="flex flex-col items-start gap-5" data-reveal>
+            <p className="lede !text-navy-100">
+              We are looking for hospitals and cardiologists to join our first clinical pilot.
+            </p>
+            <a
+              href="mailto:yashwanth@trikshahealth.com?subject=Clinical%20pilot"
+              className="cta cta-cream"
+              data-magnetic
             >
-              <h3 className="font-display text-[22px] font-semibold !text-cream">{p.title}</h3>
-              <p className="text-navy-100">{p.body}</p>
-            </div>
-          ))}
+              Talk to us about the pilot
+            </a>
+          </div>
         </div>
 
-        <div className="flex flex-wrap items-center justify-between gap-5 border-t border-navy-500 pt-8">
-          <p className="max-w-[30em] font-display text-[clamp(22px,2.2vw,28px)] font-medium">
-            We are looking for hospitals and cardiologists to join our first clinical pilot.
-          </p>
-          <a
-            href="mailto:yashwanth@trikshahealth.com?subject=Clinical%20pilot"
-            className="cta cta-cream"
-          >
-            Talk to us about the pilot
-          </a>
-        </div>
+        <figure className="flex flex-col gap-3 lg:sticky lg:top-28">
+          {/* The flat page, not a tilted mock-up: its text stays sharp. */}
+          <img
+            src="/img/summary-sample-900.webp"
+            srcSet="/img/summary-sample-900.webp 900w, /img/summary-sample-1800.webp 1800w"
+            sizes="(min-width: 1536px) 656px, (min-width: 1024px) 46vw, 94vw"
+            alt="Sample one-page Triksha cardiac drift summary, with three signal charts, a table of signals and a timeline"
+            width={1800}
+            height={2547}
+            loading="lazy"
+            className="h-auto w-full rounded-2xl"
+          />
+          <figcaption className="text-sm text-navy-200">
+            Sample summary. Not real patient data and not a diagnosis.
+          </figcaption>
+        </figure>
       </div>
     </section>
   );

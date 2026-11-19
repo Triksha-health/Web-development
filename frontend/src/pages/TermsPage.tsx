@@ -3,7 +3,7 @@ import LegalPage, { type LegalSection } from "../components/site/LegalPage";
 import { usePageMeta } from "../seo";
 
 /**
- * Terms of use — placeholder text, clearly marked on the page as a draft.
+ * Terms of use: placeholder text, clearly marked on the page as a draft.
  * Must be reviewed by legal counsel before launch.
  */
 const sections: LegalSection[] = [

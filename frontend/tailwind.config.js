@@ -4,51 +4,55 @@ export default {
   theme: {
     extend: {
       colors: {
-        // ── Triksha brand palette (redesign handoff) ──────────────────
+        // ── Triksha palette ────────────────────────────────────────────
+        // The colours that differ between dark and light sections are CSS
+        // variables (see :root and .theme-light in index.css).
+        // The names are kept from the earlier light theme so existing classes
+        // keep working: `canvas` is the ground, `ink` is the text on it.
         // Ink (primary text)
         ink: {
-          DEFAULT: '#17191C',
-          50:  '#F0F0F1',
-          100: '#E1E1E3',
-          200: '#C5C6C9',
-          300: '#A1A3A6',
-          400: '#7A7C80',
-          500: '#56585C',
-          600: '#3D4045',
-          700: '#2A2D31',
-          800: '#1F2126',
-          900: '#17191C',
-          950: '#0D1014',
+          DEFAULT: 'rgb(var(--ink) / <alpha-value>)',
+          50:  '#0F1B30',
+          100: '#16263F',
+          200: '#22365A',
+          300: 'rgb(var(--ink-300) / <alpha-value>)',
+          400: '#8496B5',
+          500: '#9FAEC6',
+          600: '#B5C1D4',
+          700: '#C6CFDC',
+          800: '#E1E5EC',
+          900: 'rgb(var(--ink) / <alpha-value>)', // main text
+          950: '#FFFFFF',
         },
-        body:  '#4F4B44', // paragraph text
-        muted: '#6B665C', // captions, small labels
+        body:  'rgb(var(--body) / <alpha-value>)', // paragraph text
+        muted: 'rgb(var(--muted) / <alpha-value>)', // captions, small labels
 
         // Cream ground + raised surfaces
         canvas: {
-          DEFAULT: '#F4EEE1', // ground
-          soft:    '#E9E0CD', // image wells
-          paper:   '#FBF8F1', // raised surfaces
-          warm:    '#FBF8F1', // alias
+          DEFAULT: 'rgb(var(--canvas) / <alpha-value>)', // ground
+          soft:    'rgb(var(--canvas-soft) / <alpha-value>)', // image wells
+          paper:   'rgb(var(--canvas-paper) / <alpha-value>)', // alternate sections and raised surfaces
+          warm:    'rgb(var(--canvas-paper) / <alpha-value>)', // alias
         },
         cream: '#F3EEE3', // text on navy
         line: {
-          DEFAULT: '#E2D9C6',
-          strong:  '#D8CDB6',
+          DEFAULT: 'rgb(var(--line) / <alpha-value>)',
+          strong:  'rgb(var(--line-strong) / <alpha-value>)',
         },
 
         // Accent blue: 500 = buttons + highlighted words, 600 = small labels
         accent: {
-          50:  '#EEF4FB',
-          100: '#E4ECF6',
-          200: '#C3D8F1',
-          300: '#8EBDF2',
+          50:  '#EEF4FB', // text on the blue waitlist band
+          100: 'rgb(var(--accent-100) / <alpha-value>)', // chip background
+          200: '#1F4477',
+          300: 'rgb(var(--accent-300) / <alpha-value>)', // highlighted words
           400: '#4E93DE',
-          500: '#1B6BC9',
-          600: '#1557A8',
-          700: '#104586',
-          800: '#0C3566',
+          500: '#1B6BC9', // buttons
+          600: 'rgb(var(--accent-600) / <alpha-value>)', // small labels and links
+          700: 'rgb(var(--accent-700) / <alpha-value>)', // chip text
+          800: '#C9E0FA',
           900: '#0C2547',
-          sky: '#8EBDF2', // on-navy light blue
+          sky: '#8EBDF2',
         },
 
         // Alias kept for legacy `primary-*` usage on older pages
@@ -82,17 +86,17 @@ export default {
 
         // Honest status labels
         status: {
-          done: '#1F6B3A',
-          wip:  '#8A4B0A',
-          dot:  '#C9781E',
+          done: 'rgb(var(--status-done) / <alpha-value>)',
+          wip:  'rgb(var(--status-wip) / <alpha-value>)',
+          dot:  'rgb(var(--status-dot) / <alpha-value>)',
         },
 
         // Hairlines / soft tints used by older pages
-        hairline: 'rgba(23,25,28,0.14)',
-        'hairline-strong': 'rgba(23,25,28,0.22)',
-        'ink-soft': 'rgba(23,25,28,0.62)',
-        'ink-mute': 'rgba(23,25,28,0.40)',
-        'blue-soft': 'rgba(27,107,201,0.10)',
+        hairline: 'rgba(243,238,227,0.14)',
+        'hairline-strong': 'rgba(243,238,227,0.22)',
+        'ink-soft': 'rgba(243,238,227,0.70)',
+        'ink-mute': 'rgba(243,238,227,0.50)',
+        'blue-soft': 'rgba(142,189,242,0.14)',
 
         // Semantic
         secondary: {
@@ -114,12 +118,12 @@ export default {
 
       fontFamily: {
         sans: ['Libre Franklin Variable', 'Libre Franklin', 'Helvetica Neue', 'Arial', 'sans-serif'],
-        display: ['Spectral', 'Georgia', 'serif'],
+        display: ['Inter Tight Variable', 'Inter Tight', 'Libre Franklin Variable', 'Helvetica Neue', 'Arial', 'sans-serif'],
         mono: ['JetBrains Mono Variable', 'JetBrains Mono', 'ui-monospace', 'monospace'],
       },
       fontSize: {
-        hero:     ['clamp(2.75rem, 6vw, 4.75rem)', { lineHeight: '1.02', letterSpacing: '-0.02em',  fontWeight: '600' }],
-        display:  ['clamp(2.125rem, 4vw, 3.25rem)', { lineHeight: '1.08', letterSpacing: '-0.015em', fontWeight: '600' }],
+        hero:     ['clamp(2.75rem, 5.9vw, 5.5rem)', { lineHeight: '0.98', letterSpacing: '-0.02em',  fontWeight: '500' }],
+        display:  ['clamp(2rem, calc(1.375rem + 2.2vw), 3.5rem)', { lineHeight: '1.08', letterSpacing: '-0.01em', fontWeight: '500' }],
         eyebrow:  ['0.8125rem',                    { lineHeight: '1.4',  letterSpacing: '0.22em',   fontWeight: '400' }],
       },
       letterSpacing: {

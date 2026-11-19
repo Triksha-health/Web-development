@@ -3,6 +3,8 @@ import { Link, useLocation } from "react-router-dom";
 
 interface NavbarProps {
   scrolled: boolean;
+  /** True while the nav sits over the homepage's dark hero. */
+  onDark?: boolean;
 }
 
 const LINKS = [
@@ -12,7 +14,7 @@ const LINKS = [
   { id: "about", label: "About" },
 ];
 
-function Navbar({ scrolled }: NavbarProps) {
+function Navbar({ scrolled, onDark = false }: NavbarProps) {
   const [open, setOpen] = useState(false);
   const [activeId, setActiveId] = useState("");
   const location = useLocation();
@@ -56,23 +58,31 @@ function Navbar({ scrolled }: NavbarProps) {
   }, [location.pathname]);
 
   return (
-    <header className={`site-nav sticky top-0 z-50 ${scrolled || open ? "is-scrolled" : ""}`}>
+    <header
+      className={`site-nav sticky top-0 z-50 ${scrolled || open ? "is-scrolled" : ""} ${
+        // The open mobile menu is a light panel, so the bar goes light with it.
+        onDark && !open ? "on-dark" : ""
+      }`}
+    >
+      <span className="scroll-progress" aria-hidden="true" />
       <nav
         aria-label="Main"
-        className="site-wrap nav-inner flex items-center justify-between gap-x-6"
+        className="nav-inner flex items-center justify-between gap-x-6"
       >
         <Link to="/" aria-label="Triksha home" className="flex flex-none items-center">
+          {/* The full logo, name then symbol, exactly as supplied. Only the symbol
+              is recoloured (black to cream) so it shows on the navy bar. */}
           <img
-            src="/img/logo-full.webp"
+            src="/img/logo-triksha-on-dark.webp"
             alt="Triksha"
-            width={168}
-            height={76}
-            className="h-[38px] w-auto"
+            width={472}
+            height={219}
+            className="h-[52px] w-auto"
           />
         </Link>
 
-        {/* Desktop links */}
-        <div className="hidden items-center gap-x-7 text-[15px] font-medium md:flex">
+        {/* Desktop links (1024px and up; below that they wrap, so the menu takes over) */}
+        <div className="hidden items-center gap-x-7 text-[15px] font-medium lg:flex">
           {LINKS.map((l) => (
             <Link
               key={l.id}
@@ -89,16 +99,19 @@ function Navbar({ scrolled }: NavbarProps) {
         </div>
 
         {/* Mobile: primary action stays visible, the rest sits in the menu */}
-        <div className="flex items-center gap-2 md:hidden">
+        <div className="flex items-center gap-2 lg:hidden">
           <Link
             to="/#waitlist"
-            className="cta cta-blue hidden !px-4 !py-2.5 !text-[14px] min-[400px]:inline-flex"
+            className={`cta cta-blue !px-4 !py-2.5 !text-[14px] ${
+              // The open menu has its own waitlist button; don't show two.
+              open ? "!hidden" : "hidden min-[400px]:inline-flex"
+            }`}
           >
             Join the waitlist
           </Link>
           <button
             type="button"
-            className="flex h-11 w-11 items-center justify-center rounded-full text-ink-900 transition-colors hover:bg-canvas-soft active:bg-line"
+            className="nav-burger flex h-11 w-11 items-center justify-center rounded-lg text-ink-900 transition-colors hover:bg-canvas-soft"
             aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
             aria-controls="mobile-menu"
@@ -128,14 +141,14 @@ function Navbar({ scrolled }: NavbarProps) {
       <div
         id="mobile-menu"
         hidden={!open}
-        className="absolute inset-x-0 top-full max-h-[calc(100dvh-64px)] overflow-y-auto border-t border-line bg-canvas-paper shadow-[0_24px_40px_rgba(12,37,71,0.14)] md:hidden"
+        className="absolute inset-x-0 top-full max-h-[calc(100dvh-64px)] overflow-y-auto border-t border-line bg-canvas-paper shadow-[0_24px_40px_rgba(12,37,71,0.14)] lg:hidden"
       >
-        <div className="site-wrap flex flex-col pb-6 pt-2">
+        <div className="flex flex-col px-[var(--page-pad)] pb-6 pt-2">
           {LINKS.map((l) => (
             <Link
               key={l.id}
               to={`/#${l.id}`}
-              className="border-b border-line py-4 font-display text-[22px] font-semibold text-ink-900 no-underline active:text-accent-600"
+              className="border-b border-line py-4 font-display text-[22px] font-medium text-ink-900 no-underline active:text-accent-600"
             >
               {l.label}
             </Link>

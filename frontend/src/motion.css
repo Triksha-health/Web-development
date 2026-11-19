@@ -1,0 +1,436 @@
+/* ════════════════════════════════════════════════════════════════
+   Motion and depth for the public site.
+
+   Ground rules (do not break these):
+   1. Nothing is hidden unless <html> has the class `js-motion`. That
+      class is added by the inline script in index.html only when scripts
+      run and the visitor has not asked for reduced motion. Without it,
+      every element below is fully visible and still.
+   2. Scroll-linked effects sit inside @supports, so browsers without
+      scroll-driven animations simply show the finished state.
+   3. Pointer effects only apply to mouse / trackpad devices.
+   ════════════════════════════════════════════════════════════════ */
+
+:root {
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ── Reveal on scroll ───────────────────────────────────────────
+   Mark an element with data-reveal (optionally ="left" | "right" |
+   "scale" | "wipe"). useReveal() adds .is-in when it enters the screen,
+   then .is-done once the entrance has finished, which hands the
+   element's transitions back to its normal hover styles.
+   Stagger siblings with style={{ "--i": n }}. */
+html.js-motion [data-reveal]:not(.is-done) {
+  transition:
+    opacity 0.8s var(--ease-out),
+    transform 0.8s var(--ease-out),
+    clip-path 1s var(--ease-out);
+  transition-delay: calc(var(--i, 0) * 85ms);
+}
+html.js-motion [data-reveal]:not(.is-in) {
+  opacity: 0;
+  transform: translateY(28px);
+}
+html.js-motion [data-reveal="left"]:not(.is-in) {
+  transform: translateX(-32px);
+}
+html.js-motion [data-reveal="right"]:not(.is-in) {
+  transform: translateX(32px);
+}
+html.js-motion [data-reveal="scale"]:not(.is-in) {
+  transform: scale(0.94);
+}
+html.js-motion [data-reveal="wipe"]:not(.is-in) {
+  opacity: 1;
+  transform: none;
+  clip-path: inset(0 0 100% 0 round 16px);
+}
+html.js-motion [data-reveal="wipe"] {
+  clip-path: inset(0 0 0 0 round 16px);
+}
+/* a rule that draws itself from the left */
+html.js-motion [data-reveal="draw-x"]:not(.is-in) {
+  opacity: 1;
+  transform: scaleX(0);
+}
+[data-reveal="draw-x"] {
+  transform-origin: left center;
+}
+
+/* Icons draw their strokes as their card arrives. Shapes need pathLength="1". */
+.icon-draw * {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+}
+html.js-motion .icon-draw * {
+  transition: stroke-dashoffset 1.2s ease calc(var(--i, 0) * 85ms + 250ms);
+}
+html.js-motion [data-reveal]:not(.is-in) .icon-draw * {
+  stroke-dashoffset: 1;
+}
+
+/* ── Hero entrance (plays once on load, not on scroll) ───────── */
+html.js-motion .hero-in {
+  animation: heroRise 0.9s var(--ease-out) both;
+  animation-delay: calc(var(--i, 0) * 90ms + 60ms);
+}
+@keyframes heroRise {
+  from {
+    opacity: 0;
+    transform: translateY(26px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Full-bleed hero ─────────────────────────────────────────────
+   The stage runs up underneath the transparent nav. From 1024px it is
+   exactly one screen tall; below that the text and the twin stack. */
+.hero-full {
+  margin-top: calc(-1 * var(--nav-h));
+  padding-top: var(--nav-h);
+}
+@media (min-width: 1024px) {
+  .hero-full {
+    height: 100svh;
+    min-height: 640px;
+  }
+}
+
+/* ── Dark hero stage ─────────────────────────────────────────── */
+.hero-dark {
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+  color: #f3eee3;
+  background:
+    radial-gradient(60% 70% at 78% 42%, rgba(27, 107, 201, 0.34), rgba(27, 107, 201, 0) 70%),
+    radial-gradient(40% 50% at 12% 100%, rgba(12, 37, 71, 0.9), rgba(12, 37, 71, 0) 70%),
+    linear-gradient(180deg, #040b18 0%, #071630 70%, #071630 100%);
+}
+/* faint measurement grid, fading out toward the text */
+.hero-dark::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image:
+    linear-gradient(rgba(142, 189, 242, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(142, 189, 242, 0.07) 1px, transparent 1px);
+  background-size: 56px 56px;
+  -webkit-mask-image: radial-gradient(70% 80% at 76% 45%, #000 0%, transparent 75%);
+  mask-image: radial-gradient(70% 80% at 76% 45%, #000 0%, transparent 75%);
+}
+.hero-dark .cta-outline {
+  color: #f3eee3;
+  border-color: rgba(243, 238, 227, 0.55);
+}
+.hero-dark .cta-outline:hover {
+  background: #f3eee3;
+  color: #0c2547;
+  border-color: #f3eee3;
+}
+
+/* The twin: a still poster first, the live scene fades in over it. */
+.twin-poster,
+.twin-live {
+  position: absolute;
+  inset: 0;
+  transition: opacity 0.9s ease;
+}
+.twin-live {
+  opacity: 0;
+}
+.twin-stage.is-live .twin-live {
+  opacity: 1;
+}
+.twin-stage.is-live .twin-poster {
+  opacity: 0;
+}
+/* Once the live scene is on its way, the still steps aside quickly so the
+   figure can be seen forming out of dots. */
+.twin-stage.is-loading .twin-poster {
+  opacity: 0;
+  transition-duration: 0.35s;
+}
+html.js-motion .twin-poster img {
+  animation: twinBreathe 6s ease-in-out infinite;
+}
+@keyframes twinBreathe {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+/* The twin beside the How it works steps: still image first, live scene over it. */
+.journey-poster,
+.journey-live {
+  position: absolute;
+  inset: 0;
+  transition: opacity 0.9s ease;
+}
+.journey-live {
+  opacity: 0;
+}
+.journey.is-live .journey-live {
+  opacity: 1;
+}
+.journey.is-live .journey-poster {
+  opacity: 0;
+}
+.journey-caption {
+  transition: opacity 0.35s ease;
+}
+
+/* ── Nav over the dark hero ──────────────────────────────────── */
+.site-nav.on-dark {
+  background: transparent;
+  border-bottom-color: transparent;
+  box-shadow: none;
+}
+.site-nav.on-dark .nav-link {
+  color: #f3eee3;
+}
+.site-nav.on-dark .nav-link::after {
+  background: #1b6bc9;
+}
+.site-nav.on-dark .nav-burger {
+  color: #f3eee3;
+}
+.site-nav.on-dark .nav-burger:hover {
+  background: rgba(243, 238, 227, 0.12);
+}
+/* the whole site is dark now, so the light logo is always the one shown */
+.site-nav .logo-dark {
+  display: none;
+}
+
+/* Scroll progress: a thin line along the bottom edge of the nav */
+.scroll-progress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  background: #1b6bc9;
+  transform: scaleX(0);
+  transform-origin: left center;
+  pointer-events: none;
+}
+.site-nav.on-dark .scroll-progress {
+  background: #1b6bc9;
+}
+
+/* ── Cursor-reactive depth ───────────────────────────────────────
+   usePointerEffects() writes --px / --py (-1..1) and --mx / --my (0..1)
+   on the element under the pointer. */
+@media (hover: hover) and (pointer: fine) {
+  html.js-motion [data-tilt] {
+    transform: perspective(900px) translateY(var(--lift, 0px))
+      rotateX(calc(var(--py, 0) * -4deg)) rotateY(calc(var(--px, 0) * 5deg));
+    transform-style: preserve-3d;
+  }
+  html.js-motion [data-tilt].is-done,
+  html.js-motion [data-tilt]:not([data-reveal]) {
+    transition:
+      transform 0.25s ease,
+      box-shadow 0.25s ease,
+      border-color 0.25s ease;
+  }
+  html.js-motion [data-tilt]:hover {
+    --lift: -4px;
+  }
+
+  [data-spot] {
+    position: relative;
+  }
+  html.js-motion [data-spot]::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    background: radial-gradient(
+      260px circle at calc(var(--mx, 0.5) * 100%) calc(var(--my, 0.5) * 100%),
+      var(--spot-color, rgba(142, 189, 242, 0.12)),
+      transparent 62%
+    );
+  }
+  html.js-motion [data-spot]:hover::after {
+    opacity: 1;
+  }
+
+  html.js-motion [data-magnetic] {
+    translate: calc(var(--px, 0) * 7px) calc(var(--py, 0) * 5px);
+    transition:
+      translate 0.25s ease,
+      background-color 0.18s ease,
+      color 0.18s ease,
+      box-shadow 0.18s ease,
+      transform 0.12s ease;
+  }
+}
+
+/* ── How it works ────────────────────────────────────────────── */
+
+/* rail that fills as the three steps scroll past (desktop) */
+.steps-rail {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: #1b6bc9;
+  transform-origin: top center;
+  pointer-events: none;
+  display: none;
+}
+
+/* ── Status list ─────────────────────────────────────────────── */
+.pulse-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-right: 8px;
+  border-radius: 50%;
+  background: currentColor;
+  vertical-align: 1px;
+}
+html.js-motion .pulse-dot {
+  animation: dotPulse 2.2s ease-in-out infinite;
+}
+@keyframes dotPulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(201, 120, 30, 0.45);
+  }
+  50% {
+    box-shadow: 0 0 0 7px rgba(201, 120, 30, 0);
+  }
+}
+
+/* photo sits slightly oversized in its frame so it can drift on scroll */
+.parallax-frame {
+  overflow: hidden;
+}
+
+/* ── Heartbeat line used as a moving background ──────────────── */
+.bg-trace {
+  position: absolute;
+  left: 0;
+  right: 0;
+  pointer-events: none;
+}
+.bg-trace g {
+  animation: sigRun 14s linear infinite;
+}
+
+/* drawn check mark on waitlist success */
+.check-draw path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+}
+html.js-motion .check-draw path {
+  animation: checkDraw 0.6s var(--ease-out) both;
+}
+@keyframes checkDraw {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* ── FAQ: answers open and close with a height animation ─────── */
+@supports (interpolate-size: allow-keywords) {
+  html.js-motion {
+    interpolate-size: allow-keywords;
+  }
+  html.js-motion .faq::details-content {
+    height: 0;
+    overflow: clip;
+    opacity: 0;
+    transition:
+      height 0.4s var(--ease-out),
+      opacity 0.3s ease,
+      content-visibility 0.4s allow-discrete;
+  }
+  html.js-motion .faq[open]::details-content {
+    height: auto;
+    opacity: 1;
+  }
+}
+
+/* ── Scroll-linked effects (progressive enhancement) ─────────── */
+@supports (animation-timeline: view()) {
+  html.js-motion .scroll-progress {
+    animation: growX linear both;
+    animation-timeline: scroll(root);
+  }
+
+  @media (min-width: 1024px) {
+    html.js-motion .steps-rail {
+      display: block;
+      animation: growY linear both;
+      animation-timeline: view();
+      animation-range: cover 22% cover 78%;
+    }
+  }
+
+  html.js-motion .parallax-frame img {
+    animation: parallaxY linear both;
+    animation-timeline: view();
+    animation-range: cover 0% cover 100%;
+  }
+
+  /* The twin recedes as the hero scrolls away. Desktop only: on phones the
+     twin sits below the text, so it would already have faded on arrival. */
+  @media (min-width: 1024px) {
+    html.js-motion .twin-stage {
+      animation: twinRecede linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0 90vh;
+    }
+  }
+
+}
+@keyframes growX {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+@keyframes growY {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+@keyframes parallaxY {
+  from {
+    transform: translateY(-6%) scale(1.14);
+  }
+  to {
+    transform: translateY(6%) scale(1.14);
+  }
+}
+@keyframes twinRecede {
+  to {
+    transform: translateY(8%) scale(0.92);
+    opacity: 0.35;
+  }
+}

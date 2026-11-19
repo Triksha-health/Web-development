@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { API_BASE } from "../../lib/api";
 import { track } from "../../lib/analytics";
+import EndingMark from "./EndingMark";
 
 const AUDIENCES = [
   { value: "self", label: "Myself" },
@@ -12,7 +13,7 @@ const AUDIENCES = [
 type Status = { kind: "idle" } | { kind: "ok"; msg: string } | { kind: "err"; msg: string };
 
 const fieldClass =
-  "w-full rounded-[14px] border-0 bg-white px-[18px] py-4 text-[17px] text-ink-900 placeholder:text-ink-300 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white";
+  "w-full rounded-lg border border-[rgb(var(--field-border))] bg-white px-[18px] py-4 text-[17px] text-[#14202E] placeholder:text-[#6B7480] focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-600";
 
 export default function Waitlist() {
   const [email, setEmail] = useState("");
@@ -60,19 +61,24 @@ export default function Waitlist() {
   };
 
   return (
-    <section id="waitlist" className="px-[clamp(20px,5vw,48px)] pb-[clamp(64px,8vw,112px)]">
-      <div className="mx-auto grid max-w-[1104px] items-center gap-10 rounded-[32px] bg-accent-500 p-[clamp(28px,5vw,72px)] text-white lg:grid-cols-2">
-        <div className="flex flex-col gap-4">
-          <h2 className="font-display text-[clamp(34px,4vw,50px)] font-semibold leading-[1.05] tracking-[-0.015em] !text-white">
-            Let’s hear the whisper.
-          </h2>
-          <p className="text-lg text-accent-50">
-            Join the waitlist for family plans. No spam — one email when Triksha is ready for
+    <section id="waitlist" className="sec theme-light">
+      <div className="site-wrap grid items-start gap-x-16 gap-y-10 lg:grid-cols-2">
+        <div className="flex flex-col gap-[18px]" data-reveal>
+          <h2 className="h-display">Join the waitlist</h2>
+          <p className="lede">
+            Join the waitlist for family plans. No spam, just one email when Triksha is ready for
             you.
           </p>
+          {/* A cloud of dots gathers into the eye of the logo as this scrolls into view. */}
+          <EndingMark className="mt-2 h-[240px] w-full max-w-[460px] lg:h-[300px]" />
         </div>
 
-        <form onSubmit={onSubmit} noValidate className="flex flex-col gap-3.5">
+        <form
+          onSubmit={onSubmit}
+          noValidate
+          className="flex w-full max-w-[560px] flex-col gap-3.5"
+          data-reveal
+        >
           <label htmlFor="wl-email" className="text-sm font-semibold">
             Email address
           </label>
@@ -108,7 +114,7 @@ export default function Waitlist() {
           <button
             type="submit"
             disabled={loading}
-            className="cta cta-navy mt-1 !py-4 !text-[17px] disabled:cursor-wait disabled:opacity-70"
+            className="cta cta-blue mt-1 !py-4 !text-[17px] disabled:cursor-wait disabled:opacity-70"
           >
             {loading ? "Joining…" : "Join the waitlist"}
           </button>
@@ -117,17 +123,33 @@ export default function Waitlist() {
               <span
                 className={
                   status.kind === "ok"
-                    ? "text-white"
-                    : "rounded-md bg-white px-2 py-1 text-[#9B1C1C]"
+                    ? "inline-flex items-start gap-2 text-status-done"
+                    : "text-[#9B1C1C]"
                 }
               >
+                {status.kind === "ok" && (
+                  <svg
+                    aria-hidden="true"
+                    className="check-draw mt-0.5 flex-none"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.4"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path pathLength={1} d="M5 12.5l4.5 4.5L19 7.5" />
+                  </svg>
+                )}
                 {status.msg}
               </span>
             )}
           </p>
-          <p className="text-[13px] text-accent-50">
+          <p className="text-[13px] text-muted">
             We use your email only for this waitlist. See our{" "}
-            <Link to="/privacy" className="font-semibold text-white underline underline-offset-2">
+            <Link to="/privacy" className="text-link font-semibold">
               privacy policy
             </Link>
             .
