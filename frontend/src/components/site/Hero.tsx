@@ -40,9 +40,6 @@ export default function Hero() {
         <div className="hero-in flex flex-wrap items-center gap-3.5" style={step(4)}>
           <Link to="/#waitlist" className="cta cta-blue" data-magnetic>
             Join the waitlist
-            <span className="cta-arrow" aria-hidden="true">
-              →
-            </span>
           </Link>
           <Link to="/#how" className="cta cta-outline">
             See how it works

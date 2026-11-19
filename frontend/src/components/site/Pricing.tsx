@@ -1,14 +1,13 @@
 import type { CSSProperties } from "react";
-import CountUpNumber from "./CountUpNumber";
 
 const step = (i: number) => ({ "--i": i }) as CSSProperties;
 
 const priceClass =
-  "font-display text-[clamp(56px,6.4vw,92px)] font-medium leading-none tracking-[-0.01em]";
+  "tabular-nums font-display text-[clamp(56px,6.4vw,92px)] font-medium leading-none tracking-[-0.01em]";
 
 const PLANS = [
-  { term: "6 months, prepaid", value: 9000, highlight: false },
-  { term: "12 months, prepaid", value: 18000, highlight: true },
+  { term: "6 months, prepaid", price: "₹9,000", highlight: false },
+  { term: "12 months, prepaid", price: "₹18,000", highlight: true },
 ];
 
 export default function Pricing() {
@@ -34,9 +33,7 @@ export default function Pricing() {
             }`}
           >
             <span className="section-label">{plan.term}</span>
-            <p className={priceClass}>
-              <CountUpNumber value={plan.value} prefix="₹" />
-            </p>
+            <p className={priceClass}>{plan.price}</p>
             <p className="text-body">
               ₹1,500 a month. Wristband, app and Health Book included.
             </p>

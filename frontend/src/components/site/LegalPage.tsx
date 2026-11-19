@@ -17,7 +17,8 @@ interface LegalPageProps {
 /** Shared layout for the Privacy policy and Terms of use pages. */
 export default function LegalPage({ kicker, title, intro, updated, sections }: LegalPageProps) {
   return (
-    <div className="site-wrap pb-[clamp(64px,8vw,112px)] pt-[clamp(40px,6vw,80px)]">
+    <div className="theme-light sec">
+    <div className="site-wrap">
       <div className="flex max-w-[760px] flex-col gap-[18px]">
         <p className="section-label">{kicker}</p>
         <h1 className="h-display">{title}</h1>
@@ -51,7 +52,7 @@ export default function LegalPage({ kicker, title, intro, updated, sections }: L
         <article className="flex max-w-[720px] flex-col gap-10">
           {sections.map((s) => (
             <section key={s.id} id={s.id}>
-              <h2 className="mb-3 font-display text-[26px] font-medium leading-[1.2]">
+              <h2 className="mb-3 font-display text-[clamp(22px,2vw,28px)] font-medium leading-[1.2]">
                 {s.title}
               </h2>
               <div className="flex flex-col gap-3 text-[17px] text-body [&_a]:text-accent-600 [&_a]:underline [&_a]:underline-offset-2 [&_strong]:font-semibold [&_strong]:text-ink-900 [&_ul]:flex [&_ul]:list-disc [&_ul]:flex-col [&_ul]:gap-1.5 [&_ul]:pl-5">
@@ -61,6 +62,7 @@ export default function LegalPage({ kicker, title, intro, updated, sections }: L
           ))}
         </article>
       </div>
+    </div>
     </div>
   );
 }

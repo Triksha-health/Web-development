@@ -12,12 +12,12 @@ function Footer() {
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           <div className="flex flex-col gap-3.5">
             <img
-              src="/img/eye-mark-light.webp"
-              alt=""
-              width={187}
-              height={240}
+              src="/img/logo-triksha-on-dark.webp"
+              alt="Triksha"
+              width={472}
+              height={219}
               loading="lazy"
-              className="h-auto w-9"
+              className="h-12 w-auto self-start"
             />
             <p className="font-display text-xl text-cream">
               Predict cardiac risk, before symptoms.

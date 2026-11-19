@@ -1,39 +1,25 @@
-import { StrictMode } from "react";
-import { createRoot, hydrateRoot } from "react-dom/client";
-import { BrowserRouter } from "react-router-dom";
-import "@fontsource-variable/inter-tight";
+// Entry point. Styles and fonts load with the page; the app itself (boot.tsx)
+// starts only after the browser has painted the prerendered HTML, so the page
+// is visible before any of the app's JavaScript runs.
+import "./fonts.css";
 import "@fontsource-variable/libre-franklin";
 import "@fontsource-variable/jetbrains-mono";
-import App from "./App";
 import "./index.css";
 import "./motion.css";
-import { AuthProvider } from "./context/AuthContext";
-import StoreProvider from "./store/StoreProvider";
 
-const container = document.getElementById("root")!;
+let started = false;
+const start = () => {
+  if (started) return;
+  started = true;
+  void import("./boot");
+};
 
-const app = (
-  <StrictMode>
-    <BrowserRouter>
-      <StoreProvider>
-        <AuthProvider>
-          <App />
-        </AuthProvider>
-      </StoreProvider>
-    </BrowserRouter>
-  </StrictMode>
-);
-
-// Pages written out by scripts/prerender.mjs already contain their HTML and
-// say which page it is. When that matches the address, attach to it instead
-// of rendering from scratch. Anything else (app.html, the dev server, or a
-// host that served the wrong file) starts from an empty root.
-const prerendered = container.dataset.prerendered;
-const here = window.location.pathname.replace(/\/+$/, "") || "/";
-
-if (prerendered && prerendered === here) {
-  hydrateRoot(container, app);
+if (document.visibilityState === "hidden") {
+  // A background tab never gets an animation frame; don't wait for one.
+  start();
 } else {
-  container.replaceChildren();
-  createRoot(container).render(app);
+  // The frame callback runs just before a paint; the timeout runs just after it.
+  requestAnimationFrame(() => setTimeout(start, 0));
+  // Safety net in case the frame never comes.
+  setTimeout(start, 1200);
 }

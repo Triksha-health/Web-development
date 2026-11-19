@@ -53,9 +53,6 @@ export default function Clinicians() {
               data-magnetic
             >
               Talk to us about the pilot
-              <span className="cta-arrow" aria-hidden="true">
-                →
-              </span>
             </a>
           </div>
         </div>

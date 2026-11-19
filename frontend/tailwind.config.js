@@ -118,7 +118,7 @@ export default {
 
       fontFamily: {
         sans: ['Libre Franklin Variable', 'Libre Franklin', 'Helvetica Neue', 'Arial', 'sans-serif'],
-        display: ['Inter Tight Variable', 'Inter Tight', 'Helvetica Neue', 'Arial', 'sans-serif'],
+        display: ['Inter Tight Variable', 'Inter Tight', 'Libre Franklin Variable', 'Helvetica Neue', 'Arial', 'sans-serif'],
         mono: ['JetBrains Mono Variable', 'JetBrains Mono', 'ui-monospace', 'monospace'],
       },
       fontSize: {

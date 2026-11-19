@@ -114,11 +114,6 @@ export default function Waitlist() {
             className="cta cta-blue mt-1 !py-4 !text-[17px] disabled:cursor-wait disabled:opacity-70"
           >
             {loading ? "Joining…" : "Join the waitlist"}
-            {!loading && (
-              <span className="cta-arrow" aria-hidden="true">
-                →
-              </span>
-            )}
           </button>
           <p id="wl-status" role="status" aria-live="polite" className="min-h-[1.5em] text-[15px] font-semibold">
             {status.kind !== "idle" && (

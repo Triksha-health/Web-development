@@ -6,7 +6,7 @@ const step = (i: number) => ({ "--i": i }) as CSSProperties;
 export default function AlertSection() {
   return (
     <section id="alert" className="sec theme-light">
-      <div className="site-wrap grid items-center gap-x-16 gap-y-12 lg:grid-cols-2">
+      <div className="site-wrap grid items-start gap-x-16 gap-y-12 lg:grid-cols-2">
         <div data-reveal="left">
           <TwinDemo />
         </div>
