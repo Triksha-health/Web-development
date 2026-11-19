@@ -53,60 +53,8 @@
     <script>
       if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
         document.documentElement.classList.add("js-motion");
-        // Arriving on the homepage: play the short logo intro, once per visit
-        // (a browser session), so the name comes first and the twin forms after it.
-        // (Add ?intro=1 to the address to see it again.)
-        try {
-          var force = /[?&]intro=1/.test(location.search);
-          if (location.pathname === "/" && (force || !sessionStorage.getItem("triksha-intro"))) {
-            document.documentElement.classList.add("intro-on");
-            sessionStorage.setItem("triksha-intro", "1");
-          }
-        } catch (e) {}
       }
     </script>
-
-    <!-- Styles for the first-visit intro. Inline so they apply from the very
-         first frame, before the main stylesheet arrives. -->
-    <style>
-      /* The logo opens like an eyelid on the navy ground, then the screen fades
-         to the page. About 1.2s in all. Only shown when the script above adds
-         .intro-on (first visit to the homepage, motion allowed). */
-      #intro {
-        display: none;
-      }
-      html.intro-on #intro {
-        position: fixed;
-        inset: 0;
-        z-index: 100;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: #071630;
-        animation: introOut 0.3s ease 0.9s both;
-      }
-      html.intro-on #intro img {
-        width: min(300px, 62vw);
-        height: auto;
-        animation: introOpen 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.12s both;
-      }
-      @keyframes introOpen {
-        from {
-          clip-path: ellipse(75% 0% at 50% 50%);
-          opacity: 0.4;
-        }
-        to {
-          clip-path: ellipse(75% 80% at 50% 50%);
-          opacity: 1;
-        }
-      }
-      @keyframes introOut {
-        to {
-          opacity: 0;
-          visibility: hidden;
-        }
-      }
-    </style>
 
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -118,26 +66,6 @@
     -->
   </head>
   <body>
-    <!-- First-visit intro (see "intro" in src/motion.css). Hidden unless the
-         script in the head switched it on, and removed as soon as it has played. -->
-    <div id="intro" aria-hidden="true">
-      <img src="/img/logo-triksha-on-dark.webp" alt="" width="472" height="219" />
-    </div>
-    <script>
-      (function () {
-        var el = document.getElementById("intro");
-        var root = document.documentElement;
-        function done() {
-          root.classList.remove("intro-on");
-          if (el.parentNode) el.parentNode.removeChild(el);
-        }
-        if (!root.classList.contains("intro-on")) return done();
-        el.addEventListener("animationend", function (e) {
-          if (e.target === el) done();
-        });
-        setTimeout(done, 2000); // safety net
-      })();
-    </script>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
