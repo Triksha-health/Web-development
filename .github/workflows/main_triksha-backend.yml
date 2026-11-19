@@ -6,7 +6,7 @@ name: Build and deploy Node.js app to Azure Web App - triksha-backend
 on:
   push:
     branches:
-      - main
+      - 'main'
   workflow_dispatch:
 
 jobs:
@@ -23,25 +23,17 @@ jobs:
         with:
           node-version: '20.x'
 
-      - name: npm install, build, and test (backend only)
+      - name: npm install, build, and test
         run: |
-          cd backend
           npm install
           npm run build --if-present
           npm run test --if-present
-          cd ..
-
-      - name: Zip artifact for deployment
-        run: |
-         cd backend
-         zip -r ../release.zip ./*
-         cd ..
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: node-app
-          path: release.zip
+          path: .
 
   deploy:
     runs-on: ubuntu-latest
@@ -55,16 +47,13 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: node-app
-
-      - name: Unzip artifact for deployment
-        run: unzip release.zip
       
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_15860E47EDCE49469528A9AAD8FFD8D2 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_3F02F832ABF54FBDBB84670DF0DBB012 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_8D908E815EF74EAF98CB050637474F2A }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_1B58ACB2BE4E42A4ACF7A58C7F8DF68A }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_8FB23EAEF5C846EDA58D741B4B5B3E9D }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_8776D23FDF5D4B8FAD05DA7190F92BD8 }}
 
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
