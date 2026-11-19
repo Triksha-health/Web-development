@@ -163,6 +163,26 @@ html.js-motion .twin-poster img {
   }
 }
 
+/* The twin beside the How it works steps: still image first, live scene over it. */
+.journey-poster,
+.journey-live {
+  position: absolute;
+  inset: 0;
+  transition: opacity 0.9s ease;
+}
+.journey-live {
+  opacity: 0;
+}
+.journey.is-live .journey-live {
+  opacity: 1;
+}
+.journey.is-live .journey-poster {
+  opacity: 0;
+}
+.journey-caption {
+  transition: opacity 0.35s ease;
+}
+
 /* ── Nav over the dark hero ──────────────────────────────────── */
 .site-nav.on-dark {
   background: transparent;

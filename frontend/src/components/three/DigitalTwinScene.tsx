@@ -30,6 +30,14 @@ interface Props {
   showRings?: boolean;
   /** Called once, after the first frame has been drawn. */
   onReady?: () => void;
+  /**
+   * Story mode, used by the How it works stage. Off by default (the hero).
+   * When on, `focus` moves the camera: "wrist" flies in to the wrist and makes
+   * it pulse; "future" pulls back and shows a second, fainter twin whose heart
+   * has drifted.
+   */
+  journey?: boolean;
+  focus?: "body" | "wrist" | "future";
 }
 
 const SETTINGS = {
@@ -46,6 +54,8 @@ export default function DigitalTwinScene({
   scrollLinked = false,
   showRings = true,
   onReady,
+  journey = false,
+  focus = "body",
 }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   // Read inside the animation loop, so changing these never rebuilds the scene.
@@ -53,6 +63,8 @@ export default function DigitalTwinScene({
   driftRef.current = drift;
   const onReadyRef = useRef(onReady);
   onReadyRef.current = onReady;
+  const focusRef = useRef(focus);
+  focusRef.current = focus;
   const dark = variant === "dark";
 
   useEffect(() => {
@@ -82,6 +94,7 @@ export default function DigitalTwinScene({
 
     const FIGURE_Y = 1.1; // world height of the figure's mid-line (ring centre)
     const HEART = new THREE.Vector3(0.035, 1.255, 0.075);
+    const WRIST = new THREE.Vector3(0.287, 0.9, 0.054); // where a wristband sits
 
     /* ── Anatomy: tapered capsules, z-flattened, smooth-blended ── */
     interface Prim {
@@ -176,6 +189,7 @@ export default function DigitalTwinScene({
     const phases: number[] = [];
     const shades: number[] = [];
     const hearts: number[] = [];
+    const wrists: number[] = [];
     const normals: number[] = [];
     (function sample() {
       const weights = prims.map(function (pr) {
@@ -218,16 +232,18 @@ export default function DigitalTwinScene({
         const hd = pos.distanceTo(HEART);
         const hw = THREE.MathUtils.clamp(1 - hd / 0.26, 0, 1);
         hearts.push(hw * hw);
+        wrists.push(THREE.MathUtils.clamp(1 - pos.distanceTo(WRIST) / 0.075, 0, 1));
       }
     })();
     const COUNT = positions.length / 3;
 
     /* ── Shimmering point shader (with depth cueing + scan sweep) ── */
     const pointVert = [
-      "attribute float aSize; attribute float aPhase; attribute float aHeart; attribute vec3 aColor; attribute vec3 aNormal;",
-      "uniform float uTime, uPulse, uSize, uScale, uFlat;",
-      "varying vec3 vColor; varying float vAlpha; varying float vHeart; varying float vLight; varying float vRim; varying float vY;",
+      "attribute float aSize; attribute float aPhase; attribute float aHeart; attribute float aWrist; attribute vec3 aColor; attribute vec3 aNormal;",
+      "uniform float uTime, uPulse, uSize, uScale, uFlat, uWrist;",
+      "varying vec3 vColor; varying float vAlpha; varying float vHeart; varying float vLight; varying float vRim; varying float vY; varying float vWrist;",
       "void main(){",
+      "  vWrist = aWrist * uWrist * (0.62 + 0.38 * sin(uTime * 4.2 - position.y * 40.0));",
       "  float tw = 0.80 + 0.34 * sin(uTime * 1.7 + aPhase);",
       "  vColor = aColor; vHeart = aHeart; vY = position.y;",
       "  vec3 vn = normalize(normalMatrix * aNormal);",
@@ -239,7 +255,7 @@ export default function DigitalTwinScene({
       "  float facing = mix(smoothstep(-0.9, 0.35, vn.z), 1.0, uFlat);",
       "  vAlpha = tw * mix(0.38, 1.0, facing);",
       "  vec4 mv = modelViewMatrix * vec4(position, 1.0);",
-      "  float s = aSize * uSize * tw * (1.0 + aHeart * uPulse * 1.1) * mix(0.78, 1.0, facing);",
+      "  float s = aSize * uSize * tw * (1.0 + aHeart * uPulse * 1.1) * mix(0.78, 1.0, facing) * (1.0 + vWrist * 0.9);",
       "  gl_PointSize = s * (uScale / -mv.z);", // perspective depth cueing
       "  gl_Position = projectionMatrix * mv;",
       "}",
@@ -247,7 +263,8 @@ export default function DigitalTwinScene({
     const pointFrag = [
       "uniform float uPulse; uniform vec3 uHeartColor; uniform vec3 uRimColor;",
       "uniform float uScanY, uScanBand, uScanOn; uniform vec3 uScanColor;",
-      "varying vec3 vColor; varying float vAlpha; varying float vHeart; varying float vLight; varying float vRim; varying float vY;",
+      "uniform vec3 uWristColor; uniform float uFade;",
+      "varying vec3 vColor; varying float vAlpha; varying float vHeart; varying float vLight; varying float vRim; varying float vY; varying float vWrist;",
       "void main(){",
       "  vec2 c = gl_PointCoord - 0.5;",
       "  float d = length(c);",
@@ -258,8 +275,9 @@ export default function DigitalTwinScene({
       "  col = mix(col, uHeartColor, vHeart * (0.35 + 0.65 * uPulse));",
       "  float scan = uScanOn * smoothstep(uScanBand, 0.0, abs(vY - uScanY));",
       "  col += uScanColor * scan * 0.7;",
+      "  col = mix(col, uWristColor, clamp(vWrist, 0.0, 1.0));",
       "  float alpha = a * vAlpha * 0.95 + scan * a * 0.5;",
-      "  gl_FragColor = vec4(col, alpha);",
+      "  gl_FragColor = vec4(col, alpha * uFade);",
       "}",
     ].join("\n");
 
@@ -276,6 +294,9 @@ export default function DigitalTwinScene({
         uScanBand: { value: 0.13 },
         uScanOn: { value: compact || reduceMotion ? 0 : 1 },
         uScanColor: { value: new THREE.Color("#d4ebff") },
+        uWrist: { value: 0 },
+        uWristColor: { value: new THREE.Color("#eaf6ff") },
+        uFade: { value: 1 },
       },
       vertexShader: pointVert,
       fragmentShader: pointFrag,
@@ -288,6 +309,7 @@ export default function DigitalTwinScene({
     bodyGeo.setAttribute("aSize", new THREE.Float32BufferAttribute(sizes, 1));
     bodyGeo.setAttribute("aPhase", new THREE.Float32BufferAttribute(phases, 1));
     bodyGeo.setAttribute("aHeart", new THREE.Float32BufferAttribute(hearts, 1));
+    bodyGeo.setAttribute("aWrist", new THREE.Float32BufferAttribute(wrists, 1));
     bodyGeo.setAttribute("aNormal", new THREE.Float32BufferAttribute(normals, 3));
     const bodyColors = new Float32Array(COUNT * 3);
     const colorAttr = new THREE.BufferAttribute(bodyColors, 3);
@@ -344,6 +366,33 @@ export default function DigitalTwinScene({
     figure.add(bodyPoints, heartCore, heartHalo);
     figure.scale.setScalar(1.28);
     scene.add(figure);
+
+    /* ── Story mode only: a second, fainter twin for the "possible future" ──
+       Same particles, drawn again beside the first with a drifted (amber) heart.
+       Not created at all for the hero. */
+    let ghost: THREE.Group | null = null;
+    let ghostMat: THREE.ShaderMaterial | null = null;
+    let ghostHeart: THREE.Sprite | null = null;
+    if (journey) {
+      ghostMat = bodyMat.clone();
+      ghostMat.uniforms.uHeartColor.value = new THREE.Color("#ffab4d");
+      ghostMat.uniforms.uScanOn.value = 0;
+      ghostMat.uniforms.uFade.value = 0;
+      ghostHeart = new THREE.Sprite(
+        new THREE.SpriteMaterial({
+          map: glowTexture("rgba(255,236,205,0.95)", "rgba(255,171,77,0.5)"),
+          transparent: true,
+          depthWrite: false,
+          opacity: 0,
+        }),
+      );
+      ghostHeart.position.copy(HEART);
+      ghost = new THREE.Group();
+      ghost.add(new THREE.Points(bodyGeo, ghostMat), ghostHeart);
+      ghost.scale.setScalar(1.28);
+      ghost.visible = false;
+      scene.add(ghost);
+    }
 
     /* ── Tilted, depth-faded perspective rings ── */
     const ringVert =
@@ -472,6 +521,7 @@ export default function DigitalTwinScene({
       camera.aspect = w / h;
       camera.updateProjectionMatrix();
       bodyMat.uniforms.uScale.value = (h * Math.min(window.devicePixelRatio, 2)) / 105;
+      if (ghostMat) ghostMat.uniforms.uScale.value = bodyMat.uniforms.uScale.value;
     }
     const twinResizeObserver = new ResizeObserver(resize);
     twinResizeObserver.observe(container);
@@ -504,6 +554,20 @@ export default function DigitalTwinScene({
     const SPRITE_DRIFTED = new THREE.Color("#ffc27a");
     let rafId = 0;
     let running = false;
+
+    // Story mode state (all stay at zero for the hero).
+    let wWrist = 0; // 0..1, how far the camera has moved in to the wrist
+    let wFuture = 0; // 0..1, how far the "future" twin has appeared
+    let spin = 0; // the figure's own slow turn, which settles while focused
+    let ghostBeat = 0;
+    const CAM_BODY = new THREE.Vector3(0, 1.05, 4.35);
+    const LOOK_BODY = new THREE.Vector3(0, 1.05, 0);
+    const CAM_WRIST = new THREE.Vector3(0.76, 1.2, 2.3);
+    const LOOK_WRIST = new THREE.Vector3(0.41, 1.15, 0.05);
+    const CAM_FUTURE = new THREE.Vector3(0.12, 1.08, 4.95);
+    const LOOK_FUTURE = new THREE.Vector3(0.12, 1.05, 0);
+    const _cam = new THREE.Vector3();
+    const _look = new THREE.Vector3();
 
     /* ── Pointer interactivity: the twin turns toward the cursor ──
        Damped follow (no snap), hover-capable devices only, off under
@@ -553,7 +617,22 @@ export default function DigitalTwinScene({
         scrollNow += (target - scrollNow) * (1 - Math.exp(-dt * 8));
       }
 
-      figure.rotation.y = (reduceMotion ? 0 : t * SETTINGS.rotationSpeed) + yaw + scrollNow * 1.5;
+      if (journey) {
+        // ease toward the requested focus (~0.6s)
+        const f = focusRef.current;
+        const kf = 1 - Math.exp(-dt * 3.2);
+        wWrist += ((f === "wrist" ? 1 : 0) - wWrist) * kf;
+        wFuture += ((f === "future" ? 1 : 0) - wFuture) * kf;
+        // The slow turn carries on while looking at the whole body, and settles
+        // to face the viewer while a detail is in focus.
+        const hold = Math.max(wWrist, wFuture);
+        if (!reduceMotion) spin += dt * SETTINGS.rotationSpeed * (1 - hold);
+        const facing = Math.round(spin / (Math.PI * 2)) * Math.PI * 2;
+        spin += (facing - spin) * (1 - Math.exp(-dt * 3)) * hold;
+      }
+
+      figure.rotation.y =
+        (journey ? spin : reduceMotion ? 0 : t * SETTINGS.rotationSpeed) + yaw * (1 - wWrist) + scrollNow * 1.5;
       figure.rotation.x = pitch;
       figure.position.y = reduceMotion ? 0 : Math.sin(t * 0.6) * 0.012;
 
@@ -561,6 +640,29 @@ export default function DigitalTwinScene({
       camera.position.x = -yaw * 0.22;
       camera.position.z = 4.35 + scrollNow * 1.4;
       camera.lookAt(0, 1.05, 0);
+
+      if (journey) {
+        _cam.copy(CAM_BODY).lerp(CAM_WRIST, wWrist).lerp(CAM_FUTURE, wFuture);
+        _look.copy(LOOK_BODY).lerp(LOOK_WRIST, wWrist).lerp(LOOK_FUTURE, wFuture);
+        camera.position.set(_cam.x - yaw * 0.22 * (1 - wWrist), _cam.y, _cam.z);
+        camera.lookAt(_look);
+        figure.position.x = -0.36 * wFuture;
+        bodyMat.uniforms.uWrist.value = wWrist;
+        if (ghost && ghostMat && ghostHeart) {
+          ghost.visible = wFuture > 0.01;
+          if (ghost.visible) {
+            ghost.position.set(0.58 * wFuture + 0.1, figure.position.y, -0.18);
+            ghost.rotation.y = figure.rotation.y;
+            ghostBeat = (ghostBeat + (dt * 98) / 60) % 1; // the drifted, faster pace
+            const gp = reduceMotion ? 0.25 : heartbeat(ghostBeat);
+            ghostMat.uniforms.uTime.value = t;
+            ghostMat.uniforms.uPulse.value = gp;
+            ghostMat.uniforms.uFade.value = 0.5 * wFuture;
+            ghostHeart.scale.setScalar(0.2 + gp * 0.1);
+            (ghostHeart.material as THREE.SpriteMaterial).opacity = (0.5 + gp * 0.3) * wFuture;
+          }
+        }
+      }
 
       // 72 bpm at rest, rising to ~98 when drifted
       beatPhase = (beatPhase + (dt * (72 + 26 * driftNow)) / 60) % 1;
@@ -649,7 +751,7 @@ export default function DigitalTwinScene({
         container.removeChild(renderer.domElement);
       }
     };
-  }, [dark, scrollLinked, showRings]);
+  }, [dark, scrollLinked, showRings, journey]);
 
   return (
     <div className={`relative w-full h-full ${dark ? "" : "canvas-fade"} ${className ?? ""}`}>

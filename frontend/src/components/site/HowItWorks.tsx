@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import JourneyTwin, { type TwinFocus } from "./JourneyTwin";
 
 interface Step {
   tag: string;
@@ -49,6 +50,13 @@ const STEPS: Step[] = [
     width: 786,
     height: 1648,
   },
+];
+
+/** What the twin beside the steps does for each step, and the line shown with it. */
+const TWIN_STORY: { focus: TwinFocus; caption: string }[] = [
+  { focus: "wrist", caption: "Reading the wrist" },
+  { focus: "body", caption: "One history, kept with you" },
+  { focus: "future", caption: "A possible future, seen early" },
 ];
 
 interface StepMediaProps {
@@ -176,10 +184,10 @@ export default function HowItWorks() {
                 ref={(el) => (stepRefs.current[i] = el)}
                 data-step={i}
                 data-reveal
-                className="flex flex-col overflow-hidden rounded-2xl border border-line bg-canvas-paper lg:min-h-[68vh] lg:justify-center lg:overflow-visible lg:rounded-none lg:border-0 lg:bg-transparent"
+                className="flex flex-col overflow-hidden rounded-2xl border border-line bg-canvas-paper lg:min-h-[78vh] lg:justify-center lg:overflow-visible lg:rounded-none lg:border-0 lg:bg-transparent lg:py-10"
               >
                 <div
-                  className={`flex h-[300px] justify-center overflow-hidden bg-canvas-soft px-6 lg:hidden ${
+                  className={`flex h-[300px] justify-center overflow-hidden bg-canvas-soft px-6 lg:order-2 lg:ml-8 lg:mt-7 lg:h-[400px] lg:rounded-2xl lg:border lg:border-line ${
                     s.kind === "phone" ? "pt-8" : "items-start pt-9"
                   }`}
                 >
@@ -187,8 +195,8 @@ export default function HowItWorks() {
                     step={s}
                     className={
                       s.kind === "phone"
-                        ? "h-auto w-[230px] self-start"
-                        : "h-auto w-full max-w-[420px] rounded-2xl"
+                        ? "h-auto w-[230px] self-start lg:w-[300px]"
+                        : "h-auto w-full max-w-[420px] rounded-2xl lg:max-w-none"
                     }
                   />
                 </div>
@@ -207,31 +215,28 @@ export default function HowItWorks() {
             ))}
           </div>
 
-          {/* Pinned stage: stays put on desktop while the steps scroll past. */}
+          {/* Pinned stage (desktop): the twin stays beside the steps and changes with
+              each one. Step 1 moves in to the wrist, step 2 shows the whole figure,
+              step 3 shows a second twin whose heart has drifted. */}
           <div className="hidden lg:block" aria-hidden="true">
-            <div className="sticky top-24 h-[min(640px,calc(100vh-8rem))] overflow-hidden rounded-2xl border border-line">
-              {STEPS.map((s, i) => (
-                <div
-                  key={s.tag}
-                  // Screens sit flat. A 3D tilt or a filter makes the browser resample
-                  // the image, which softens the small text in the screenshots.
-                  className={`stage-layer absolute inset-0 flex justify-center bg-canvas-soft px-8 ${
-                    s.kind === "phone" ? "items-start pt-12" : "items-center"
-                  } ${active === i ? "is-active" : prev === i ? "is-prev" : ""}`}
-                >
-                  <StepMedia
-                    step={s}
-                    decorative
-                    active={active === i}
-                    className={
-                      s.kind === "phone"
-                        ? "h-auto w-[340px]"
-                        : "h-auto w-full rounded-2xl"
-                    }
-                  />
-                </div>
-              ))}
-              <div className="absolute bottom-5 left-1/2 z-10 flex -translate-x-1/2 gap-2">
+            <div className="sticky top-24 h-[min(680px,calc(100vh-8rem))] overflow-hidden rounded-2xl border border-line bg-[#050e1e]">
+              <JourneyTwin focus={TWIN_STORY[active].focus} />
+              <div className="absolute left-6 top-6 z-10">
+                {TWIN_STORY.map((t, i) => (
+                  <p
+                    key={t.caption}
+                    className={`journey-caption absolute left-0 top-0 whitespace-nowrap font-display text-xl font-medium text-cream ${
+                      active === i ? "opacity-100" : "opacity-0"
+                    }`}
+                  >
+                    {t.caption}
+                  </p>
+                ))}
+              </div>
+              <p className="absolute bottom-5 left-6 z-10 text-[13px] text-navy-200">
+                Digital twin, illustration
+              </p>
+              <div className="absolute bottom-6 right-6 z-10 flex gap-2">
                 {STEPS.map((s, i) => (
                   <span
                     key={s.tag}
