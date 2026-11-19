@@ -173,7 +173,7 @@ html.js-motion .twin-poster img {
   color: #f3eee3;
 }
 .site-nav.on-dark .nav-link::after {
-  background: #8ebdf2;
+  background: #1b6bc9;
 }
 .site-nav.on-dark .nav-burger {
   color: #f3eee3;
@@ -199,7 +199,7 @@ html.js-motion .twin-poster img {
   pointer-events: none;
 }
 .site-nav.on-dark .scroll-progress {
-  background: #8ebdf2;
+  background: #1b6bc9;
 }
 
 /* ── Cursor-reactive depth ───────────────────────────────────────

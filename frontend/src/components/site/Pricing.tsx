@@ -16,8 +16,7 @@ export default function Pricing() {
     <section id="pricing" className="sec theme-light">
       <div className="site-wrap flex flex-col gap-11">
       <div className="flex max-w-[860px] flex-col gap-[18px]" data-reveal>
-        <p className="section-label">Planned pricing</p>
-        <h2 className="h-display">You subscribe to the insight. The sensor comes free.</h2>
+        <h2 className="h-display">Planned pricing</h2>
         <p className="lede">
           One family plan. The wristband is included, never sold separately. Final pricing will
           be confirmed before launch.

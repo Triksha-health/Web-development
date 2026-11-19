@@ -25,10 +25,7 @@ export default function Clinicians() {
       <div className="site-wrap grid items-start gap-x-16 gap-y-12 lg:grid-cols-2">
         <div className="flex flex-col gap-10">
           <div className="flex flex-col gap-[18px]" data-reveal>
-            <p className="section-label !text-navy-200">For cardiologists and clinical partners</p>
-            <h2 className="h-display !text-cream">
-              Something to prescribe for the months between visits.
-            </h2>
+            <h2 className="h-display !text-cream">For cardiologists and clinical partners</h2>
             <p className="lede !text-navy-100">
               After a cardiac event, your patient’s family is frightened and motivated. Triksha
               gives them a daily, personal signal, and gives you a clean summary instead of a

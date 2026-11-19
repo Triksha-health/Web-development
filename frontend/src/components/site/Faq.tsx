@@ -36,7 +36,7 @@ export default function Faq() {
     <section id="faq" className="sec theme-light">
       <div className="mx-auto flex w-full max-w-[900px] flex-col gap-8 px-[var(--page-pad)]">
       <h2 className="h-display" data-reveal>
-        Honest answers
+        Questions
       </h2>
       <div className="flex flex-col border-t border-line-strong">
         {FAQS.map((f, i) => (

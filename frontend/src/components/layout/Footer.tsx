@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 const linkClass =
-  "text-cream underline decoration-navy-400 underline-offset-4 transition-colors hover:text-white hover:decoration-accent-300";
+  "text-cream underline decoration-navy-400 underline-offset-4 transition-colors hover:text-white hover:decoration-cream";
 
 function Footer() {
   const year = new Date().getFullYear();

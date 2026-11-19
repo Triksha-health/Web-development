@@ -69,23 +69,18 @@ function Navbar({ scrolled, onDark = false }: NavbarProps) {
         aria-label="Main"
         className="nav-inner flex items-center justify-between gap-x-6"
       >
-        <Link to="/" aria-label="Triksha home" className="flex flex-none items-center">
+        <Link to="/" aria-label="Triksha home" className="flex flex-none items-center gap-2.5 no-underline">
           <img
-            src="/img/logo-full.webp"
-            alt="Triksha"
-            width={168}
-            height={76}
-            className="logo-dark h-[38px] w-auto"
-          />
-          {/* shown instead while the nav is over the dark hero (see motion.css) */}
-          <img
-            src="/img/logo-full-light.webp"
+            src="/img/eye-light.webp"
             alt=""
             aria-hidden="true"
-            width={168}
-            height={76}
-            className="logo-light h-[38px] w-auto"
+            width={72}
+            height={93}
+            className="h-[38px] w-auto"
           />
+          <span className="font-display text-[23px] font-medium leading-none tracking-[0.01em] text-cream">
+            Triksha
+          </span>
         </Link>
 
         {/* Desktop links (1024px and up; below that they wrap, so the menu takes over) */}

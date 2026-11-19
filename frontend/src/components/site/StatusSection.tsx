@@ -15,11 +15,8 @@ export default function StatusSection() {
     <section id="status" className="sec theme-light">
       <div className="site-wrap grid items-center gap-x-16 gap-y-12 lg:grid-cols-2">
       <div className="flex flex-col gap-[22px]">
-        <p className="section-label" data-reveal>
-          Where we are today
-        </p>
         <h2 className="h-display" data-reveal style={step(1)}>
-          Not a render. Real hardware, on a real wrist.
+          Where Triksha is today
         </h2>
         <p className="lede" data-reveal style={step(2)}>
           We would rather tell you exactly where Triksha stands than promise too much.

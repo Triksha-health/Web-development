@@ -20,7 +20,7 @@
     --line-strong: 40 70 122;
     --accent-100: 23 51 92;
     --accent-300: 142 189 242;
-    --accent-600: 142 189 242;
+    --accent-600: 243 238 227; /* links on navy are cream, underlined */
     --accent-700: 169 205 246;
     --status-done: 95 208 138;
     --status-wip: 240 169 78;
@@ -48,15 +48,15 @@
     --line: 221 216 207;
     --line-strong: 201 196 184;
     --accent-100: 228 236 246;
-    --accent-300: 21 87 168;
-    --accent-600: 21 87 168; /* #1557A8 */
-    --accent-700: 16 69 134;
+    --accent-300: 27 107 201;
+    --accent-600: 27 107 201; /* #1B6BC9, the one brand blue */
+    --accent-700: 20 32 46;
     --status-done: 24 110 60;
     --status-wip: 143 80 8;
     --status-dot: 201 120 30;
     --field-border: 124 132 143;
     --chart-band: #d3e2f5;
-    --chart-edge: #6f9bd4;
+    --chart-edge: #1b6bc9;
     --chart-future: #8d98a7;
     --chart-line: #14202e;
     --chart-mark: #7c8795;

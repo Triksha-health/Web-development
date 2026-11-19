@@ -22,8 +22,7 @@ export default function Families() {
       <div className="site-wrap flex flex-col gap-12 lg:gap-16">
         <div className="grid items-end gap-x-16 gap-y-6 lg:grid-cols-[1.25fr_1fr]">
           <div className="flex flex-col gap-[18px]" data-reveal>
-            <p className="section-label">Who Triksha is for</p>
-            <h2 className="h-display">Heart disease rarely knocks. It usually just arrives.</h2>
+            <h2 className="h-display">Who Triksha is for</h2>
           </div>
           <p className="lede" data-reveal style={{ "--i": 1 } as CSSProperties}>
             Most people only start watching their heart after someone they love has a cardiac

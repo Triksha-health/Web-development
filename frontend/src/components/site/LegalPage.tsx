@@ -40,7 +40,7 @@ export default function LegalPage({ kicker, title, intro, updated, sections }: L
           <ol className="flex flex-col gap-2 text-[15px]">
             {sections.map((s) => (
               <li key={s.id}>
-                <a href={`#${s.id}`} className="text-ink-900 no-underline hover:text-accent-600">
+                <a href={`#${s.id}`} className="text-ink-900 no-underline hover:underline">
                   {s.title}
                 </a>
               </li>

@@ -19,8 +19,7 @@ export default function AlertSection() {
             You decide who else sees it: your family, your cardiologist, or both.
           </p>
           <p className="lede" data-reveal style={step(2)}>
-            We tune Triksha to avoid false alarms. An alert you learn to ignore is worse than
-            no alert at all.
+            We tune Triksha to avoid false alarms.
           </p>
         </div>
       </div>

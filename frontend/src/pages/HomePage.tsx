@@ -2,6 +2,7 @@ import Hero from "../components/site/Hero";
 import Families from "../components/site/Families";
 import HowItWorks from "../components/site/HowItWorks";
 import AlertSection from "../components/site/AlertSection";
+import Statement from "../components/site/Statement";
 import StatusSection from "../components/site/StatusSection";
 import Clinicians from "../components/site/Clinicians";
 import Pricing from "../components/site/Pricing";
@@ -19,6 +20,7 @@ function HomePage() {
       <Families />
       <HowItWorks />
       <AlertSection />
+      <Statement />
       <StatusSection />
       <Clinicians />
       <Pricing />

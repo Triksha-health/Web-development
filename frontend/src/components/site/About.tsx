@@ -26,11 +26,8 @@ export default function About() {
       <div className="site-wrap flex flex-col gap-14 lg:gap-20">
         <div className="grid items-center gap-x-16 gap-y-10 lg:grid-cols-2">
           <div className="flex flex-col gap-[22px]">
-            <p className="section-label" data-reveal>
-              Why we exist
-            </p>
             <h2 className="h-display" data-reveal style={step(1)}>
-              Built because an illness was caught too late.
+              Why we started Triksha
             </h2>
             <p className="lede" data-reveal style={step(2)}>
               Yashwanth started Triksha after his father’s illness went unnoticed until it was

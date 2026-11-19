@@ -63,7 +63,7 @@ export default function Waitlist() {
     <section id="waitlist" className="sec theme-light">
       <div className="site-wrap grid items-start gap-x-16 gap-y-10 lg:grid-cols-2">
         <div className="flex flex-col gap-[18px]" data-reveal>
-          <h2 className="h-display">Let’s hear the whisper.</h2>
+          <h2 className="h-display">Join the waitlist</h2>
           <p className="lede">
             Join the waitlist for family plans. No spam, just one email when Triksha is ready for
             you.
