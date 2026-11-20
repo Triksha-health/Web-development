@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react";
+import SensorStage from "./SensorStage";
 
 const STATUS = [
   { item: "Wristband sensor, version 1", state: "Built & tested", tone: "text-status-done", live: false },
@@ -41,22 +42,10 @@ export default function StatusSection() {
       </div>
 
       <figure className="flex flex-col gap-3" data-reveal="right">
-        {/* The photo sits slightly oversized in its frame and drifts as the page
-            scrolls, where the browser supports it. */}
-        <div className="parallax-frame rounded-2xl">
-          <img
-            src="/img/sensor-v1-800.webp"
-            srcSet="/img/sensor-v1-800.webp 800w, /img/sensor-v1-1340.webp 1340w"
-            sizes="(min-width: 1024px) 660px, 92vw"
-            alt="Triksha’s first sensor: two green circuit boards, component side up, on a blue work mat"
-            width={1340}
-            height={760}
-            loading="lazy"
-            className="h-auto w-full"
-          />
-        </div>
+        {/* The real photo first; where the browser can, the two boards in 3D. */}
+        <SensorStage />
         <figcaption className="text-sm text-muted">
-          Sensor v1. Designed, fabricated and assembled in-house.
+          Sensor v1, its two boards. Designed, fabricated and assembled in-house.
         </figcaption>
       </figure>
       </div>
