@@ -25,6 +25,7 @@ const AboutPage = lazy(() => import("./pages/AboutPage"));
 const CareersPage = lazy(() => import("./pages/CareersPage"));
 const AdminLoginPage = lazy(() => import("./pages/AdminLoginPage"));
 const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
+const AdminWaitlist = lazy(() => import("./pages/AdminWaitlist"));
 
 function App() {
   useEffect(() => {
@@ -58,6 +59,15 @@ function App() {
         element={
           <PrivateAdminRoute>
             <AdminDashboard />
+          </PrivateAdminRoute>
+        }
+      />
+
+      <Route
+        path="/admin/waitlist"
+        element={
+          <PrivateAdminRoute>
+            <AdminWaitlist />
           </PrivateAdminRoute>
         }
       />

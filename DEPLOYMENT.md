@@ -47,6 +47,21 @@ Three older secrets, ending in `15860E47...`, `3F02F832...` and `8D908E81...`, a
 
 Do not change the workflow file, the secret names, or the backend-only build and zip steps without a reason. They are easy to break.
 
+## Settings the backend needs in Azure
+
+These are set in the Azure portal: `triksha-backend`, Environment variables, App settings. Names only here; never write the values in this file. The full list with notes is in `backend/.env.example`.
+
+- `SESSION_SECRET`: required. The backend refuses to start without it. This caused a 503 outage in November 2026: the newer backend code needed it and Azure did not have it yet. Use a long random string.
+- `MONGO_URL`, `JWT_SECRET`: required.
+- `ADMIN_EMAIL`, `ADMIN_PASSWORD`: the sign-in for the admin pages, including `/admin/waitlist`.
+- `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`, `FROM_EMAIL`: email. If any is missing the site still works, but no waitlist confirmation or contact form notice is sent.
+- `TEAM_INBOX_EMAIL`: optional. Where contact form messages go. Defaults to `FROM_EMAIL`.
+- `RAZORPAY_KEY_ID`, `RAZORPAY_KEY_SECRET`, `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `GOOGLE_CALLBACK_URL`: payments and Google sign-in.
+
+If the backend answers "503 Service Unavailable", open Log stream on `triksha-backend` first. A missing setting is named there.
+
+If it answers "403 This web app is stopped", the app is switched off or, on the Free plan, has used up its daily allowance. Check Status on the Overview page.
+
 ## If the backend deploy fails at "Login to Azure"
 
 This happened in November 2026.
