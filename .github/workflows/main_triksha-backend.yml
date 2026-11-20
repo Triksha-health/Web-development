@@ -7,6 +7,11 @@ on:
   push:
     branches:
       - main
+    # Only when the backend, or this file, changes. Website-only changes
+    # (the frontend folder) are deployed by Netlify and must not trigger this.
+    paths:
+      - 'backend/**'
+      - '.github/workflows/main_triksha-backend.yml'
   workflow_dispatch:
 
 jobs:
