@@ -178,30 +178,6 @@ export default function DigitalTwinScene({
       for (let i = 0; i < prims.length; i++) d = smin(d, primSdf(p, prims[i]), 0.05);
       return d;
     }
-    const _g1 = new THREE.Vector3();
-    function bodyNormal(p: THREE.Vector3, out: THREE.Vector3) {
-      const e = 0.0045;
-      _g1.copy(p);
-      _g1.x = p.x + e;
-      let dx = bodySdf(_g1);
-      _g1.x = p.x - e;
-      dx -= bodySdf(_g1);
-      _g1.x = p.x;
-      _g1.y = p.y + e;
-      let dy = bodySdf(_g1);
-      _g1.y = p.y - e;
-      dy -= bodySdf(_g1);
-      _g1.y = p.y;
-      _g1.z = p.z + e;
-      let dz = bodySdf(_g1);
-      _g1.z = p.z - e;
-      dz -= bodySdf(_g1);
-      out.set(dx, dy, dz);
-      if (out.lengthSq() < 1e-9) out.set(0, 0, 1);
-      else out.normalize();
-      return out;
-    }
-
     /* ── Sample particles on the blended surface ── */
     const positions: number[] = [];
     const sizes: number[] = [];
@@ -240,7 +216,10 @@ export default function DigitalTwinScene({
         const zm = (pr.a.z + pr.b.z) * 0.5;
         pos.z = zm + (pos.z - zm) / pr.zs;
         if (bodySdf(pos) < -0.02) continue;
-        bodyNormal(pos, nrm);
+        // The direction this dot was pushed out from its limb is a good stand-in
+        // for the surface normal, and far cheaper than measuring it (which made
+        // the page pause while the figure was built).
+        nrm.set(dir.x, dir.y, dir.z * pr.zs).normalize();
         normals.push(nrm.x, nrm.y, nrm.z);
         // (a small scatter only, so hands, jaw and calves keep their outline)
         pos.x += (Math.random() - 0.5) * 0.008;
