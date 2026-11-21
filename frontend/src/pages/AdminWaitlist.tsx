@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { API_BASE } from "../lib/api";
 
 interface Signup {
@@ -104,9 +104,6 @@ export default function AdminWaitlist() {
             <h1 className="h-display">Waitlist and messages</h1>
           </div>
           <div className="flex flex-wrap items-center gap-4">
-            <Link to="/admin/dashboard" className="text-link text-[15px]">
-              Admin dashboard
-            </Link>
             <button type="button" onClick={downloadCsv} disabled={downloading || !waitlist} className="cta cta-blue !px-5 !py-3 !text-[15px] disabled:opacity-60">
               {downloading ? "Preparing…" : "Download spreadsheet"}
             </button>

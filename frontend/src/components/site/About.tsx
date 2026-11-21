@@ -17,14 +17,36 @@ const PEOPLE = [
   },
 ];
 
-const BACKING = "NIT AP Ignition grant, Microsoft for Startups member, VTY Triksha Health Tech Pvt Ltd";
+const SUPPORTERS: { name: string; kind: string; logo: string; lines: [string, string] }[] = [
+  {
+    name: "NIT Andhra Pradesh",
+    kind: "Ignition grant",
+    logo: "/img/nit-ap-logo.webp",
+    lines: ["Where Triksha began, and where our advisor teaches.", "Its Ignition grant supports our early hardware work."],
+  },
+  {
+    name: "Microsoft for Startups",
+    kind: "Programme member",
+    logo: "/img/microsoft-logo.svg",
+    lines: ["Cloud credits and tools for early-stage startups.", "The Triksha backend runs on Microsoft Azure."],
+  },
+  {
+    name: "Claude for Startups",
+    kind: "Programme member",
+    logo: "/img/claude-logo.svg",
+    lines: ["The startup programme from Anthropic.", "We use Claude while building our software."],
+  },
+];
+
+const LEGAL = "Triksha is built by VTY Triksha Health Tech Pvt Ltd.";
 
 const step = (i: number) => ({ "--i": i }) as CSSProperties;
 
 export default function About() {
   return (
     <section id="about" className="sec theme-light">
-      <div className="site-wrap grid items-start gap-x-16 gap-y-14 lg:grid-cols-2">
+      <div className="site-wrap flex flex-col gap-14 lg:gap-20">
+        <div className="grid items-start gap-x-16 gap-y-14 lg:grid-cols-2">
         {/* The story */}
         <div className="flex flex-col gap-[22px] lg:sticky lg:top-28">
           <h2 className="h-display" data-reveal style={step(0)}>
@@ -85,7 +107,38 @@ export default function About() {
               </li>
             ))}
           </ul>
-          <p className="pt-6 text-sm text-body">{BACKING}</p>
+        </div>
+        </div>
+
+        {/* Who supports the work */}
+        <div>
+          <p className="section-label pb-4">Supported by</p>
+          <ul className="grid gap-4 md:grid-cols-3 md:gap-6">
+            {SUPPORTERS.map((s, i) => (
+              <li
+                key={s.name}
+                data-reveal
+                style={step(i)}
+                className="flex flex-col gap-5 rounded-2xl border border-line bg-canvas-paper p-6 lg:p-7"
+              >
+                <div className="flex items-center gap-4">
+                  <span className="flex h-14 w-14 flex-none items-center justify-center rounded-lg bg-white">
+                    <img src={s.logo} alt="" width={40} height={40} loading="lazy" className="h-10 w-10 object-contain" />
+                  </span>
+                  <div className="flex min-w-0 flex-col gap-1">
+                    <h3 className="font-display text-[20px] font-medium leading-[1.2]">{s.name}</h3>
+                    <span className="text-sm text-muted">{s.kind}</span>
+                  </div>
+                </div>
+                <p className="text-[15px] leading-relaxed text-body">
+                  {s.lines[0]}
+                  <br />
+                  {s.lines[1]}
+                </p>
+              </li>
+            ))}
+          </ul>
+          <p className="pt-6 text-sm text-muted">{LEGAL}</p>
         </div>
       </div>
     </section>

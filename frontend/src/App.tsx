@@ -18,13 +18,9 @@ const SignInPage = lazy(() => import("./pages/SignInPage"));
 const SignUpPage = lazy(() => import("./pages/SignUpPage"));
 const PreOrderPage = lazy(() => import("./pages/PreOrderPage"));
 const TeamsPage = lazy(() => import("./pages/TeamsPage"));
-const UserDashBored = lazy(() => import("./pages/UserDashBored"));
 const ForgotPassword = lazy(() => import("./pages/ForgotPassword"));
-const ApplyPage = lazy(() => import("./pages/ApplyPage"));
 const AboutPage = lazy(() => import("./pages/AboutPage"));
-const CareersPage = lazy(() => import("./pages/CareersPage"));
 const AdminLoginPage = lazy(() => import("./pages/AdminLoginPage"));
-const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
 const AdminWaitlist = lazy(() => import("./pages/AdminWaitlist"));
 
 function App() {
@@ -44,24 +40,12 @@ function App() {
         <Route path="signup" element={<SignUpPage />} />
         <Route path="pre-order" element={<PreOrderPage />} />
         <Route path="teams" element={<TeamsPage />} />
-        <Route path="applyjob" element={<ApplyPage />} />
         <Route path="forgot-password" element={<ForgotPassword />} />
         <Route path="about" element={<AboutPage />} />
-        <Route path="careers" element={<CareersPage />} />
-        <Route path="userdashboard/*" element={<UserDashBored />} />
       </Route>
 
       {/* Admin Routes */}
       <Route path="/admin/login" element={<AdminLoginPage />} />
-
-      <Route
-        path="/admin/dashboard"
-        element={
-          <PrivateAdminRoute>
-            <AdminDashboard />
-          </PrivateAdminRoute>
-        }
-      />
 
       <Route
         path="/admin/waitlist"
@@ -72,7 +56,7 @@ function App() {
         }
       />
 
-      <Route path="/admin" element={<Navigate to="/admin/dashboard" replace />} />
+      <Route path="/admin" element={<Navigate to="/admin/waitlist" replace />} />
 
       {/* Catch all */}
       <Route path="*" element={<Navigate to="/" replace />} />

@@ -107,7 +107,7 @@ localStorage.setItem("otp_email", email);
         }
       }
 
-      navigate("/userdashboard");
+      navigate("/");
     } catch (err) {
       console.error(err);
       setError("Failed to verify OTP");
