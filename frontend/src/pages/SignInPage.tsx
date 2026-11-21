@@ -22,7 +22,7 @@ function SignInPage() {
 
     try {
       await login(email, password);
-      navigate("/userdashboard");
+      navigate("/");
     } catch (err) {
       setError("Invalid email or password");
       controls.start({

@@ -37,7 +37,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       localStorage.setItem('triksha_token', urlToken);
 
       // Clean up URL so ?token=... goes away
-      window.history.replaceState({}, document.title, '/userdashboard');
+      window.history.replaceState({}, document.title, '/');
     }
 
     if (token) {

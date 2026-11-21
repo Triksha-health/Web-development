@@ -36,7 +36,7 @@ function AdminLoginPage() {
       );
 
       localStorage.setItem("triksha_admin_token", res.data.token);
-      navigate("/admin/dashboard");
+      navigate("/admin/waitlist");
     } catch (err) {
       setError("Invalid admin credentials");
     }

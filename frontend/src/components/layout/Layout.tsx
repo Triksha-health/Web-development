@@ -53,8 +53,6 @@ function Layout() {
     }
   }, [location.pathname, location.hash, location.key]);
 
-  const hideFooter = location.pathname.startsWith("/userdashboard");
-
   return (
     <div className="flex min-h-screen flex-col">
       <a
@@ -69,7 +67,7 @@ function Layout() {
           <Outlet />
         </Suspense>
       </main>
-      {!hideFooter && <Footer />}
+      <Footer />
     </div>
   );
 }

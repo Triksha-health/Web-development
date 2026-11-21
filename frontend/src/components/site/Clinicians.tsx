@@ -1,3 +1,4 @@
+import PilotForm from "./PilotForm";
 const POINTS = [
   {
     title: "One-page summary",
@@ -43,17 +44,11 @@ export default function Clinicians() {
             ))}
           </dl>
 
-          <div className="flex flex-col items-start gap-5" data-reveal>
+          <div className="flex flex-col items-stretch gap-5" data-reveal>
             <p className="lede !text-navy-100">
               We are looking for hospitals and cardiologists to join our first clinical pilot.
             </p>
-            <a
-              href="mailto:yashwanth@trikshahealth.com?subject=Clinical%20pilot"
-              className="cta cta-cream"
-              data-magnetic
-            >
-              Talk to us about the pilot
-            </a>
+            <PilotForm />
           </div>
         </div>
 

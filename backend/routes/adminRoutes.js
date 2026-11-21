@@ -9,18 +9,24 @@ const adminPayments = require("../controllers/adminPaymentController");
 const adminUsers = require("../controllers/adminUserController");
 const adminAnalytics = require("../controllers/adminAnalyticsController");
 const adminSettings = require("../controllers/adminSettingsController");
+const adminWaitlist = require("../controllers/adminWaitlistController");
 
-router.get('/profile', adminmiddleware, (req, res) => {
-  res.json({ msg: "Welcome Admin", adminId: req.user.id });
-});
-console.log("adminLogin:", typeof adminController.adminLogin);
-console.log("adminLogout:", typeof adminController.adminLogout);
-
-
-// ✅ Admin Auth
+// Signing in and out are the only admin routes open to everyone.
 router.post("/login", adminController.adminLogin);
-router.get("/profile", adminController.getAdminProfile);
 router.post("/logout", adminController.adminLogout);
+
+// Everything below this line needs a valid admin token (sent as
+// "Authorization: Bearer <token>", the token returned by /login). Without
+// this, anyone on the internet could list users and orders, change
+// settings or start refunds.
+router.use(adminmiddleware);
+
+router.get("/profile", adminController.getAdminProfile);
+
+// Waitlist signups and contact form messages
+router.get("/waitlist", adminWaitlist.getWaitlist);
+router.get("/waitlist.csv", adminWaitlist.getWaitlistCsv);
+router.get("/contacts", adminWaitlist.getContacts);
 
 // ✅ Orders Management
 router.get("/orders", adminOrders.getAllOrders);

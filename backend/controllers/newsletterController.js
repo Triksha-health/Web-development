@@ -1,4 +1,21 @@
 const Newsletter = require('../models/Newsletter');
+const { sendMail } = require('../utils/mailer');
+
+// Sent once, when someone joins. Plain text, no claims, and a way out.
+const CONFIRMATION_SUBJECT = "You're on the Triksha waitlist";
+const CONFIRMATION_TEXT = [
+  'Thank you for joining the Triksha waitlist.',
+  '',
+  'We will email you once, when Triksha is ready for you. We will not send anything else in the meantime.',
+  '',
+  'Triksha is in development and is not a certified medical device. It does not diagnose, treat or prevent any disease.',
+  '',
+  'If you did not sign up, or you would like to be removed, reply to this email and we will take you off the list.',
+  '',
+  'Triksha',
+  'VTY Triksha Health Tech Pvt Ltd',
+  'https://trikshahealth.com',
+].join('\n');
 
 const AUDIENCES = ['self', 'family', 'clinician'];
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -21,6 +38,10 @@ exports.subscribeToNewsletter = async (req, res) => {
     }
 
     await Newsletter.create({ email, joiningFor });
+
+    // Confirmation email. Not awaited: the signup is already saved, and the
+    // visitor should not wait on (or be failed by) the mail server.
+    sendMail({ to: email, subject: CONFIRMATION_SUBJECT, text: CONFIRMATION_TEXT });
 
     res.status(200).json({ success: true, message: 'Subscribed successfully!' });
   } catch (err) {

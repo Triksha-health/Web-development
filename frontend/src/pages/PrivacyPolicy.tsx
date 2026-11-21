@@ -44,8 +44,8 @@ const sections: LegalSection[] = [
           <li>
             <strong>Basic technical data:</strong> privacy-friendly analytics (page views,
             referrer) via{" "}
-            <a href="https://plausible.io/data-policy" rel="noopener">
-              Plausible Analytics
+            <a href="https://umami.is/privacy" rel="noopener">
+              Umami
             </a>
             . No cookies, no cross-site tracking, no personally identifying analytics.
           </li>
